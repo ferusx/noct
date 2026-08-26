@@ -1,0 +1,102 @@
+name = "ash_ice"
+
+[file_type]
+file = "#d2d7e1"
+directory = "#68b7ff"
+symlink = "#68b7ff"
+special = "#8a8f99"
+
+[permissions]
+read = "#37373b"
+write = "#4a4a51"
+execute = "#68b7ff"
+missing = "#3f4650"
+
+[columns]
+user = "#4a4a51"
+size = "#d2d7e1"
+time = "#4a4a51"
+age = "#5f6978"
+state_normal = "#a1a5ad"
+state_attention = "#68b7ff"
+
+[names]
+file = "#a1a5ad"
+directory = "#68b7ff"
+symlink = "#68b7ff"
+broken_symlink = "#8fd0ff"
+executable = "#68b7ff"
+special = "#8a8f99"
+
+[classification]
+broken_symlink = "#8fd0ff"
+directory = "#68b7ff"
+symlink = "#68b7ff"
+special = "#8a8f99"
+executable = "#68b7ff"
+
+source_code = "#d2d7e1"
+shell = "#68b7ff"
+web = "#88c9f5"
+
+build_config = "#9aa8b8"
+structured_data = "#82bfd3"
+log = "#6f747d"
+
+archive_package = "#a7b0bd"
+document = "#d2d7e1"
+spreadsheet = "#93c7c5"
+presentation = "#b2bac6"
+
+image = "#9bc8e8"
+audio = "#86bfd8"
+video = "#9caed0"
+font = "#b1bdd1"
+
+database = "#79b8cb"
+backup = "#8492a3"
+certificate = "#c0c5b1"
+disk_image = "#829fc0"
+torrent = "#79bcb7"
+desktop_plugin = "#96a7c0"
+
+binary = "#8a8f99"
+file = "#a1a5ad"
+
+[tags]
+filesystem = "#8a8f99"
+virtual_tag = "#68b7ff"
+memory = "#68b7ff"
+note = "#68b7ff"
+
+[report]
+heading = "#68b7ff"
+label = "#68b7ff"
+value = "#a1a5ad"
+name = "#a1a5ad"
+path = "#68b7ff"
+command = "#68b7ff"
+package = "#68b7ff"
+version = "#68b7ff"
+size = "#d2d7e1"
+count = "#5f6978"
+total = "#d2d7e1"
+muted = "#4a4a51"
+attention = "#68b7ff"
+
+[header]
+foreground = "#000000"
+background = "#68b7ff"
+bold = true
+
+[summary]
+entries = "#d2d7e1"
+entries_bold = true
+files = "#d2d7e1"
+directories = "#a1a5ad"
+symlinks = "#8a8f99"
+special = "#6f747d"
+executables = "#68b7ff"
+empty = "#5f6978"
+danger = "#68b7ff"
+total_size = "#d2d7e1"

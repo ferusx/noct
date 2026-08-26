@@ -1,0 +1,102 @@
+name = "ash_violet"
+
+[file_type]
+file = "#d2d7e1"
+directory = "#9c6bdb"
+symlink = "#9c6bdb"
+special = "#8a8f99"
+
+[permissions]
+read = "#37373b"
+write = "#4a4a51"
+execute = "#9c6bdb"
+missing = "#3f4650"
+
+[columns]
+user = "#4a4a51"
+size = "#d2d7e1"
+time = "#4a4a51"
+age = "#5f6978"
+state_normal = "#a1a5ad"
+state_attention = "#9c6bdb"
+
+[names]
+file = "#a1a5ad"
+directory = "#9c6bdb"
+symlink = "#9c6bdb"
+broken_symlink = "#c58cff"
+executable = "#9c6bdb"
+special = "#8a8f99"
+
+[classification]
+broken_symlink = "#c58cff"
+directory = "#9c6bdb"
+symlink = "#9c6bdb"
+special = "#8a8f99"
+executable = "#9c6bdb"
+
+source_code = "#d2d7e1"
+shell = "#9c6bdb"
+web = "#b78de2"
+
+build_config = "#a49bb5"
+structured_data = "#aa94bd"
+log = "#6f747d"
+
+archive_package = "#b09aab"
+document = "#d2d7e1"
+spreadsheet = "#aaa6bd"
+presentation = "#b99cbf"
+
+image = "#bd8fca"
+audio = "#a68fbd"
+video = "#9e8fbe"
+font = "#b7abc9"
+
+database = "#978fae"
+backup = "#897c96"
+certificate = "#c2b3a5"
+disk_image = "#8f9bad"
+torrent = "#918fa5"
+desktop_plugin = "#aa8fc3"
+
+binary = "#8a8f99"
+file = "#a1a5ad"
+
+[tags]
+filesystem = "#8a8f99"
+virtual_tag = "#9c6bdb"
+memory = "#9c6bdb"
+note = "#9c6bdb"
+
+[report]
+heading = "#9c6bdb"
+label = "#9c6bdb"
+value = "#a1a5ad"
+name = "#a1a5ad"
+path = "#9c6bdb"
+command = "#9c6bdb"
+package = "#9c6bdb"
+version = "#9c6bdb"
+size = "#d2d7e1"
+count = "#5f6978"
+total = "#d2d7e1"
+muted = "#4a4a51"
+attention = "#9c6bdb"
+
+[header]
+foreground = "#000000"
+background = "#9c6bdb"
+bold = true
+
+[summary]
+entries = "#d2d7e1"
+entries_bold = true
+files = "#d2d7e1"
+directories = "#a1a5ad"
+symlinks = "#8a8f99"
+special = "#6f747d"
+executables = "#9c6bdb"
+empty = "#5f6978"
+danger = "#9c6bdb"
+total_size = "#d2d7e1"

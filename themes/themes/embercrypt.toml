@@ -1,0 +1,102 @@
+name = "embercrypt"
+
+[file_type]
+file = "#d4c7ad"
+directory = "#d08b5b"
+symlink = "#76aaa0"
+special = "#aa849f"
+
+[permissions]
+read = "#8b7d68"
+write = "#c29463"
+execute = "#b7a966"
+missing = "#4e4943"
+
+[columns]
+user = "#8a8072"
+size = "#b9b66f"
+time = "#a89478"
+age = "#978d80"
+state_normal = "#756d64"
+state_attention = "#d16d66"
+
+[names]
+file = "#d4c7ad"
+directory = "#d08b5b"
+symlink = "#76aaa0"
+broken_symlink = "#d16d66"
+executable = "#c8b869"
+special = "#aa849f"
+
+[classification]
+broken_symlink = "#d16d66"
+directory = "#d08b5b"
+symlink = "#76aaa0"
+special = "#aa849f"
+executable = "#c8b869"
+
+source_code = "#d8b06f"
+shell = "#c8b869"
+web = "#aa849f"
+
+build_config = "#a89478"
+structured_data = "#76aaa0"
+log = "#8b7d68"
+
+archive_package = "#d6a060"
+document = "#d4c7ad"
+spreadsheet = "#b9b66f"
+presentation = "#c29463"
+
+image = "#aa849f"
+audio = "#7ea9a1"
+video = "#97899d"
+font = "#b2a494"
+
+database = "#8fa69b"
+backup = "#978d80"
+certificate = "#d8b06f"
+disk_image = "#8f938d"
+torrent = "#8da883"
+desktop_plugin = "#a18b9f"
+
+binary = "#756d64"
+file = "#d4c7ad"
+
+[tags]
+filesystem = "#d6a060"
+virtual_tag = "#7ea9a1"
+memory = "#aa849f"
+note = "#d8b06f"
+
+[report]
+heading = "#d9a064"
+label = "#c29463"
+value = "#d4c7ad"
+name = "#d4c7ad"
+path = "#76aaa0"
+command = "#c8b869"
+package = "#aa849f"
+version = "#d8b06f"
+size = "#b9b66f"
+count = "#a39888"
+total = "#e0d6c4"
+muted = "#756d64"
+attention = "#d16d66"
+
+[header]
+foreground = "#1d1915"
+background = "#d08b5b"
+bold = true
+
+[summary]
+entries = "#e0d6c4"
+entries_bold = true
+files = "#d4c7ad"
+directories = "#d08b5b"
+symlinks = "#76aaa0"
+special = "#aa849f"
+executables = "#c8b869"
+empty = "#756d64"
+danger = "#d16d66"
+total_size = "#b9b66f"

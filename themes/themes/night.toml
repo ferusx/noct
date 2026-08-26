@@ -1,0 +1,87 @@
+name = "night"
+
+[file_type]
+file = "#1cce0c"
+directory = "#ffffff"
+symlink = "#42c7d9"
+special = "#d19a66"
+
+[permissions]
+read = "#5f6978"
+write = "#509beb"
+execute = "#a06edc"
+missing = "#3f4650"
+
+[columns]
+user = "#a06edc"
+size = "#cccccc"
+time = "#a06edc"
+age = "#5f6978"
+state_normal = "#509beb"
+state_attention = "#ff7887"
+
+[names]
+file = "#d2d7e1"
+directory = "#4896f0"
+symlink = "#42c7d9"
+broken_symlink = "#ff5064"
+executable = "#81ff91"
+special = "#d19a66"
+
+[classification]
+broken_symlink = "#ff5064"
+directory = "#4896f0"
+symlink = "#42c7d9"
+special = "#a06edc"
+executable = "#81ff91"
+
+source_code = "#cccccc"
+shell = "#81ff91"
+web = "#b973ff"
+
+build_config = "#509beb"
+structured_data = "#42c7d9"
+log = "#5f6978"
+
+archive_package = "#d19a66"
+document = "#d2d7e1"
+spreadsheet = "#8fcf9a"
+presentation = "#c58bd8"
+
+image = "#b973ff"
+audio = "#42c7d9"
+video = "#8e73c7"
+font = "#aaa0c2"
+
+database = "#509beb"
+backup = "#7f708f"
+certificate = "#ffbe64"
+disk_image = "#6f83ad"
+torrent = "#72b99b"
+desktop_plugin = "#9d72c6"
+
+binary = "#5f6978"
+file = "#d2d7e1"
+
+[tags]
+filesystem = "#d19a66"
+virtual_tag = "#ffaa5a"
+memory = "#b973ff"
+note = "#ffbe64"
+
+[header]
+foreground = "#000000"
+background = "#a06edc" #5f6978
+bold = true
+
+[summary]
+entries = "#d2d7e1"
+entries_bold = true
+files = "#d2d7e1"
+directories = "#4896f0"
+symlinks = "#42c7d9"
+special = "#a06edc"
+executables = "#81ff91"
+empty = "#5f6978"
+danger = "#ff7887"
+total_size = "#667085"

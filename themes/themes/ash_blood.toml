@@ -1,0 +1,102 @@
+name = "ash_blood"
+
+[file_type]
+file = "#d2d7e1"
+directory = "#d14b5a"
+symlink = "#d14b5a"
+special = "#8a8f99"
+
+[permissions]
+read = "#37373b"
+write = "#4a4a51"
+execute = "#d14b5a"
+missing = "#3f4650"
+
+[columns]
+user = "#4a4a51"
+size = "#d2d7e1"
+time = "#4a4a51"
+age = "#5f6978"
+state_normal = "#a1a5ad"
+state_attention = "#d14b5a"
+
+[names]
+file = "#a1a5ad"
+directory = "#d14b5a"
+symlink = "#d14b5a"
+broken_symlink = "#ff6b7a"
+executable = "#d14b5a"
+special = "#8a8f99"
+
+[classification]
+broken_symlink = "#ff6b7a"
+directory = "#d14b5a"
+symlink = "#d14b5a"
+special = "#8a8f99"
+executable = "#d14b5a"
+
+source_code = "#d2d7e1"
+shell = "#d14b5a"
+web = "#c86a7a"
+
+build_config = "#a1a5ad"
+structured_data = "#b5a0aa"
+log = "#6f747d"
+
+archive_package = "#b98282"
+document = "#d2d7e1"
+spreadsheet = "#b7b0a0"
+presentation = "#c98a7a"
+
+image = "#c77f91"
+audio = "#a88f9b"
+video = "#b58da6"
+font = "#bda7b8"
+
+database = "#9b9da8"
+backup = "#8f7d8b"
+certificate = "#c9b39a"
+disk_image = "#9aa2b3"
+torrent = "#9aa89d"
+desktop_plugin = "#a894ad"
+
+binary = "#8a8f99"
+file = "#a1a5ad"
+
+[tags]
+filesystem = "#8a8f99"
+virtual_tag = "#d14b5a"
+memory = "#d14b5a"
+note = "#d14b5a"
+
+[report]
+heading = "#d14b5a"
+label = "#d14b5a"
+value = "#a1a5ad"
+name = "#a1a5ad"
+path = "#d14b5a"
+command = "#d14b5a"
+package = "#d14b5a"
+version = "#d14b5a"
+size = "#d2d7e1"
+count = "#5f6978"
+total = "#d2d7e1"
+muted = "#4a4a51"
+attention = "#d14b5a"
+
+[header]
+foreground = "#000000"
+background = "#d14b5a"
+bold = true
+
+[summary]
+entries = "#d2d7e1"
+entries_bold = true
+files = "#d2d7e1"
+directories = "#a1a5ad"
+symlinks = "#8a8f99"
+special = "#6f747d"
+executables = "#d14b5a"
+empty = "#5f6978"
+danger = "#d14b5a"
+total_size = "#d2d7e1"

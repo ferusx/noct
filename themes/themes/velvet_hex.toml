@@ -1,0 +1,102 @@
+name = "velvet_hex"
+
+[file_type]
+file = "#c9bfd8"
+directory = "#9b78d1"
+symlink = "#6fc6c8"
+special = "#d07ab5"
+
+[permissions]
+read = "#776a85"
+write = "#a36eb0"
+execute = "#8fb28a"
+missing = "#47404f"
+
+[columns]
+user = "#8a7f94"
+size = "#b894d6"
+time = "#8d7db2"
+age = "#9d92aa"
+state_normal = "#746b7d"
+state_attention = "#df6f91"
+
+[names]
+file = "#c9bfd8"
+directory = "#9b78d1"
+symlink = "#6fc6c8"
+broken_symlink = "#df6f91"
+executable = "#9dbb8d"
+special = "#d07ab5"
+
+[classification]
+broken_symlink = "#df6f91"
+directory = "#9b78d1"
+symlink = "#6fc6c8"
+special = "#d07ab5"
+executable = "#9dbb8d"
+
+source_code = "#ddd5e7"
+shell = "#9dbb8d"
+web = "#d07ab5"
+
+build_config = "#8d7db2"
+structured_data = "#6fc6c8"
+log = "#776a85"
+
+archive_package = "#c99a6e"
+document = "#c9bfd8"
+spreadsheet = "#9dbb8d"
+presentation = "#bd8da8"
+
+image = "#d07ab5"
+audio = "#6fc6c8"
+video = "#9c82c1"
+font = "#b5a5c5"
+
+database = "#83a6ae"
+backup = "#9d92aa"
+certificate = "#d7a06f"
+disk_image = "#858ca5"
+torrent = "#86ad99"
+desktop_plugin = "#b184ca"
+
+binary = "#746b7d"
+file = "#c9bfd8"
+
+[tags]
+filesystem = "#c99a6e"
+virtual_tag = "#6fc6c8"
+memory = "#b894d6"
+note = "#d7a06f"
+
+[report]
+heading = "#b88ce4"
+label = "#d07ab5"
+value = "#c9bfd8"
+name = "#c9bfd8"
+path = "#6fc6c8"
+command = "#9dbb8d"
+package = "#d07ab5"
+version = "#c99a6e"
+size = "#b894d6"
+count = "#9d92aa"
+total = "#ddd5e7"
+muted = "#746b7d"
+attention = "#df6f91"
+
+[header]
+foreground = "#17111d"
+background = "#9b78d1"
+bold = true
+
+[summary]
+entries = "#ddd5e7"
+entries_bold = true
+files = "#c9bfd8"
+directories = "#9b78d1"
+symlinks = "#6fc6c8"
+special = "#d07ab5"
+executables = "#9dbb8d"
+empty = "#746b7d"
+danger = "#df6f91"
+total_size = "#b894d6"

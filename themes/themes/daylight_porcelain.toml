@@ -1,0 +1,102 @@
+name = "saylight_porcelain"
+
+[file_type]
+file = "#46505e"
+directory = "#2f6fb2"
+symlink = "#2f8d91"
+special = "#7a67a8"
+
+[permissions]
+read = "#6b7583"
+write = "#3a7fb4"
+execute = "#4f8a63"
+missing = "#a8b0bb"
+
+[columns]
+user = "#6e7784"
+size = "#4f8a63"
+time = "#3a7fb4"
+age = "#7e8793"
+state_normal = "#7b848f"
+state_attention = "#b64b55"
+
+[names]
+file = "#46505e"
+directory = "#2f6fb2"
+symlink = "#2f8d91"
+broken_symlink = "#b64b55"
+executable = "#4f8a63"
+special = "#7a67a8"
+
+[tags]
+filesystem = "#9b6b46"
+virtual_tag = "#2f8d91"
+memory = "#7a67a8"
+note = "#a27c3f"
+
+[report]
+heading = "#2f6fb2"
+label = "#2f8d91"
+value = "#46505e"
+name = "#46505e"
+path = "#2f8d91"
+command = "#4f8a63"
+package = "#7a67a8"
+version = "#9b6b46"
+size = "#4f8a63"
+count = "#7b848f"
+total = "#303844"
+muted = "#8b939d"
+attention = "#b64b55"
+
+[header]
+foreground = "#ffffff"
+background = "#2f6fb2"
+bold = true
+
+[summary]
+entries = "#303844"
+entries_bold = true
+files = "#46505e"
+directories = "#2f6fb2"
+symlinks = "#2f8d91"
+special = "#7a67a8"
+executables = "#4f8a63"
+empty = "#8b939d"
+danger = "#b64b55"
+total_size = "#a27c3f"
+
+[classification]
+broken_symlink = "#b64b55"
+directory = "#2f6fb2"
+symlink = "#2f8d91"
+special = "#7a67a8"
+executable = "#4f8a63"
+
+source_code = "#6e7c2f"
+shell = "#4f8a63"
+web = "#7a67a8"
+
+build_config = "#3a7fb4"
+structured_data = "#2f8d91"
+log = "#7b848f"
+
+archive_package = "#9b6b46"
+document = "#46505e"
+spreadsheet = "#4f8a63"
+presentation = "#a07a59"
+
+image = "#7a67a8"
+audio = "#2f8d91"
+video = "#667aa4"
+font = "#7d7d90"
+
+database = "#2f7398"
+backup = "#8a7b72"
+certificate = "#a27c3f"
+disk_image = "#647786"
+torrent = "#4e8b73"
+desktop_plugin = "#7a67a8"
+
+binary = "#7b848f"
+file = "#46505e"

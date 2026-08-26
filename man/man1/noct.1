@@ -1,0 +1,1684 @@
+.\" SPDX-License-Identifier: BSD-3-Clause
+.TH NOCT 1 "August 2026" "Noct" "User Commands"
+
+.SH NAME
+Noct \- noctilucent filesystem inspection tool and viewer
+
+.SH SYNOPSIS
+
+.nf
+\fBnt [options] [path]
+nt noct-specific-option [modifiers] [path]
+nt meta-option\fP
+.fi
+
+.TP
+For ordinary listing, display, filtering, and sorting options, see \fBDISPLAY AND LISTING OPTIONS\fP and \fBFILTERING OPTIONS\fP. For \fBNoct's\fP focused inspection and analysis operations, see \fBNOCT-SPECIFIC OPTIONS\fP.
+
+
+
+.\" === DESCRIPTION ===
+.SH DESCRIPTION
+.TP
+\fBNoct\fP, short for \fBNoctilucent\fP, is a command-line \fBfilesystem inspection tool\fP and \fBviewer\fP for Unix-like systems. It combines ordinary directory listing with focused inspection and analysis operations for examining files, directories, ownership, permissions, sizes, ages, links, scripts, duplicate data, filesystem boundaries, cleanup candidates, and other filesystem properties.
+
+.TP
+The program may be invoked as \fBnt\fP, the primary short command used throughout this manual, or as \fBnoct\fP.
+
+.TP
+When \fBnt\fP is invoked without a \fBNoct-specific\fP operation, \fBnt\fP acts as a flexible directory viewer. Listings may be displayed as a compact grid, one entry per line, a metadata-rich long view, or a recursive Tree, and can be filtered, sorted, limited, or adjusted with the ordinary display and listing options.
+
+.TP
+\fBNoct-specific\fP options provide focused views or analyses intended to answer one filesystem question at a time. These operations include inspecting individual entries, identifying package ownership, finding duplicate files, examining directory size and composition, profiling permissions and ownership, locating stale or recently modified data, and discovering filesystem structures such as mounts, empty directories, and leaf directories.
+
+.TP
+Most command-line options may be combined only where their meanings are compatible. Options accepted by a particular \fBNoct-specific\fP operation, together with its supported modifiers and fields, are described in the corresponding sections below.
+
+.TP
+Configuration settings provide defaults for display, listing, colors, icons, themes, and related behavior. Command-line options override applicable configuration settings for the current invocation.
+
+.\" === Main section ===
+.SH "META OPTIONS"
+
+.TP
+.BR \-\-manual
+Display \fBNoct’s\fP explanatory built-in manual. It provides a guided overview of ordinary listing options, filters, fields, and \fBNoct-specific\fP inspection operations.
+
+.TP
+.BR \-\-theme-help
+Display the theming quick reference, including the configuration fields available when creating or modifying \fBNoct\fP themes.
+
+.TP
+.BR \-\-generate-config
+Generate an editable configuration template without replacing the active configuration file. The generated copy can be reviewed and renamed when ready to use.
+
+.TP
+.BR \-? ", " \-\-help
+Display \fBNoct’s\fP compact command reference for quickly looking up available options, modifiers, fields, and command forms.
+
+.TP
+.BR \-v ", " \-\-version
+Display the installed \fBNoct version\fP together with basic program information.
+
+
+.\" === Main Section ===
+.SH "DISPLAY AND LISTING OPTIONS"
+
+.TP
+.BR \-a ", " \-\-all
+Include hidden dotfiles together with the special \fB.\fP and \fB..\fP directory entries.
+
+.TP
+.BR \-A ", " \-\-almost\-all
+Include hidden dotfiles but omit the special \fB.\fP and \fB..\fP directory entries.
+
+.TP
+.BR \-h ", " \-\-header
+Show column headings above the long table view.
+
+.TP
+.BR \-l ", " \-\-long
+Display entries in the metadata-rich long table view instead of the compact grid.
+
+.TP
+.BR \-1 ", " \-\-oneline
+Display one entry per line.
+
+.TP
+.BR \-d ", " \-\-directory
+List the supplied directory itself rather than the entries inside it.
+
+.TP
+.BR \-T ", " \-\-tree
+Display directory contents as a recursive Tree.
+
+.TP
+.BR \-L ", " "\-\-level DEPTH"
+Limit Tree recursion to the specified number of directory levels.
+
+.TP
+.BR \-\-no\-colors
+Disable colored output for the current invocation.
+
+.TP
+.BR \-\-icons
+Show file-type icons alongside entry names. A font containing the required \fBNerd Font\fP glyphs is needed for the icons to display correctly.
+
+.TP
+.BR \-\-no\-age
+Hide the \fBAGE\fP column from long view.
+
+.TP
+.BR \-\-no\-date
+Hide the selected timestamp column from long view.
+
+.TP
+.BR \-\-no\-user
+Hide the \fBUSER\fP column from long view.
+
+.TP
+.BR \-\-no\-perms
+Hide the \fBMODE\fP column from long view.
+
+.TP
+.BR \-\-no\-state
+Hide the \fBSTATE\fP column from long view.
+
+.TP
+.BR \-\-state
+Show detected file states alongside entries in grid and oneline views.
+
+.TP
+.BR \-\-summary
+Show a summary of the listed entries after the main output.
+
+.TP
+.BR "\-\-limit N"
+Limit the final listing to at most \fBN\fP entries after filtering and sorting.
+
+.TP
+.BR "\-\-tail N"
+Keep the last \fBN\fP entries after filtering and sorting.
+
+.TP
+.BR \-w ", " \-\-wide
+Use more generous spacing between displayed columns.
+
+.TP
+.BR \-W ", " "\-\-width COLS"
+Format grid output for the specified column width instead of the detected terminal width.
+
+.TP
+.BR \-s ", " "\-\-sort FIELD"
+Sort entries by the selected field. Available fields are described in the \fBFIELDS\fP section.
+
+.TP
+.BR \-S
+Sort by size, largest first. 
+
+.TP
+.BR \-r ", " \-\-reverse
+Reverse the selected sort order.
+
+.TP
+.BR \-U "," \-\-unsorted
+Do not sort; preserve filesystem directory order.
+
+.TP
+.BR \-t ", " "\-\-time FIELD"
+Select which timestamp field is displayed and used by long view. Available fields are described in the \fBFIELDS\fP section.
+
+.\" === Main Section ===
+.SH "FILTERING OPTIONS"
+
+.TP
+These options narrow an ordinary listing by selecting entries that match particular filesystem properties, sizes, ages, states, permissions, or names. Multiple compatible filters may be combined to refine the displayed result further.
+
+.TP
+.BR \-\-big
+Show large regular files. The built-in threshold is 10 MiB, providing a quick way to focus on files that occupy a more noticeable amount of space.
+
+For a custom minimum size, use \fB--greater-than SIZE\fP.
+
+.TP
+.BR \-\-danger
+Show entries whose detected filesystem state is not normal. This provides a convenient way to focus on entries that \fBNoct\fP considers worthy of attention without selecting each state individually.
+
+.TP
+.BR \-\-empty ", " \-\-zero
+Show zero-byte regular files. \fB--empty\fP and \fB--zero\fP select the same filter.
+
+.TP
+.BR \-\-executables
+Show executable regular files. A file matches when at least one execute permission bit is set.
+
+Directories are not included by this filter.
+
+.TP
+.BR \-f ", " "\-\-filter KIND VALUE"
+Apply \fBNoct's\fP general filtering interface to an ordinary listing. \fBKIND\fP selects the property to match and \fBVALUE\fP supplies the requested value.
+
+Apply the general filtering interface to ordinary listings. \fBKIND\fP selects the property to match and VALUE supplies the wanted match. Supported kinds are \fBextension\fP (ext) and \fBtype\fP.
+
+The available filter kinds are described in the \fBKINDS\fP section.
+
+.TP
+.BR \-\-fresh
+Show entries modified within the last 24 hours.
+
+This is the fixed-
+window convenience form for recent modification filtering. For a custom time window, use \fB--newer-than AGE\fP or \fB--since AGE\fP.
+
+.TP
+.BR "\-\-greater\-than SIZE"
+Show regular files whose size is greater than or equal to \fBSIZE\fP.
+
+This provides a custom lower size threshold when the fixed \fB--big\fP filter is not suitable. Accepted size expressions are described in the \fBSIZE FORMAT\fP section.
+
+.TP
+.BR "\-\-less\-than SIZE"
+Show regular files whose size is less than or equal to \fBSIZE\fP.
+
+This is the counterpart to \fB--greater-than\fP and can be used to isolate files below a chosen size threshold. Accepted size expressions are described in the \fBSIZE FORMAT\fP section.
+
+.TP
+.BR "\-\-newer\-than AGE"
+Show entries whose modification time falls within the supplied age window.
+
+Unlike \fB--fresh\fP, this option lets you choose the time span. Accepted age expressions are described in the \fBAGE FORMAT\fP section.
+
+.TP
+.BR "\-\-older\-than AGE"
+Show entries whose modification age is greater than or equal to \fBAGE\fP.
+
+Use this to focus an ordinary listing on older or long-untouched material. Accepted age expressions are described in the \fBAGE FORMAT\fP section.
+
+.TP
+.BR "\-\-only\-state STATE"
+Show only entries whose detected filesystem state matches \fBSTATE\fP.
+
+This turns \fBNoct's\fP state detection into a direct filtering condition rather than merely displaying the detected state beside each entry. Valid state names are described in the \fBSTATES\fP section.
+
+.TP
+.BR \-\-orphans
+Show entries with unresolved filesystem references. This includes broken symbolic links and entries whose stored user or group IDs no longer correspond to known local accounts or groups.
+
+Use this when dangling links and missing ownership references are of particular interest.
+
+.TP
+.BR "\-\-permissions MODE"
+Show entries whose ordinary permission bits match \fBMODE\fP exactly.
+
+The mode is written in octal form, such as \fB755\fP or \fB0644\fP. This is useful when a precise permission layout matters more than broader conditions such as writability.
+
+.TP
+.BR \-\-sgid
+Show entries with the \fBset-group-ID\fP permission bit set.
+
+On executable files this bit can affect the effective group identity used during execution. On directories it can affect group ownership inheritance for newly created entries.
+
+.TP
+.BR \-\-stale
+Show entries modified at least 30 days ago.
+
+This is the fixed-window counterpart to \fB--fresh\fP. For a custom age threshold, use \fB--older-than AGE\fP.
+
+.TP
+.BR \-\-suid
+Show entries with the \fBset-user-ID\fP permission bit set.
+
+On executable files this bit can cause execution to use the effective user identity of the file owner, making it particularly useful when inspecting system executables and other security-sensitive locations.
+
+.TP
+.BR \-\-tiny
+Show tiny regular files. The built-in maximum is \fB1 KiB\fP.
+
+For a custom upper size threshold, use \fB--less-than SIZE\fP.
+
+.TP
+.BR \-\-writable
+Show entries with at least one write permission bit set.
+
+This is a broad writability filter and includes entries writable by the owner, group, or others. For the narrower world-write condition, use \fB--world-writable\fP.
+
+.TP
+.BR \-\-world\-writable
+Show entries whose world-write permission bit is set.
+
+This is narrower than \fB--writable\fP and identifies entries that may be modified by users outside the owning user or group. Such entries can deserve particular attention in shared or system locations.
+
+.\" === Main Section ===
+.SH "NOCT-SPECIFIC OPTIONS"
+
+.TP
+These options perform dedicated filesystem inspections and analyses rather than merely shaping or filtering an ordinary listing. Each operation is designed to answer a particular filesystem question and may accept additional modifiers, fields, limits, or selection values described elsewhere in this manual.
+
+.TP 
+.BR "\-\-audit [PATH]"
+Audit a directory for filesystem entries that deserve attention. The report provides a focused view of unusual or potentially troublesome conditions without requiring them to be discovered manually in an ordinary listing.
+
+Use this as a quick filesystem health check when you want to identify entries worth investigating more closely.
+
+.TP
+.BR "\-\-cold [PATH]"
+Search recursively for old or stale filesystem entries below a directory. By default, \fB--cold\fP looks for entries older than \fB180 days\fP and returns at most \fB50 results\fP, providing a quick view of material that may have remained untouched for a long time.
+
+The age threshold can be changed with \fB--older-than AGE\fP. Results may also be restricted by \fB--min-size SIZE\fP or \fB--limit N\fP, sorted by age, size, or path, and displayed in reverse order.
+
+.TP
+.BR "\-\-du [PATH]"
+Walk a directory and report the sizes of directories below it. This provides a compact view of where storage is concentrated without turning the ordinary directory listing into a recursive size report.
+
+Use \fB--limit N\fP when only the largest portion of the report is wanted.
+
+.TP
+.BR "\-\-duplicates [PATH]"
+Find regular files that contain identical data. \fBNoct\fP first narrows potential duplicates by size, hashes the remaining candidates, and verifies matching candidates by content before reporting them as duplicates.
+
+The search normally remains in the selected directory. Use \fB-R\fP, \fB--recursive\fP to descend into subdirectories and \fB--min-size SIZE\fP to ignore files below a chosen size.
+
+.TP
+.BR "\-\-empty\-dirs [PATH]"
+Find empty directories recursively below a starting directory. This is useful for locating abandoned directory structures, leftover application directories, and empty branches that can be difficult to notice in ordinary listings.
+
+Use \fB--min-depth N\fP to ignore empty directories close to the starting point and \fB--limit N\fP to restrict the report. Results may be sorted by age, depth, or path.
+
+.TP
+.BR "\-\-exts [PATH]"
+Build an extension profile for regular files in a directory. Files are grouped by extension and the report shows how many belong to each group together with the amount of space represented by that group.
+
+The report is sorted by total size by default. It may instead be sorted by size, file count, or extension name.
+
+.TP
+.BR "\-\-graveyard [PATH]"
+Find filesystem entries that resemble cleanup candidates. \fBNoct\fP recognizes patterns associated with caches, trash, backups, temporary files, saved or recovered data, logs, archives, empty entries, unusually large entries, and old material, then assigns candidates a score according to the conditions that matched.
+
+Use \fB--kind KIND\fP to concentrate on one candidate type, or refine the report with \fB--min-size SIZE\fP, \fB--older-than AGE\fP, \fB--limit N\fP, and \fB-R\fP, \fB--recursive\fP. Results may be sorted by score, size, age, or name; score is the default. The recognized candidate kinds are documented under \fBKINDS\fP.
+
+.TP
+.BR "\-\-hot [PATH]"
+Search recursively for recently modified entries below a directory. By default, \fB--hot\fP examines the previous 24 hours, places the newest findings first, and shows at most 50 results.
+
+Use \fB--since AGE\fP to change the time window and --limit N to restrict the number of findings. Results may be sorted by age or path.
+
+.TP
+.BR "\-\-inspect PATH|COMMAND"
+Inspect one filesystem entry in detail. The argument may be a path or a command name; when a command is supplied, \fBNoct\fP can resolve it through \fBPATH\fP before examining the resulting entry.
+
+The report brings together information such as identity, location, entry type, permissions, ownership, timestamps, detected state, and package information. Symbolic links can additionally report their target, while installed commands may show their owning package and version when that information can be determined.
+
+.TP
+.BR "\-\-leaves [PATH]"
+Find leaf directories: directories containing regular files but no subdirectories. These represent endpoints in a directory hierarchy where the actual file collections reside.
+
+Use \fB--min-files N\fP to require a minimum number of files, \fB--min-size SIZE\fP to ignore smaller collections, and \fB--limit N\fP to restrict the report. Results may be sorted by size, file count, or path.
+
+.TP
+.BR "\-\-link\-to LINK"
+Show the target stored in the symbolic link \fBLINK\fP.
+
+Use this when you want to inspect where one particular symlink points without performing a broader directory or link analysis.
+
+.TP
+.BR "\-\-map [PATH]"
+Display a visual size map of a directory. The map turns directory contents into a compact overview designed to make larger entries and concentrations of space easier to spot than in an ordinary name-oriented listing.
+
+An optional path selects the directory to inspect. Use \fB--limit N\fP to restrict how many entries are included in the map.
+
+.TP
+.BR "\-\-mounts [PATH]"
+Show filesystem boundaries encountered below a directory. The report reveals mounted filesystems beneath the selected path and helps identify where a directory hierarchy crosses from one filesystem into another.
+
+By default, the report remains focused on relevant boundaries below the selected path. Use \fB--all\fP when a broader mount view is wanted.
+
+.TP
+.BR "\-\-names [PATH]"
+Analyze filename patterns in a directory. Rather than inspecting file contents or concentrating on size, \fB--names\fP examines the names themselves and summarizes recurring naming characteristics in a compact report.
+
+Use \fB--since AGE\fP to restrict the analysis to recently modified entries and \fB--limit N\fP to reduce the number of reported findings.
+
+.TP
+.BR "\-\-owners [PATH]"
+Build a recursive ownership profile for a directory. \fBNoct\fP groups discovered entries by owner so that you can see who owns the contents, how many entries belong to each owner, and how much space those entries represent.
+
+The report may be sorted by owner, entry count, or size, depending on whether ownership names, quantity, or storage usage is most useful for the inspection.
+
+.TP
+.BR "\-\-owns PATH|COMMAND"
+Show which installed package owns a filesystem path or command. When a command name is supplied, \fBNoct\fP resolves it through \fBPATH\fP before querying the system package database about the resulting executable.
+
+This is useful when an unfamiliar file or command has been discovered and you want to determine which installed package provided it.
+
+.TP
+.BR "\-\-package\-bins PACKAGE"
+Show the executable commands installed by a package. \fBNoct\fP queries the system package database, examines the package contents, and reduces the result to executable command paths together with relevant package information.
+
+Use this when you know the package name but want to discover which commands that package actually makes available.
+
+.TP
+.BR "\-\-perms [PATH]"
+Build a permission profile for entries in a directory. Instead of listing every entry individually, \fB--perms\fP groups identical permission modes and reports how frequently each mode occurs.
+
+The report may be sorted by mode, count, or attention. Attention-oriented sorting is useful when unusual or security-sensitive permission patterns matter more than simple frequency.
+
+.TP
+.BR "\-\-portable [PATH]"
+Find filenames that may be awkward to use across shells, tools, or filesystems. The report highlights names whose characters or structure may make quoting, scripting, copying, or moving files between environments less predictable.
+
+Use \fB--portable\fP when the filename itself is the subject of the inspection rather than the contents or metadata of the entry.
+
+.TP
+.BR "\-\-profile [PATH]"
+Build a broad profile of a directory. Unlike \fBNoct's\fP narrower inspection operations, \fB--profile\fP combines several kinds of information into a compact overview of the selected directory and its contents.
+
+Use it when you want to understand the general shape of a directory before deciding which of \fBNoct's\fP more specialized inspection operations to use next.
+
+.TP
+.BR "\-\-scripts [PATH]"
+Analyze executable scripts in a directory and group them by interpreter. This provides a quick view of the scripting environments represented in the directory and how frequently each interpreter occurs.
+
+Use \fB--sort\fP to order the report by count, interpreter, or name. \fB--limit N\fP restricts the number of displayed results.
+
+.TP
+.BR "\-\-timeline [PATH]"
+Group directory entries by modification age. Instead of presenting files as one ordinary listing, \fB--timeline\fP organizes them into age-based groups so that patterns of recent and older activity can be seen more easily.
+
+Use \fB--since AGE\fP to restrict the report to entries changed within a chosen period and \fB--limit N\fP to restrict the number of displayed entries.
+
+.\" === Main Section ===
+.SH "MODIFIER OPTIONS"
+
+.TP
+These options modify the scope or output of selected \fBNoct-specific\fP operations. Their availability depends on the operation being used; unsupported combinations are rejected.
+
+.TP
+.BR "\-\-limit N"
+Limit the number of results produced by operations that support a result limit.
+
+It is useful when an analysis would otherwise produce a large report and only the most relevant portion is wanted. The meaning of the limit follows the ordering used by the selected operation.
+
+.TP
+.BR "\-\-older\-than AGE"
+Set a minimum age threshold for \fBNoct-specific\fP operations that search for old or cleanup-worthy material.
+
+It is accepted by \fB--cold\fP to replace its default age threshold and by \fB--graveyard\fP to restrict cleanup candidates by age. Accepted age expressions are described in \fBAGE FORMAT\fP.
+
+.TP
+.BR "\-\-since AGE"
+Restrict supported \fBNoct-specific\fP operations to entries modified within the supplied age window.
+
+It is accepted by \fB--hot\fP, \fB--names\fP, and \fB--timeline\fP. Accepted age expressions are described in \fBAGE FORMAT\fP.
+
+.TP
+.BR \-s ", " "\-\-sort FIELD"
+Select the ordering used by \fBNoct-specific\fP operations that provide sortable reports.
+
+The available fields vary by operation and are listed under \fBFIELDS\fP. A sort field valid for one operation is not necessarily valid for another.
+
+.\" === Main Section ===
+.SH "SPECIAL MODIFIER OPTIONS"
+
+.TP
+These options refine the behavior of particular \fBNoct-specific\fP operations. They are not general listing controls and are accepted only by the operations that explicitly support them.
+
+.TP
+.BR \-D ", " \-\-dirs-only
+Restrict Tree output to directories.
+
+Use this when the directory structure itself matters more than the individual files contained within it. This modifier is used with \fB--tree\fP.
+
+.TP
+.BR "\-\-kind KIND"
+Restrict \fB--graveyard\fP to cleanup candidates of the selected kind.
+
+The accepted values are described in the \fBKINDS\fP section.
+
+.TP
+.BR "\-\-min\-depth N"
+Ignore matching directories above depth \fBN\fP.
+
+This modifier is used with \fB--empty-dirs\fP when empty directories close to the starting point should be excluded from the report.
+
+.TP
+.BR "\-\-min\-files N"
+Require a leaf directory to contain at least \fBN\fP regular files before it is included in the report.
+
+This modifier is used with \fB--leaves\fP to suppress very small leaf directories and concentrate on more substantial file collections.
+
+.TP
+.BR "\-\-min\-size SIZE"
+Ignore entries or collections smaller than \fBSIZE\fP in operations that support a minimum size threshold.
+
+It is used with \fB--duplicates\fP, \fB--graveyard\fP, \fB--leaves\fP, and \fB--cold\fP. Accepted size expressions are described in the \fBSIZE FORMAT\fP section.
+
+.TP
+.BR \-R ", " \-\-recursive
+Enable recursive traversal for operations that otherwise restrict their search to the selected directory or scope.
+
+It is used with operations such as \fB--duplicates\fP and \fB--graveyard\fP when subdirectories should be included in the analysis.
+
+.\" === Main Section ===
+.SH FIELDS
+
+.TP
+Fields are named values accepted by options such as \fB--sort\fP and \fB--time\fP. Some \fBNoct-specific\fP operations define their own sort fields in addition to the ordinary listing fields.
+
+.\" ---Sub Section ---
+.SS "SORT FIELDS"
+
+.TP
+These are fields accepted by ordinary \fB-s\fP, \fB--sort\fP.
+
+.TP
+.BR name
+
+.RS
+Sort entries alphabetically by name. This is \fBNoct's\fP ordinary default sort order.
+.RE
+
+.TP
+.BR size
+
+.RS
+Sort entries by size, with the largest entries first.
+.RE
+
+.TP
+.BR age
+
+.RS
+Sort entries by modification age, with the newest entries first.
+.RE
+
+.TP
+.BR "extension, ext"
+
+.RS
+Sort entries by filename extension. ext is the shorter alias.
+.RE
+
+.\" --- Sub Section ---
+.SS "TIME FIELDS"
+
+.TP
+These fields are accepted by \fB-t\fP, \fB--time\fP and select which filesystem timestamp is displayed in long view.
+
+.TP
+.BR "modified, mod"
+
+.RS
+Use the file modification time. This is the default timestamp field.
+.RE
+
+.TP
+.BR "accessed, access"
+
+.RS
+Use the file access time.
+.RE
+
+.TP
+.BR "created, create"
+
+.RS
+Use the file creation time when that timestamp is available from the operating system and filesystem.
+.RE
+
+.\" --- Sub Section ---
+.SS "NOCT-SPECIFIC FIELDS"
+
+.TP
+Some \fBNoct-specific\fP operations define their own sort fields. These fields apply only to the operation shown and are not interchangeable with the ordinary listing sort fields.
+
+.TP
+.BR \-\-cold
+
+.RS
+Accepted fields: \fBage\fP, \fBpath\fP, \fBsize\fP.
+.RE
+
+.TP
+.BR \-\-empty\-dirs
+
+.RS
+Accepted fields: \fBage\fP, \fBdepth\fP, \fBpath\fP.
+.RE
+
+.TP
+.BR \-\-exts
+
+.RS
+Accepted fields: \fBcount\fP, \fBname\fP, \fBsize\fP.
+.RE
+
+.TP
+.BR \-\-graveyard
+
+.RS
+Accepted fields: \fBage\fP, \fBname\fP, \fBscore\fP, \fBsize\fP.
+.RE
+
+.TP
+.BR \-\-hot
+
+.RS
+Accepted fields: \fBage\fP, \fBpath\fP.
+.RE
+
+
+.TP
+.BR \-\-leaves
+
+.RS
+Accepted fields: \fBfiles\fP, \fBpath\fP, \fBsize\fP.
+.RE
+
+.TP
+.BR \-\-owners
+
+.RS
+Accepted fields: \fBentries\fP, \fBowner\fP, \fBsize\fP.
+.RE
+
+.TP
+.BR \-\-perms
+
+.RS
+Accepted fields: \fBattention\fP, \fBcount\fP, \fBmodes\fP.
+.RE
+
+.TP
+.BR \-\-scripts
+
+.RS
+Accepted fields: \fBcount\fP, \fBinterpreter\fP, \fBname\fP.
+.RE
+
+
+.\" === Main Section ===
+.SH KINDS
+
+.TP
+Kinds are named values accepted by options that classify or select a specific type of result.
+
+.\" --- Sub Section ---
+.SS FILTER KINDS
+
+.TP
+These values are accepted by \fB-f\fP, \fB--filter\fP.
+
+.TP
+.BR "extension, ext"
+
+.RS
+Match regular files by filename extension. \fBext\fP is the shorter alias.
+.RE
+
+.TP
+.BR type
+
+.RS
+Match entries by filesystem type. Accepted values are \fBfile\fP, \fBdirectory (dir)\fP, \fBsymlink (link)\fP, and \fBspecial\fP. Special entries include sockets, FIFOs, block devices, and character devices.
+.RE
+
+.\" --- Sub Section ---
+.SS "GRAVEYARD KINDS"
+
+.TP
+These values are accepted by \fB--kind KIND\fP with \fB--graveyard\fP and restrict the report to cleanup candidates matching the selected classification.
+
+.TP
+A candidate may match more than one kind. \fBNoct\fP may retain multiple matching classifications while choosing one primary kind for the displayed report.
+
+.TP
+.BR archive
+
+.RS
+Match common archive and compressed-file formats such as \fBZIP\fP, \fBTAR\fP, \fB7z\fP, \fBRAR\fP, \fBGzip\fP, \fBXZ\fP, and related forms.
+.RE
+
+.TP
+.BR backup
+
+.RS
+Match backup-like names and suffixes such as \fB~\fP, \fB.bak\fP, \fB.backup\fP, \fB.old\fP, \fB.orig\fP, and similar forms.
+.RE
+
+.TP
+.BR cache
+
+.RS
+Match names that appear cache-related, including names containing \fBcache\fP.
+.RE
+
+.TP
+.BR empty
+
+.RS
+Match entries whose calculated size is zero bytes.
+.RE
+
+.TP
+.BR large
+
+.RS
+Match entries whose calculated size is at least \fB100 MiB\fP.
+.RE
+
+.TP
+.BR log
+
+.RS
+Match log-like filenames, including common \fB.log\fP and rotated-log forms.
+.RE
+
+.TP
+.BR old
+
+.RS
+Match entries whose modification age is at least \fB180 days\fP.
+.RE
+
+.TP
+.BR save
+
+.RS
+Match names associated with saved, autosaved, recovered, or recovery data.
+.RE
+
+.TP
+.BR temp
+
+.RS
+Match temporary or incomplete-download names, including patterns such as \fBtmp\fP, \fBtemp\fP, \fB.swp\fP, \fB.part\fP, and download remnants.
+.RE
+
+.TP
+.BR trash
+
+.RS
+Match names suggesting trash, recycling, or graveyard-style storage.
+.RE
+
+.\" === Main Section ===
+.SH "FILE STATES"
+
+.TP
+\fBNoct\fP assigns one detected state to each entry when certain filesystem conditions are found. States can be displayed with \fB--state\fP or used as filtering values with \fB--only-state STATE\fP.
+
+An entry receives only one displayed state. If several conditions apply at the same time, \fBNoct\fP reports the first matching state according to its detection order.
+
+.TP
+.BR broken\-link
+
+.RS
+A symbolic link whose target cannot be resolved.
+.RE
+
+.TP
+.BR empty
+
+.RS
+A regular file whose size is zero bytes.
+.RE
+
+.TP
+.BR no\-group
+
+.RS
+An entry whose stored group ID does not correspond to a known local group.
+.RE
+
+.TP
+.BR no\-owner
+
+.RS
+An entry whose stored user ID does not correspond to a known local user.
+.RE
+
+.TP
+.BR normal
+
+.RS
+No attention-worthy filesystem state was detected for the entry.
+.RE
+
+.TP
+.BR setgid
+
+.RS
+The \fBset-group-ID\fP permission bit is set.
+.RE
+
+.TP
+.BR setuid
+
+.RS
+The \fBset-user-ID\fP permission bit is set.
+.RE
+
+.TP
+.BR world\-writable
+
+.RS
+The world-write permission bit is set, allowing users outside the owning user or group to modify the entry.
+.RE
+
+.\" === Main Section ===
+.SH "AGE FORMAT"
+
+.TP
+Age values combine a positive number with a time suffix. They are used by options such as \fB--since AGE\fP, \fB--newer-than AGE\fP, and \fB--older-than AGE\fP.
+
+.TP
+.BR m
+
+.RS
+Minutes. For example: \fB30m\fP
+.RE
+
+.TP
+.BR h
+
+.RS
+Hours. For example: \fB12h\fP
+.RE
+
+.TP
+.BR d
+
+.RS
+Days. For example: \fB7d\fP
+.RE
+
+.TP
+.BR w
+
+.RS
+Weeks. For example: \fB4w\fP
+.RE
+
+.TP
+.BR mo
+
+.RS
+Months. For example: \fB3mo\fP
+.RE 
+
+.TP
+.BR y
+
+.RS
+Years. For example: \fB2y\fP
+.RE
+
+.TP
+\fBNoct\fP also accepts longer textual forms for these units, but the compact forms above are the standard notation used throughout this manual.
+
+.\" === Main Section ===
+.SH "SIZE FORMAT"
+
+.TP
+Size values combine a positive number with an optional size suffix. They are used by options such as \fB--greater-than SIZE\fP, \fB--less-than SIZE\fP, and \fB--min-size SIZE\fP.
+
+Size input is case-insensitive. Units may therefore be written in lower, upper, or mixed case.
+
+.TP
+.BR B
+
+.RS
+Bytes. A value without a suffix is also interpreted as bytes.
+.RE
+
+.TP
+.BR "K, KB, KiB"
+
+.RS
+Kibibytes. One unit equals \fB1024 bytes\fP.
+.RE
+
+.TP
+.BR "M, MB, MiB"
+
+.RS
+Mebibytes. One unit equals \fB1024 KiB\fP.
+.RE
+
+.TP
+.BR "G, GB, GiB"
+
+.RS
+Gibibytes. One unit equals \fB1024 MiB\fP.
+.RE
+
+.TP
+.BR "T, TB, TiB"
+
+.RS
+Tebibytes. One unit equals \fB1024 GiB\fP.
+
+Examples of valid size expressions include \fB512\fP, \fB100K\fP, \fB10MiB\fP, \fB2G\fP, and \fB1TiB\fP.
+
+.\" === Main Section ===
+.SH CONFIGURATION
+
+.TP
+\fBNoct\fP reads its configuration from \fBnoct.toml\fP in the \fBNoct configuration directory\fP (see below). Command-line options override applicable configuration settings for the current invocation.
+
+.TP
+The configuration directory is determined as follows:
+
+.TP
+.BR $XDG_CONFIG_HOME/noct
+
+.RS
+Used when \fBXDG_CONFIG_HOME\fP is set.
+.RE
+
+.TP
+.BR $HOME/.config/noct
+
+.RS
+Used when \fBXDG_CONFIG_HOME\fP is not set.
+.RE
+
+.TP
+The active configuration file is:
+
+.RS
+\fBnoct.toml\fP
+.RE
+
+.TP
+If the file does not exist, \fBNoct\fP creates it automatically using the built-in default configuration.
+
+.TP
+\fBThemes\fP are stored in the themes subdirectory below the same configuration directory.
+
+.\" --- Sub Section ---
+.SS "GENERATED CONFIGURATION"
+
+.TP
+Use \fBnt --generate-config\fP to create an editable configuration template without modifying the active noct.toml file.
+
+.TP
+The generated template is written as:
+
+.RS
+\fBnoct.toml.generated\fP
+.RE
+
+.TP
+An existing generated template may be replaced when the command is run again. The active configuration remains untouched.
+
+.TP
+After reviewing and editing the generated file, rename it to \fBnoct.toml\fP when you want it to become the active configuration.
+
+.\" --- Sub Section ---
+.SS "CONFIGURATION SETTINGS"
+
+.TP
+The configuration file controls defaults for the selected theme, filesystem colors, display behavior, long-view columns, and ordinary listing behavior.
+
+.TP
+Available settings include:
+
+.RS
+\fBtheme\fP
+.RE
+
+.TP
+Select the \fBNoct\fP theme to load.
+
+.RS
+filesystem_colors
+.RE
+
+.TP
+Select how filename and icon colors are resolved. Accepted values are \fBtheme\fP, \fBstandard\fP, and \fBdirectories\fP.
+
+.RS
+\fB[display]\fP
+.RE
+
+.TP
+Controls display-related defaults such as colors, icons, headers, summaries, and Tree output.
+
+.RS
+\fB[long]\fP
+.RE
+
+.TP
+Controls which metadata columns are shown in long view, including permissions, user, date, age, and state.
+
+.RS
+[listing]
+.RE
+
+.TP
+Controls ordinary listing defaults such as sort field, reverse ordering, and result limits.
+
+.TP
+For a complete annotated configuration template, use \fBnt --generate-config\fP.
+
+.\" === Main Section ===
+.SH "THEME, COLORS AND ICONS"
+
+.TP
+\fBNoct\fP supports configurable themes for terminal output. Themes control the colors used for interface elements, metadata, reports, filenames, filesystem classifications, headers, summaries, and other visual elements.
+
+Theme files are loaded from the \fBthemes\fP subdirectory of the Noct configuration directory. The selected theme is set with the top-level theme configuration value.
+
+.TP
+For a compact reference to the available theme fields, use \fBnt --theme-help\fP.
+
+.\" --- Sub Section ---
+.SS "FILESYSTEM COLORS"
+
+.TP
+The top-level filesystem_colors setting controls how colors are chosen for filenames and file icons.
+
+.TP
+.BR theme
+
+.RS
+Use filesystem classification colors supplied by the selected theme.
+.RE
+
+.TP
+.BR standard
+
+.RS
+Use \fBNoct's\fP built-in filesystem classification palette regardless of the selected theme.
+.RE
+
+.TP
+.BR directories
+
+.RS
+Keep ordinary filenames unclassified while retaining directory coloring in listings. Tree output continues to use filesystem classification colors.
+.RE
+
+.TP
+When \fBfilesystem_colors = "theme"\fP is used, the theme's \fB[classification]\fP section controls colors for classified filesystem entries such as directories, symlinks, executables, source code, shell scripts, documents, archives, images, audio, video, databases, backups, certificates, and other recognized file families.
+
+.TP
+Each classification color is optional. If a classification entry is omitted from a theme, \fBNoct\fP falls back to its built-in classification color for that class. These fallback values are the same across all themes.
+
+.TP
+Because the fallback palette is theme-independent, omitted classification colors may not harmonize with the rest of a custom theme.
+
+.\" --- Sub Section ---
+.SS "FILESYSTEM CLASSIFICATION"
+
+.TP
+\fBNoct\fP classifies ordinary filesystem entries using inexpensive information such as entry type, filename, extension, and permission metadata. Ordinary listing classification does not require reading file contents.
+
+.TP
+More detailed classifications may be used internally for icon selection, while related classes may share a broader visual color category. For example, individual programming languages can use distinct icons while still sharing the source-code classification color.
+
+.TP
+Structural filesystem identity takes precedence over filename classification. Directories, symbolic links, broken symbolic links, sockets, FIFOs, block devices, and character devices are therefore recognized according to their filesystem type rather than merely by their names.
+
+.\" --- Sub Section ---
+.SS ICONS
+
+.TP
+File icons can be enabled with \fB--icons\fP or through the \fBdisplay.icons\fP configuration setting.
+
+.TP
+The icons use \fBNerd Font\fP glyphs and therefore require a terminal font containing the corresponding characters.
+
+.TP
+Icons may distinguish more file types than the color palette does, but an icon always uses the same resolved filesystem classification color as its filename.
+
+.TP
+Disabling colors does not disable icons. When icons are enabled with plain output, the glyphs remain visible without ANSI color styling.
+
+.\" === Main Section ===
+.SH "FILESYSTEM AND SIZE NOTES"
+
+.TP
+\fBNoct\fP uses filesystem metadata to distinguish between the space an entry appears to occupy and the space actually allocated to it on disk.
+
+.\" --- Sub Section ---
+.SS "ALLOCATED AND APPARENT SIZE"
+
+.TP
+For ordinary files, \fBNoct\fP reports the allocated size based on filesystem block usage where available.
+.TP
+The apparent size is the logical file length reported by the filesystem. These values may differ for sparse files, virtual filesystems, and other special cases.
+
+.TP
+When the values differ, Noct may display both forms so that the reported size more accurately reflects how much storage is actually consumed.
+
+.\" --- Sub Section ---
+.SS "VIRTUAL FILESYSTEMS"
+
+.TP
+Some files exposed through virtual metadata filesystems can report extremely large apparent sizes while consuming little or no real storage.
+
+.TP
+\fBNoct\fP recognizes common virtual filesystems such as procfs, sysfs, cgroup filesystems, debugfs, and related metadata filesystems. When a virtual entry reports a significantly misleading apparent size, Noct may annotate the entry and distinguish the apparent value from the allocated value.
+
+.TP
+This prevents virtual metadata from being mistaken for ordinary disk usage.
+
+.\" --- Sub Section ---
+.SS "MEMORY-BACKED FILESYSTEMS"
+
+.TP
+\fBNoct\fP also recognizes common memory-backed filesystems such as tmpfs, devtmpfs, and ramfs.
+
+.TP
+Mount points belonging to memory-backed filesystems may be annotated so that their storage characteristics are not confused with ordinary disk-backed filesystems.
+
+.\" --- Sub Section ---
+.SS "SIZE TOTALS"
+
+.TP
+When \fBNoct\fP prints a total listed size, the total is based on allocated storage.
+
+.TP
+If the accumulated apparent size differs from the allocated total, both values may be shown.
+
+.TP
+This distinction is especially important when inspecting sparse files, virtual filesystem entries, or other filesystem objects whose apparent size does not closely represent actual storage usage.
+
+
+.\" === Main Section ===
+.SH ENVIRONMENT
+
+.TP
+\fBNoct\fP uses a small number of environment variables to locate configuration files, resolve commands, determine terminal behavior, and control colored output.
+
+.TP
+.BR XDG_CONFIG_HOME
+
+.RS
+When set, Noct uses \fB$XDG_CONFIG_HOME/noct\fP as its configuration directory.
+
+If it is not set, Noct falls back to \fB$HOME/.config/noct\fP.
+.RE
+
+.TP
+.BR HOME
+
+.RS
+Used to locate Noct's default configuration directory when \fBXDG_CONFIG_HOME\fP is not set.
+.RE
+
+.TP
+.BR PATH
+
+.RS
+Used when commands rather than explicit filesystem paths are supplied to operations that support command resolution, such as \fB--inspect\fP and \fB--owns\fP.
+
+Noct searches the directories listed in \fBPATH\fP to locate the corresponding executable before continuing the inspection.
+.RE
+
+.TP
+.BR NO_COLOR
+
+.RS
+When set, disables ANSI color output when Noct is using its automatic color mode.
+
+
+Color output is also normally suppressed when standard output is not connected to an interactive terminal.
+.RE
+
+.TP
+.BR COLUMNS
+
+.RS
+May be used as a fallback source for terminal width when \fBNoct\fP cannot determine the width directly from the terminal.
+
+
+The detected or supplied width is used when arranging grid output unless an explicit width is selected with \fB-W\fP, \fB--width COLS\fP.
+.RE
+
+.\" === Main Section ===
+.SH FILES
+
+.TP
+\fBNoct\fP stores its configuration and themes below the Noct configuration directory.
+
+.TP
+.BR $XDG_CONFIG_HOME/noct/noct.toml
+
+.RS
+Active configuration file when \fBXDG_CONFIG_HOME\fP is set.
+.RE
+
+.TP
+.BR $HOME/.config/noct/noct.toml
+
+.RS
+Default active configuration file when \fBXDG_CONFIG_HOME\fP is not set.
+.RE
+
+.TP
+.BR $XDG_CONFIG_HOME/noct/noct.toml.generated
+
+.RS
+Generated configuration template created by \fBnt --generate-config\fP when \fBXDG_CONFIG_HOME\fP is set.
+.RE
+
+.TP
+.BR $HOME/.config/noct/noct.toml.generated
+
+.RS
+Default generated configuration template when \fBXDG_CONFIG_HOME\fP is not set.
+.RE
+
+.TP
+.BR $XDG_CONFIG_HOME/noct/themes/
+
+.RS
+Directory containing external Noct theme files when \fBXDG_CONFIG_HOME\fP is set.
+.RE
+
+.TP
+.BR $HOME/.config/noct/themes/
+
+.RS
+Default directory containing external Noct theme files when \fBXDG_CONFIG_HOME\fP is not set.
+.RE
+
+.\" === Main Section ===
+.SH EXAMPLES
+
+.TP
+The following examples demonstrate ordinary listing, filtering, Tree output, and \fBNoct-specific\fP inspection operations. Examples are arranged in the same general order as the corresponding option sections above.
+
+.\" --- Sub Section ---
+.SS "ORDINARY LISTING EXAMPLES"
+
+.TP
+.BR nt
+
+.RS
+List the current directory using the default view.
+.RE
+
+.TP
+.BR "nt -lh ~/Downloads"
+
+.RS
+Show a long listing of \fB~/Downloads\fP with column headings.
+.RE
+
+.TP
+.BR "nt -A ~/.config"
+
+.RS
+Include hidden entries while omitting \fB.\fP and \fB..\fP
+.RE
+
+.TP
+.BR "nt -1 ~/Projects"
+
+.RS
+Display one entry per line.
+.RE
+
+.TP
+.BR "nt -T ~/Projects"
+
+.RS
+Display \fB~/Projects\fP as a recursive Tree.
+.RE
+
+.TP
+.BR "nt -T ~/Projects -L 3"
+
+.RS
+Limit Tree output to three directory levels.
+.RE
+
+.\" --- Sub Section ---
+.SS "FILTERING EXAMPLES"
+
+.TP
+.BR "nt -lh ~/Downloads --big"
+
+.RS
+Show regular files at least \fB10 MiB\fP in size.
+.RE
+
+.TP
+.BR "nt -l ~/Downloads --danger"
+
+.RS
+Show entries whose detected state requires attention.
+.RE
+
+.TP
+.BR "nt -lA ~/Projects --empty"
+
+.RS
+Show zero-byte regular files, including hidden entries.
+.RE
+
+.TP
+.BR "nt -l /usr/local/bin --executables"
+
+.RS
+Show executable regular files.
+.RE
+
+.TP
+.BR "nt -lh -f type directory ~/Projects"
+
+.RS
+Show only directories in \fB~/Projects\fP.
+.RE
+
+.TP
+.BR "nt -lh -f ext rs ~/Projects"
+
+.RS
+Show Rust source files by matching the \fBrs\fP extension.
+.RE
+
+.TP
+.BR "nt -l ~/Projects --fresh"
+
+.RS
+Show entries modified within the last \fB24 hours\fP.
+.RE
+
+.TP
+.BR "nt -lh ~/Downloads --greater-than 100M"
+
+.RS
+Show regular files at least \fB100 MiB\fP in size.
+.RE
+
+.TP
+.BR "nt -l ~/Downloads --less-than 100K"
+
+.RS
+Show regular files no larger than \fB100 KiB\fP.
+.RE
+
+.TP
+.BR "nt -l ~/Projects --newer-than 3d"
+
+.RS
+Show entries modified within the last three days.
+.RE
+
+.TP
+.BR "nt -lh ~/Downloads --older-than 6mo"
+
+.RS
+Show entries at least six months old.
+.RE
+
+.TP
+.BR "nt -l ~/Downloads --only-state broken-link"
+
+.RS
+Show only entries whose detected state is \fBbroken-link\fP.
+.RE
+
+.TP
+.BR "nt -l ~/Projects --orphans"
+
+.RS
+Show broken links and entries with unresolved owner or group references.
+.RE
+
+.TP
+.BR "nt -l /usr/local/bin --permissions 755"
+
+.RS
+Show entries whose ordinary permission bits are exactly \fB755\fP.
+.RE
+
+.TP
+.BR "nt -l ~/Downloads --stale"
+
+.RS
+Show entries modified at least \fB30 days\fP ago.
+.RE
+
+.TP
+.BR "nt -l ~/Projects --tiny"
+
+.RS
+Show regular files no larger than \fB1 KiB\fP.
+.RE
+
+.TP
+.BR "nt -l ~/Projects --writable"
+
+.RS
+Show entries with at least one write permission bit set.
+.RE
+
+.TP
+.BR "nt -l /tmp --world-writable"
+
+.RS
+Show entries whose world-write permission bit is set.
+.RE
+
+.\" --- Sub Section ---
+.SS "NOCT-SPECIFIC EXAMPLES"
+
+.TP
+The following examples demonstrate Noct's dedicated inspection and analysis operations. They are arranged alphabetically to match the \fBNOCT-SPECIFIC OPTIONS\fP section. 
+
+.TP
+.BR "nt --audit /usr/local/bin"
+
+.RS
+Audit \fB/usr/local/bin\fP for filesystem entries that deserve attention.
+.RE
+
+.TP
+.BR "nt --cold ~/ --older-than 1y --min-size 100M"
+
+.RS
+Search recursively below the home directory for entries at least one year old and at least \fB100 MiB\fP in size.
+.RE
+
+.TP
+.BR "nt --du ~/Projects --limit 20"
+
+.RS
+Report directory sizes below \fB~/Projects\fP and restrict the output to 20 results.
+.RE
+
+.TP
+.BR "nt --duplicates ~/Downloads -R --min-size 10M"
+
+.RS
+Search \fB~/Downloads\fP recursively for duplicate regular files of at least 10 \fBMiB\fP.
+.RE
+
+.TP
+.BR "nt --empty-dirs ~/Projects --min-depth 3 --limit 30"
+
+.RS
+Find empty directories recursively below \fB~/Projects\fP, ignoring matches above depth three and limiting the report to 30 results.
+.RE
+
+.TP
+.BR "nt --exts ~/Downloads --sort count"
+
+.RS
+Build an extension profile for \fB~/Downloads\fP and sort the groups by file count.
+.RE
+
+.TP
+.BR "nt --graveyard ~/ --kind=backup"
+
+.RS
+Search the home directory for cleanup candidates classified as backups.
+.RE
+
+.TP
+.BR "nt --hot ~/Projects --since 6h --limit 30"
+
+.RS
+Search recursively below \fB~/Projects\fP for entries modified within the last six hours and show at most 30 results.
+.RE
+
+.TP
+.BR "nt --inspect rg"
+
+.RS
+Inspect the \fBrg\fP command in detail after resolving it through \fBPATH\fP.
+.RE
+
+.TP
+.BR "nt --leaves ~/Projects --min-files 3 --sort files"
+
+.RS
+Find leaf directories below \fB~/Projects\fP that contain at least three regular files and sort them by file count.
+.RE
+
+.TP
+.BR "nt --link-to ./some-link"
+
+.RS
+Show the target stored in the symbolic link \fB./some-link\fP.
+.RE
+
+.TP
+.BR "nt --map ~/Downloads --limit 25"
+
+.RS
+Display a visual size map of \fB~/Downloads\fP containing at most 25 entries.
+.RE
+
+.TP
+.BR "nt --mounts / --all"
+
+.RS
+Show filesystem boundaries below \fB/\fP using the broader mount view.
+.RE
+
+.TP
+.BR "nt --names ~/Downloads --limit 10"
+
+.RS
+Analyze filename patterns in \fB~/Downloads\fP and restrict the report to 10 findings.
+.RE
+
+.TP
+.BR "nt --owners /var --sort entries"
+
+.RS
+Build a recursive ownership profile for \fB/var\fP and sort owners by entry count.
+.RE
+
+.TP
+.BR "nt --owns rg"
+
+.RS
+Resolve the \fBrg\fP command and report which installed package owns it.
+.RE
+
+.TP
+.BR "nt --package-bins grep"
+
+.RS
+Show the executable commands installed by the \fBgrep\fP package.
+.RE
+
+.TP
+.BR "nt --perms /usr/local/bin --sort attention"
+
+.RS
+Build a permission profile for \fB/usr/local/bin\fP and prioritize attention-worthy permission modes.
+.RE
+
+.TP
+.BR "nt --portable ~/Documents"
+
+.RS
+Find filenames below \fB~/Documents\fP that may be awkward across shells, tools, or filesystems.
+.RE
+
+.TP
+.BR "nt --profile ~/Projects"
+
+.RS
+Build a broad filesystem profile of \fB~/Projects\fP.
+.RE
+
+.TP
+.BR "nt --scripts ~/bin --sort interpreter --limit 10"
+
+.RS
+Analyze executable scripts in \fB~/bin\fP, sort them by interpreter, and restrict the report to 10 results.
+.RE
+
+.TP
+.BR "nt --timeline ~/Downloads --since 2h --limit 30"
+
+.RS
+Group recently modified entries in \fB~/Downloads\fP by age, looking back two hours and displaying at most 30 entries.
+.RE
+
+
+.\" === Main Section ===
+.SH "EXIT STATUS"
+
+.TP
+.BR 0
+
+.RS
+The requested operation completed successfully.
+.RE
+
+.TP
+.BR 1
+
+.RS
+An operational error occurred, such as being unable to read a path, load required filesystem information, or complete the requested operation.
+.RE
+.TP
+.BR 2
+
+.RS
+The command line was invalid. This includes missing or malformed arguments, unsupported option combinations, invalid fields or values, and other usage errors.
+.RE
+
+.\" === Main Section ===
+.SH "SEE ALSO"
+
+.TP
+.BR ls(1)
+
+.RS
+List directory contents.
+.RE
+
+.TP
+.BR find(1)
+
+.RS
+Search for files and directories using filesystem predicates.
+.RE
+
+.TP
+.BR du(1)
+
+.RS
+Estimate file and directory space usage.
+.RE
+
+.TP
+.BR stat(1)
+
+.RS
+Display detailed filesystem metadata for files and directories.
+.RE
+
+.TP
+.BR tree(1)
+
+.RS
+Display directory hierarchies in a recursive Tree view, where available.
+.RE
+
+.TP
+.BR scry(1)
+
+.RS
+Interactive filesystem search and navigation tool related to Noct.
+.RE
+
+.TP
+.BR pkg(8)
+
+.RS
+FreeBSD package management interface used for package ownership and package-content queries on FreeBSD systems.
+.RE
+
+
+
+.\" === Main Section ===
+.SH AUTHORS
+
+.TP
+\fBNoct\fP was created by Markus Johnsson.
+
+.\" === Main Section ===
+.SH "REPORTING BUGS AND HOMEPAGE"
+
+.TP
+Bug reports, feature requests, and source code are available through the Noct project repository on GitHub.
+
+.TP
+Project homepage
+
+.RS
+\fBhttps://github.com/ferusx/noct\fP
+.RE
+
+.TP
+When reporting a problem, include the \fBNoct version\fP, operating system, command that was run, and the relevant output or error message where possible.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

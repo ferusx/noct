@@ -1,0 +1,102 @@
+name = "ash_melon"
+
+[file_type]
+file = "#d2d7e1"
+directory = "#86de33"
+symlink = "#86de33"
+special = "#8a8f99"
+
+[permissions]
+read = "#37373b"
+write = "#4a4a51"
+execute = "#86de33"
+missing = "#3f4650"
+
+[columns]
+user = "#4a4a51"
+size = "#d2d7e1"
+time = "#4a4a51"
+age = "#5f6978"
+state_normal = "#a1a5ad"
+state_attention = "#86de33"
+
+[names]
+file = "#a1a5ad"
+directory = "#86de33"
+symlink = "#86de33"
+broken_symlink = "#ffb095"
+executable = "#86de33"
+special = "#8a8f99"
+
+[classification]
+broken_symlink = "#ffb095"
+directory = "#86de33"
+symlink = "#86de33"
+special = "#8a8f99"
+executable = "#86de33"
+
+source_code = "#d2d7e1"
+shell = "#86de33"
+web = "#b8d996"
+
+build_config = "#a1a5ad"
+structured_data = "#b9c7af"
+log = "#6f747d"
+
+archive_package = "#c7b99d"
+document = "#d2d7e1"
+spreadsheet = "#a9cf8b"
+presentation = "#d6b891"
+
+image = "#d4b2bd"
+audio = "#a8c6bc"
+video = "#b8afcb"
+font = "#c6bed2"
+
+database = "#9fc5b8"
+backup = "#9a8fa5"
+certificate = "#d7ca91"
+disk_image = "#a8b5c7"
+torrent = "#91c5a0"
+desktop_plugin = "#aaa0bd"
+
+binary = "#8a8f99"
+file = "#a1a5ad"
+
+[tags]
+filesystem = "#8a8f99"
+virtual_tag = "#86de33"
+memory = "#86de33"
+note = "#86de33"
+
+[report]
+heading = "#86de33"
+label = "#86de33"
+value = "#a1a5ad"
+name = "#a1a5ad"
+path = "#86de33"
+command = "#86de33"
+package = "#86de33"
+version = "#86de33"
+size = "#d2d7e1"
+count = "#5f6978"
+total = "#d2d7e1"
+muted = "#4a4a51"
+attention = "#86de33"
+
+[header]
+foreground = "#000000"
+background = "#86de33"
+bold = true
+
+[summary]
+entries = "#d2d7e1"
+entries_bold = true
+files = "#d2d7e1"
+directories = "#a1a5ad"
+symlinks = "#8a8f99"
+special = "#6f747d"
+executables = "#86de33"
+empty = "#5f6978"
+danger = "#86de33"
+total_size = "#d2d7e1"

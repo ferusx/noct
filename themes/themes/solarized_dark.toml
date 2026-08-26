@@ -1,0 +1,102 @@
+name = "solarized_dark"
+
+[file_type]
+file = "#93a1a1"
+directory = "#268bd2"
+symlink = "#2aa198"
+special = "#6c71c4"
+
+[permissions]
+read = "#657b83"
+write = "#268bd2"
+execute = "#859900"
+missing = "#586e75"
+
+[columns]
+user = "#657b83"
+size = "#859900"
+time = "#268bd2"
+age = "#6c71c4"
+state_normal = "#586e75"
+state_attention = "#dc322f"
+
+[names]
+file = "#93a1a1"
+directory = "#268bd2"
+symlink = "#2aa198"
+broken_symlink = "#dc322f"
+executable = "#859900"
+special = "#6c71c4"
+
+[tags]
+filesystem = "#cb4b16"
+virtual_tag = "#2aa198"
+memory = "#6c71c4"
+note = "#b58900"
+
+[report]
+heading = "#268bd2"
+label = "#2aa198"
+value = "#93a1a1"
+name = "#93a1a1"
+path = "#2aa198"
+command = "#859900"
+package = "#6c71c4"
+version = "#cb4b16"
+size = "#859900"
+count = "#657b83"
+total = "#eee8d5"
+muted = "#586e75"
+attention = "#dc322f"
+
+[header]
+foreground = "#002b36"
+background = "#b58900"
+bold = true
+
+[summary]
+entries = "#eee8d5"
+entries_bold = true
+files = "#93a1a1"
+directories = "#268bd2"
+symlinks = "#2aa198"
+special = "#6c71c4"
+executables = "#859900"
+empty = "#586e75"
+danger = "#dc322f"
+total_size = "#b58900"
+
+[classification]
+broken_symlink = "#dc322f"
+directory = "#268bd2"
+symlink = "#2aa198"
+special = "#6c71c4"
+executable = "#859900"
+
+source_code = "#b58900"
+shell = "#859900"
+web = "#d33682"
+
+build_config = "#268bd2"
+structured_data = "#2aa198"
+log = "#657b83"
+
+archive_package = "#cb4b16"
+document = "#93a1a1"
+spreadsheet = "#859900"
+presentation = "#b58900"
+
+image = "#d33682"
+audio = "#2aa198"
+video = "#6c71c4"
+font = "#839496"
+
+database = "#268bd2"
+backup = "#657b83"
+certificate = "#b58900"
+disk_image = "#586e75"
+torrent = "#859900"
+desktop_plugin = "#6c71c4"
+
+binary = "#586e75"
+file = "#93a1a1"

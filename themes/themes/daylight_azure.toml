@@ -1,0 +1,102 @@
+name = "daylight_azure"
+
+[file_type]
+file = "#4f5968"
+directory = "#2d6fb3"
+symlink = "#298a9c"
+special = "#74638f"
+
+[permissions]
+read = "#687383"
+write = "#327bb8"
+execute = "#4f855d"
+missing = "#a5adb8"
+
+[columns]
+user = "#707988"
+size = "#4d7f5b"
+time = "#346fa7"
+age = "#8a725d"
+state_normal = "#747e8a"
+state_attention = "#b44b5a"
+
+[names]
+file = "#4f5968"
+directory = "#2d6fb3"
+symlink = "#298a9c"
+broken_symlink = "#b44b5a"
+executable = "#4f855d"
+special = "#74638f"
+
+[tags]
+filesystem = "#9a6743"
+virtual_tag = "#298a9c"
+memory = "#74638f"
+note = "#9c7945"
+
+[report]
+heading = "#2d6fb3"
+label = "#298a9c"
+value = "#4f5968"
+name = "#4f5968"
+path = "#298a9c"
+command = "#4f855d"
+package = "#74638f"
+version = "#9a6743"
+size = "#4d7f5b"
+count = "#747e8a"
+total = "#35404f"
+muted = "#87909b"
+attention = "#b44b5a"
+
+[header]
+foreground = "#ffffff"
+background = "#2d6fb3"
+bold = true
+
+[summary]
+entries = "#35404f"
+entries_bold = true
+files = "#4f5968"
+directories = "#2d6fb3"
+symlinks = "#298a9c"
+special = "#74638f"
+executables = "#4f855d"
+empty = "#87909b"
+danger = "#b44b5a"
+total_size = "#9c7945"
+
+[classification]
+broken_symlink = "#b44b5a"
+directory = "#2d6fb3"
+symlink = "#298a9c"
+special = "#74638f"
+executable = "#4f855d"
+
+source_code = "#8b6f32"
+shell = "#4f855d"
+web = "#74638f"
+
+build_config = "#346fa7"
+structured_data = "#298a9c"
+log = "#747e8a"
+
+archive_package = "#9a6743"
+document = "#4f5968"
+spreadsheet = "#4f855d"
+presentation = "#98704f"
+
+image = "#74638f"
+audio = "#298a9c"
+video = "#655b89"
+font = "#756e81"
+
+database = "#346fa7"
+backup = "#7a7069"
+certificate = "#9c7945"
+disk_image = "#63758e"
+torrent = "#4f866e"
+desktop_plugin = "#74638f"
+
+binary = "#747e8a"
+file = "#4f5968"

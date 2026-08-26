@@ -1,0 +1,102 @@
+name = "verdant_mocha"
+
+[file_type]
+file = "#d8d2c4"
+directory = "#4fa88f"
+symlink = "#68b7ae"
+special = "#9b7a62"
+
+[permissions]
+read = "#7f857d"
+write = "#5f9f9a"
+execute = "#83b67f"
+missing = "#49443e"
+
+[columns]
+user = "#857d73"
+size = "#8fbd8b"
+time = "#6d9f9e"
+age = "#a2876f"
+state_normal = "#716b63"
+state_attention = "#c96f62"
+
+[names]
+file = "#d8d2c4"
+directory = "#4fa88f"
+symlink = "#68b7ae"
+broken_symlink = "#c96f62"
+executable = "#83b67f"
+special = "#9b7a62"
+
+[tags]
+filesystem = "#a46f4f"
+virtual_tag = "#68b7ae"
+memory = "#8e7569"
+note = "#b89566"
+
+[report]
+heading = "#6db59d"
+label = "#68b7ae"
+value = "#d8d2c4"
+name = "#d8d2c4"
+path = "#68b7ae"
+command = "#83b67f"
+package = "#9b7a62"
+version = "#a46f4f"
+size = "#8fbd8b"
+count = "#8f877d"
+total = "#eee8dc"
+muted = "#716b63"
+attention = "#c96f62"
+
+[header]
+foreground = "#171a17"
+background = "#6db59d"
+bold = true
+
+[summary]
+entries = "#eee8dc"
+entries_bold = true
+files = "#d8d2c4"
+directories = "#4fa88f"
+symlinks = "#68b7ae"
+special = "#9b7a62"
+executables = "#83b67f"
+empty = "#716b63"
+danger = "#c96f62"
+total_size = "#b89566"
+
+[classification]
+broken_symlink = "#c96f62"
+directory = "#4fa88f"
+symlink = "#68b7ae"
+special = "#9b7a62"
+executable = "#83b67f"
+
+source_code = "#a9c98f"
+shell = "#83b67f"
+web = "#6fa99c"
+
+build_config = "#6d9f9e"
+structured_data = "#72b3a6"
+log = "#7f857d"
+
+archive_package = "#a46f4f"
+document = "#d8d2c4"
+spreadsheet = "#8fbd8b"
+presentation = "#aa8562"
+
+image = "#78a69a"
+audio = "#68b7ae"
+video = "#70918b"
+font = "#a89c8d"
+
+database = "#4f9088"
+backup = "#8e7569"
+certificate = "#b89566"
+disk_image = "#758d89"
+torrent = "#70aa78"
+desktop_plugin = "#927a68"
+
+binary = "#716b63"
+file = "#d8d2c4"

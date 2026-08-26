@@ -1,0 +1,102 @@
+name = "plasma_crown"
+
+[file_type]
+file = "#edf1ff"
+directory = "#58d6ff"
+symlink = "#30f0d2"
+special = "#c97dff"
+
+[permissions]
+read = "#8b90a3"
+write = "#58d6ff"
+execute = "#8dff91"
+missing = "#363d4b"
+
+[columns]
+user = "#8d95a8"
+size = "#8dff91"
+time = "#69a9ff"
+age = "#b08cff"
+state_normal = "#6a7282"
+state_attention = "#ff5c80"
+
+[names]
+file = "#edf1ff"
+directory = "#58d6ff"
+symlink = "#30f0d2"
+broken_symlink = "#ff5c80"
+executable = "#8dff91"
+special = "#c97dff"
+
+[classification]
+broken_symlink = "#ff5c80"
+directory = "#58d6ff"
+symlink = "#30f0d2"
+special = "#c97dff"
+executable = "#8dff91"
+
+source_code = "#ffd76a"
+shell = "#8dff91"
+web = "#ff77df"
+
+build_config = "#69a9ff"
+structured_data = "#30f0d2"
+log = "#8b90a3"
+
+archive_package = "#ffb85a"
+document = "#edf1ff"
+spreadsheet = "#8dff91"
+presentation = "#d990ff"
+
+image = "#c97dff"
+audio = "#30f0d2"
+video = "#9c7cff"
+font = "#c2a6e5"
+
+database = "#69a9ff"
+backup = "#b08cff"
+certificate = "#ffd76a"
+disk_image = "#7f96d6"
+torrent = "#5fdcad"
+desktop_plugin = "#b978ec"
+
+binary = "#6a7282"
+file = "#edf1ff"
+
+[tags]
+filesystem = "#ffb85a"
+virtual_tag = "#30f0d2"
+memory = "#c97dff"
+note = "#ffd76a"
+
+[report]
+heading = "#ff77df"
+label = "#58d6ff"
+value = "#edf1ff"
+name = "#edf1ff"
+path = "#30f0d2"
+command = "#8dff91"
+package = "#c97dff"
+version = "#ffb85a"
+size = "#8dff91"
+count = "#b08cff"
+total = "#ffffff"
+muted = "#6a7282"
+attention = "#ff5c80"
+
+[header]
+foreground = "#0d1018"
+background = "#58d6ff"
+bold = true
+
+[summary]
+entries = "#ffffff"
+entries_bold = true
+files = "#edf1ff"
+directories = "#58d6ff"
+symlinks = "#30f0d2"
+special = "#c97dff"
+executables = "#8dff91"
+empty = "#6a7282"
+danger = "#ff5c80"
+total_size = "#ffd76a"

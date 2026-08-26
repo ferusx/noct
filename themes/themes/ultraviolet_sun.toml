@@ -1,0 +1,102 @@
+name = "ultraviolet_sun"
+
+[file_type]
+file = "#f9f4ff"
+directory = "#b14cff"
+symlink = "#00e8ff"
+special = "#ff3b81"
+
+[permissions]
+read = "#9585a8"
+write = "#00bfff"
+execute = "#72ff66"
+missing = "#3d3348"
+
+[columns]
+user = "#9b8ca8"
+size = "#ffe14a"
+time = "#00bfff"
+age = "#ff984d"
+state_normal = "#71647d"
+state_attention = "#ff345f"
+
+[names]
+file = "#f9f4ff"
+directory = "#b14cff"
+symlink = "#00e8ff"
+broken_symlink = "#ff345f"
+executable = "#72ff66"
+special = "#ff3b81"
+
+[classification]
+broken_symlink = "#ff345f"
+directory = "#b14cff"
+symlink = "#00e8ff"
+special = "#ff3b81"
+executable = "#72ff66"
+
+source_code = "#ffe14a"
+shell = "#72ff66"
+web = "#ff3b81"
+
+build_config = "#00bfff"
+structured_data = "#00e8ff"
+log = "#9585a8"
+
+archive_package = "#ff984d"
+document = "#f9f4ff"
+spreadsheet = "#72ff66"
+presentation = "#ff76b7"
+
+image = "#d77cff"
+audio = "#00e8ff"
+video = "#9f6cff"
+font = "#c89de8"
+
+database = "#00bfff"
+backup = "#ff76b7"
+certificate = "#ffe14a"
+disk_image = "#718cff"
+torrent = "#72ff66"
+desktop_plugin = "#c35cff"
+
+binary = "#71647d"
+file = "#f9f4ff"
+
+[tags]
+filesystem = "#ff984d"
+virtual_tag = "#00e8ff"
+memory = "#d77cff"
+note = "#ffe14a"
+
+[report]
+heading = "#ffe14a"
+label = "#ff3b81"
+value = "#f9f4ff"
+name = "#f9f4ff"
+path = "#00e8ff"
+command = "#72ff66"
+package = "#d77cff"
+version = "#ff984d"
+size = "#ffe14a"
+count = "#ff76b7"
+total = "#ffffff"
+muted = "#71647d"
+attention = "#ff345f"
+
+[header]
+foreground = "#180c20"
+background = "#ffe14a"
+bold = true
+
+[summary]
+entries = "#ffffff"
+entries_bold = true
+files = "#f9f4ff"
+directories = "#b14cff"
+symlinks = "#00e8ff"
+special = "#ff3b81"
+executables = "#72ff66"
+empty = "#71647d"
+danger = "#ff345f"
+total_size = "#ffe14a"

@@ -1,0 +1,102 @@
+name = "daylight_carnival"
+
+[file_type]
+file = "#4a4f5e"
+directory = "#0077cc"
+symlink = "#00a6a6"
+special = "#a14fd1"
+
+[permissions]
+read = "#707789"
+write = "#0077cc"
+execute = "#3a9b4a"
+missing = "#b0b6c0"
+
+[columns]
+user = "#6f7686"
+size = "#3a9b4a"
+time = "#0077cc"
+age = "#a14fd1"
+state_normal = "#7f8793"
+state_attention = "#d13b4c"
+
+[names]
+file = "#4a4f5e"
+directory = "#0077cc"
+symlink = "#00a6a6"
+broken_symlink = "#d13b4c"
+executable = "#3a9b4a"
+special = "#a14fd1"
+
+[tags]
+filesystem = "#e67e22"
+virtual_tag = "#00a6a6"
+memory = "#a14fd1"
+note = "#c79200"
+
+[report]
+heading = "#d94f70"
+label = "#00a6a6"
+value = "#4a4f5e"
+name = "#4a4f5e"
+path = "#00a6a6"
+command = "#3a9b4a"
+package = "#a14fd1"
+version = "#e67e22"
+size = "#3a9b4a"
+count = "#7f8793"
+total = "#303645"
+muted = "#9198a3"
+attention = "#d13b4c"
+
+[header]
+foreground = "#ffffff"
+background = "#d94f70"
+bold = true
+
+[summary]
+entries = "#303645"
+entries_bold = true
+files = "#4a4f5e"
+directories = "#0077cc"
+symlinks = "#00a6a6"
+special = "#a14fd1"
+executables = "#3a9b4a"
+empty = "#9198a3"
+danger = "#d13b4c"
+total_size = "#c79200"
+
+[classification]
+broken_symlink = "#d13b4c"
+directory = "#0077cc"
+symlink = "#00a6a6"
+special = "#a14fd1"
+executable = "#3a9b4a"
+
+source_code = "#c79200"
+shell = "#3a9b4a"
+web = "#d94f70"
+
+build_config = "#0077cc"
+structured_data = "#00a6a6"
+log = "#7f8793"
+
+archive_package = "#e67e22"
+document = "#4a4f5e"
+spreadsheet = "#3a9b4a"
+presentation = "#d94f70"
+
+image = "#a14fd1"
+audio = "#00a6a6"
+video = "#6a63d9"
+font = "#8a6bb3"
+
+database = "#0088aa"
+backup = "#c06a2f"
+certificate = "#c79200"
+disk_image = "#5f7aa8"
+torrent = "#4aa86f"
+desktop_plugin = "#a14fd1"
+
+binary = "#7f8793"
+file = "#4a4f5e"

@@ -1,0 +1,102 @@
+name = "daylight_rose"
+
+[file_type]
+file = "#5d5659"
+directory = "#9a5367"
+symlink = "#3f8783"
+special = "#81627f"
+
+[permissions]
+read = "#756d70"
+write = "#8f6070"
+execute = "#5c825d"
+missing = "#aaa3a5"
+
+[columns]
+user = "#797173"
+size = "#5c825d"
+time = "#657589"
+age = "#896b5d"
+state_normal = "#7d7477"
+state_attention = "#b44355"
+
+[names]
+file = "#5d5659"
+directory = "#9a5367"
+symlink = "#3f8783"
+broken_symlink = "#b44355"
+executable = "#5c825d"
+special = "#81627f"
+
+[tags]
+filesystem = "#9a654c"
+virtual_tag = "#3f8783"
+memory = "#81627f"
+note = "#9b794d"
+
+[report]
+heading = "#9a5367"
+label = "#3f8783"
+value = "#5d5659"
+name = "#5d5659"
+path = "#3f8783"
+command = "#5c825d"
+package = "#81627f"
+version = "#9a654c"
+size = "#5c825d"
+count = "#7d7477"
+total = "#433d40"
+muted = "#8c8587"
+attention = "#b44355"
+
+[header]
+foreground = "#ffffff"
+background = "#9a5367"
+bold = true
+
+[summary]
+entries = "#433d40"
+entries_bold = true
+files = "#5d5659"
+directories = "#9a5367"
+symlinks = "#3f8783"
+special = "#81627f"
+executables = "#5c825d"
+empty = "#8c8587"
+danger = "#b44355"
+total_size = "#9b794d"
+
+[classification]
+broken_symlink = "#b44355"
+directory = "#9a5367"
+symlink = "#3f8783"
+special = "#81627f"
+executable = "#5c825d"
+
+source_code = "#806732"
+shell = "#5c825d"
+web = "#81627f"
+
+build_config = "#657589"
+structured_data = "#3f8783"
+log = "#7d7477"
+
+archive_package = "#9a654c"
+document = "#5d5659"
+spreadsheet = "#5c825d"
+presentation = "#a46d62"
+
+image = "#8f5f7d"
+audio = "#3f8783"
+video = "#75617f"
+font = "#7c727b"
+
+database = "#4d777e"
+backup = "#846f68"
+certificate = "#9b794d"
+disk_image = "#6e7680"
+torrent = "#5d836d"
+desktop_plugin = "#81627f"
+
+binary = "#7d7477"
+file = "#5d5659"

@@ -1,0 +1,102 @@
+name = "neon_revenant"
+
+[file_type]
+file = "#e5e9f0"
+directory = "#4fd6ff"
+symlink = "#35f2d0"
+special = "#c77dff"
+
+[permissions]
+read = "#7c8597"
+write = "#4fd6ff"
+execute = "#72f29a"
+missing = "#343b48"
+
+[columns]
+user = "#7f8998"
+size = "#72f29a"
+time = "#60aaff"
+age = "#9aa5b5"
+state_normal = "#5f6978"
+state_attention = "#ff5f7a"
+
+[names]
+file = "#e5e9f0"
+directory = "#4fd6ff"
+symlink = "#35f2d0"
+broken_symlink = "#ff5f7a"
+executable = "#72f29a"
+special = "#c77dff"
+
+[classification]
+broken_symlink = "#ff5f7a"
+directory = "#4fd6ff"
+symlink = "#35f2d0"
+special = "#c77dff"
+executable = "#72f29a"
+
+source_code = "#ffd166"
+shell = "#72f29a"
+web = "#ff6bd6"
+
+build_config = "#60aaff"
+structured_data = "#35f2d0"
+log = "#7c8597"
+
+archive_package = "#ffb454"
+document = "#e5e9f0"
+spreadsheet = "#72f29a"
+presentation = "#d998ff"
+
+image = "#c77dff"
+audio = "#35f2d0"
+video = "#987dff"
+font = "#bca7df"
+
+database = "#60aaff"
+backup = "#9aa5b5"
+certificate = "#ffd166"
+disk_image = "#7f95c9"
+torrent = "#59dca7"
+desktop_plugin = "#b976ea"
+
+binary = "#5f6978"
+file = "#e5e9f0"
+
+[tags]
+filesystem = "#ffb454"
+virtual_tag = "#35f2d0"
+memory = "#c77dff"
+note = "#ffd166"
+
+[report]
+heading = "#ff6bd6"
+label = "#4fd6ff"
+value = "#e5e9f0"
+name = "#e5e9f0"
+path = "#35f2d0"
+command = "#72f29a"
+package = "#c77dff"
+version = "#ffb454"
+size = "#72f29a"
+count = "#aab4c3"
+total = "#ffffff"
+muted = "#5f6978"
+attention = "#ff5f7a"
+
+[header]
+foreground = "#0d1117"
+background = "#4fd6ff"
+bold = true
+
+[summary]
+entries = "#ffffff"
+entries_bold = true
+files = "#e5e9f0"
+directories = "#4fd6ff"
+symlinks = "#35f2d0"
+special = "#c77dff"
+executables = "#72f29a"
+empty = "#5f6978"
+danger = "#ff5f7a"
+total_size = "#ffd166"

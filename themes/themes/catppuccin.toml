@@ -1,0 +1,102 @@
+name = "catppuccin"
+
+[file_type]
+file = "#cdd6f4"
+directory = "#89b4fa"
+symlink = "#94e2d5"
+special = "#cba6f7"
+
+[permissions]
+read = "#7f849c"
+write = "#89b4fa"
+execute = "#a6e3a1"
+missing = "#45475a"
+
+[columns]
+user = "#9399b2"
+size = "#a6e3a1"
+time = "#89b4fa"
+age = "#cba6f7"
+state_normal = "#7f849c"
+state_attention = "#f38ba8"
+
+[names]
+file = "#cdd6f4"
+directory = "#89b4fa"
+symlink = "#94e2d5"
+broken_symlink = "#f38ba8"
+executable = "#a6e3a1"
+special = "#cba6f7"
+
+[tags]
+filesystem = "#fab387"
+virtual_tag = "#94e2d5"
+memory = "#cba6f7"
+note = "#f9e2af"
+
+[report]
+heading = "#89b4fa"
+label = "#94e2d5"
+value = "#cdd6f4"
+name = "#cdd6f4"
+path = "#94e2d5"
+command = "#a6e3a1"
+package = "#cba6f7"
+version = "#fab387"
+size = "#a6e3a1"
+count = "#9399b2"
+total = "#f5e0dc"
+muted = "#7f849c"
+attention = "#f38ba8"
+
+[header]
+foreground = "#1e1e2e"
+background = "#89b4fa"
+bold = true
+
+[summary]
+entries = "#f5e0dc"
+entries_bold = true
+files = "#cdd6f4"
+directories = "#89b4fa"
+symlinks = "#94e2d5"
+special = "#cba6f7"
+executables = "#a6e3a1"
+empty = "#7f849c"
+danger = "#f38ba8"
+total_size = "#f9e2af"
+
+[classification]
+broken_symlink = "#f38ba8"
+directory = "#89b4fa"
+symlink = "#94e2d5"
+special = "#cba6f7"
+executable = "#a6e3a1"
+
+source_code = "#f9e2af"
+shell = "#a6e3a1"
+web = "#f5c2e7"
+
+build_config = "#89b4fa"
+structured_data = "#94e2d5"
+log = "#7f849c"
+
+archive_package = "#fab387"
+document = "#cdd6f4"
+spreadsheet = "#a6e3a1"
+presentation = "#eba0ac"
+
+image = "#cba6f7"
+audio = "#94e2d5"
+video = "#b4befe"
+font = "#c9b7e8"
+
+database = "#74c7ec"
+backup = "#9399b2"
+certificate = "#f9e2af"
+disk_image = "#89a8d8"
+torrent = "#94e2d5"
+desktop_plugin = "#cba6f7"
+
+binary = "#6c7086"
+file = "#cdd6f4"

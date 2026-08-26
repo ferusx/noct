@@ -1,0 +1,102 @@
+name = "nocturne"
+
+[file_type]
+file = "#c0c8d8"
+directory = "#7697d6"
+symlink = "#67c6c2"
+special = "#aa86d8"
+
+[permissions]
+read = "#737d91"
+write = "#6fb8d8"
+execute = "#86bd87"
+missing = "#414958"
+
+[columns]
+user = "#7f899c"
+size = "#8fcf91"
+time = "#7895c2"
+age = "#9ca6b8"
+state_normal = "#697386"
+state_attention = "#df7184"
+
+[names]
+file = "#c0c8d8"
+directory = "#7697d6"
+symlink = "#67c6c2"
+broken_symlink = "#df7184"
+executable = "#8fcf91"
+special = "#aa86d8"
+
+[classification]
+broken_symlink = "#df7184"
+directory = "#7697d6"
+symlink = "#67c6c2"
+special = "#aa86d8"
+executable = "#8fcf91"
+
+source_code = "#d6dbe5"
+shell = "#8fcf91"
+web = "#aa86d8"
+
+build_config = "#7895c2"
+structured_data = "#70b8d8"
+log = "#737d91"
+
+archive_package = "#d0a66d"
+document = "#c0c8d8"
+spreadsheet = "#8fcf91"
+presentation = "#b293b8"
+
+image = "#aa86d8"
+audio = "#67c6c2"
+video = "#8d85bd"
+font = "#aaa5be"
+
+database = "#6fb8d8"
+backup = "#8d8798"
+certificate = "#d0a66d"
+disk_image = "#8090aa"
+torrent = "#78b39a"
+desktop_plugin = "#9a85c2"
+
+binary = "#697386"
+file = "#c0c8d8"
+
+[tags]
+filesystem = "#d0a66d"
+virtual_tag = "#70b8d8"
+memory = "#aa86d8"
+note = "#d89b68"
+
+[report]
+heading = "#88a8e0"
+label = "#70b8d8"
+value = "#c0c8d8"
+name = "#c0c8d8"
+path = "#67c6c2"
+command = "#8fcf91"
+package = "#aa86d8"
+version = "#d0a66d"
+size = "#8fcf91"
+count = "#9ca6b8"
+total = "#d6dbe5"
+muted = "#697386"
+attention = "#df7184"
+
+[header]
+foreground = "#11151d"
+background = "#7697d6"
+bold = true
+
+[summary]
+entries = "#d6dbe5"
+entries_bold = true
+files = "#c0c8d8"
+directories = "#7697d6"
+symlinks = "#67c6c2"
+special = "#aa86d8"
+executables = "#8fcf91"
+empty = "#697386"
+danger = "#df7184"
+total_size = "#d0a66d"

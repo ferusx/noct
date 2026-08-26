@@ -1,0 +1,86 @@
+name = "chrome"
+
+[file_type]
+file = "#1cce0c"
+directory = "#ffffff"
+symlink = "#42c7d9"
+special = "#d19a66"
+
+[permissions]
+read = "#37373b"
+write = "#4a4a51"
+execute = "#65646f"
+missing = "#3f4650"
+
+[columns]
+user = "#28292f"
+size = "#686a7a"
+time = "#28292f"
+age = "#5f6978"
+state_normal = "#ffffff"
+state_attention = "#ff7887"
+
+[names]
+file = "#a1a5ad"
+directory = "#4a4a51"
+symlink = "#42c7d9"
+broken_symlink = "#ff5064"
+executable = "#ffffff"
+special = "#d19a66"
+
+[classification]
+broken_symlink = "#ff5064"
+directory = "#ffffff"
+symlink = "#42c7d9"
+special = "#d19a66"
+executable = "#ffffff"
+
+source_code = "#1cce0c"
+shell = "#8fbf7f"
+web = "#b973ff"
+
+build_config = "#686a7a"
+structured_data = "#42c7d9"
+log = "#64646d"
+
+archive_package = "#d19a66"
+document = "#d2d7e1"
+spreadsheet = "#8ebf8a"
+presentation = "#c89267"
+
+image = "#b973ff"
+audio = "#42c7d9"
+video = "#8f7ac0"
+font = "#a6a6b6"
+
+database = "#6f9fb5"
+backup = "#898996"
+certificate = "#ffbe64"
+disk_image = "#7f8da8"
+torrent = "#6db69f"
+desktop_plugin = "#9d79c7"
+
+binary = "#55555d"
+file = "#a1a5ad"
+[tags]
+filesystem = "#d19a66"
+virtual_tag = "#ffaa5a"
+memory = "#b973ff"
+note = "#ffbe64"
+
+[header]
+foreground = "#ffffff"
+background = "#494a56"
+bold = false
+
+[summary]
+entries = "#d2d7e1"
+entries_bold = true
+files = "#d2d7e1"
+directories = "#a4a4b4"
+symlinks = "#898996"
+special = "#64646d"
+executables = "#55555d"
+empty = "#5f6978"
+danger = "#ff7887"
+total_size = "#667085"

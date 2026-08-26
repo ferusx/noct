@@ -1,0 +1,102 @@
+name = "frostveil"
+
+[file_type]
+file = "#c8d0da"
+directory = "#8fa8c4"
+symlink = "#6fb8b2"
+special = "#9c8fbe"
+
+[permissions]
+read = "#73808f"
+write = "#7699ad"
+execute = "#88a98e"
+missing = "#46505c"
+
+[columns]
+user = "#7f8994"
+size = "#91b7a0"
+time = "#8199b5"
+age = "#98a2ad"
+state_normal = "#6d7782"
+state_attention = "#d6737d"
+
+[names]
+file = "#c8d0da"
+directory = "#8fa8c4"
+symlink = "#6fb8b2"
+broken_symlink = "#d6737d"
+executable = "#91b799"
+special = "#9c8fbe"
+
+[classification]
+broken_symlink = "#d6737d"
+directory = "#8fa8c4"
+symlink = "#6fb8b2"
+special = "#9c8fbe"
+executable = "#91b799"
+
+source_code = "#dbe1e8"
+shell = "#91b799"
+web = "#9c8fbe"
+
+build_config = "#8199b5"
+structured_data = "#72aeb6"
+log = "#73808f"
+
+archive_package = "#c4a173"
+document = "#c8d0da"
+spreadsheet = "#91b7a0"
+presentation = "#b79f86"
+
+image = "#9c8fbe"
+audio = "#6fb8b2"
+video = "#8f96ba"
+font = "#aeb5c4"
+
+database = "#7699ad"
+backup = "#98a2ad"
+certificate = "#c9a87d"
+disk_image = "#8797aa"
+torrent = "#7fa99a"
+desktop_plugin = "#998fb0"
+
+binary = "#6d7782"
+file = "#c8d0da"
+
+[tags]
+filesystem = "#c4a173"
+virtual_tag = "#72aeb6"
+memory = "#9c8fbe"
+note = "#c9a87d"
+
+[report]
+heading = "#9cb5d2"
+label = "#72aeb6"
+value = "#c8d0da"
+name = "#c8d0da"
+path = "#6fb8b2"
+command = "#91b799"
+package = "#9c8fbe"
+version = "#c4a173"
+size = "#91b7a0"
+count = "#98a2ad"
+total = "#dbe1e8"
+muted = "#6d7782"
+attention = "#d6737d"
+
+[header]
+foreground = "#11161c"
+background = "#8fa8c4"
+bold = true
+
+[summary]
+entries = "#dbe1e8"
+entries_bold = true
+files = "#c8d0da"
+directories = "#8fa8c4"
+symlinks = "#6fb8b2"
+special = "#9c8fbe"
+executables = "#91b799"
+empty = "#6d7782"
+danger = "#d6737d"
+total_size = "#91b7a0"

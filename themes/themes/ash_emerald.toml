@@ -1,0 +1,102 @@
+name = "ash_emerald"
+
+[file_type]
+file = "#d2d7e1"
+directory = "#39c27f"
+symlink = "#39c27f"
+special = "#8a8f99"
+
+[permissions]
+read = "#37373b"
+write = "#4a4a51"
+execute = "#39c27f"
+missing = "#3f4650"
+
+[columns]
+user = "#4a4a51"
+size = "#d2d7e1"
+time = "#4a4a51"
+age = "#5f6978"
+state_normal = "#a1a5ad"
+state_attention = "#39c27f"
+
+[names]
+file = "#a1a5ad"
+directory = "#39c27f"
+symlink = "#39c27f"
+broken_symlink = "#6dd8a0"
+executable = "#39c27f"
+special = "#8a8f99"
+
+[classification]
+broken_symlink = "#6dd8a0"
+directory = "#39c27f"
+symlink = "#39c27f"
+special = "#8a8f99"
+executable = "#39c27f"
+
+source_code = "#d2d7e1"
+shell = "#39c27f"
+web = "#72cfa0"
+
+build_config = "#9aaea3"
+structured_data = "#7fb9a3"
+log = "#6f747d"
+
+archive_package = "#a89f83"
+document = "#d2d7e1"
+spreadsheet = "#79c890"
+presentation = "#b3ad83"
+
+image = "#8fc6a7"
+audio = "#72bda5"
+video = "#8da8a0"
+font = "#a9b7ad"
+
+database = "#68b7a0"
+backup = "#7f9188"
+certificate = "#b7b28f"
+disk_image = "#879fa8"
+torrent = "#62b88d"
+desktop_plugin = "#8fa59a"
+
+binary = "#8a8f99"
+file = "#a1a5ad"
+
+[tags]
+filesystem = "#8a8f99"
+virtual_tag = "#39c27f"
+memory = "#39c27f"
+note = "#39c27f"
+
+[report]
+heading = "#39c27f"
+label = "#39c27f"
+value = "#a1a5ad"
+name = "#a1a5ad"
+path = "#39c27f"
+command = "#39c27f"
+package = "#39c27f"
+version = "#39c27f"
+size = "#d2d7e1"
+count = "#5f6978"
+total = "#d2d7e1"
+muted = "#4a4a51"
+attention = "#39c27f"
+
+[header]
+foreground = "#000000"
+background = "#39c27f"
+bold = true
+
+[summary]
+entries = "#d2d7e1"
+entries_bold = true
+files = "#d2d7e1"
+directories = "#a1a5ad"
+symlinks = "#8a8f99"
+special = "#6f747d"
+executables = "#39c27f"
+empty = "#5f6978"
+danger = "#39c27f"
+total_size = "#d2d7e1"

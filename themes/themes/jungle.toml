@@ -1,0 +1,86 @@
+name = "Jungle"
+
+[file_type]
+file = "#1cce0c"
+directory = "#ecea53"
+symlink = "#42c7d9"
+special = "#d19a66"
+
+[permissions]
+read = "#59b7ff"
+write = "#79ffaa"
+execute = "#b973ff"
+missing = "#3f4650"
+
+[columns]
+user = "#c2ff1b"
+size = "#93ff93"
+time = "#3b95d1"
+age = "#8e3ab8"
+state_normal = "#5f6978"
+state_attention = "#ff7887"
+
+[names]
+file = "#d2d7e1"
+directory = "#4896f0"
+symlink = "#42c7d9"
+broken_symlink = "#ff5064"
+executable = "#81ff91"
+special = "#d19a66"
+
+[classification]
+broken_symlink = "#ff5064"
+directory = "#ecea53"
+symlink = "#42c7d9"
+special = "#d19a66"
+executable = "#81ff91"
+
+source_code = "#c2ff1b"
+shell = "#81ff91"
+web = "#b973ff"
+
+build_config = "#59b7ff"
+structured_data = "#42c7d9"
+log = "#5f6978"
+
+archive_package = "#ffaa5a"
+document = "#d2d7e1"
+spreadsheet = "#93ff93"
+presentation = "#d19a66"
+
+image = "#b973ff"
+audio = "#42c7d9"
+video = "#8e6bd8"
+font = "#b6a0d6"
+
+database = "#3b95d1"
+backup = "#8e3ab8"
+certificate = "#ffbe64"
+disk_image = "#6d91c7"
+torrent = "#79ffaa"
+desktop_plugin = "#a66be0"
+
+binary = "#5f6978"
+file = "#d2d7e1"
+
+[tags]
+filesystem = "#d19a66"
+virtual_tag = "#ffaa5a"
+memory = "#b973ff"
+note = "#ffbe64"
+
+[header]
+foreground = "#19191e"
+background = "#ecea53"
+bold = true
+
+[summary]
+entries = "#d2d7e1"
+entries_bold = true
+files = "#d2d7e1"
+directories = "#4896f0"
+symlinks = "#42c7d9"
+special = "#d19a66"
+executables = "#81ff91"
+empty = "#5f6978"
+danger = "#ff7887"

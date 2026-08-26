@@ -1,0 +1,102 @@
+name = "chromatic_abomination"
+
+[file_type]
+file = "#f8f8ff"
+directory = "#ff7b00"
+symlink = "#00ffd5"
+special = "#e100ff"
+
+[permissions]
+read = "#8c8ca0"
+write = "#00bfff"
+execute = "#8cff00"
+missing = "#353542"
+
+[columns]
+user = "#9595a8"
+size = "#ffe600"
+time = "#477bff"
+age = "#ff73c9"
+state_normal = "#626274"
+state_attention = "#ff244f"
+
+[names]
+file = "#f8f8ff"
+directory = "#ff7b00"
+symlink = "#00ffd5"
+broken_symlink = "#ff244f"
+executable = "#8cff00"
+special = "#e100ff"
+
+[classification]
+broken_symlink = "#ff244f"
+directory = "#ff7b00"
+symlink = "#00ffd5"
+special = "#e100ff"
+executable = "#8cff00"
+
+source_code = "#ffe600"
+shell = "#8cff00"
+web = "#ff3cc7"
+
+build_config = "#00bfff"
+structured_data = "#00ffd5"
+log = "#8c8ca0"
+
+archive_package = "#ff7b00"
+document = "#f8f8ff"
+spreadsheet = "#8cff00"
+presentation = "#ff73c9"
+
+image = "#e100ff"
+audio = "#00ffd5"
+video = "#9d4dff"
+font = "#c47cff"
+
+database = "#477bff"
+backup = "#ff73c9"
+certificate = "#ffe600"
+disk_image = "#6f8dff"
+torrent = "#43f59d"
+desktop_plugin = "#c53cff"
+
+binary = "#626274"
+file = "#f8f8ff"
+
+[tags]
+filesystem = "#ff7b00"
+virtual_tag = "#00ffd5"
+memory = "#9d4dff"
+note = "#ffe600"
+
+[report]
+heading = "#ff3cc7"
+label = "#00bfff"
+value = "#f8f8ff"
+name = "#f8f8ff"
+path = "#00ffd5"
+command = "#8cff00"
+package = "#e100ff"
+version = "#ff7b00"
+size = "#ffe600"
+count = "#ff73c9"
+total = "#ffffff"
+muted = "#626274"
+attention = "#ff244f"
+
+[header]
+foreground = "#111116"
+background = "#ff7b00"
+bold = true
+
+[summary]
+entries = "#ffffff"
+entries_bold = true
+files = "#f8f8ff"
+directories = "#ff7b00"
+symlinks = "#00ffd5"
+special = "#e100ff"
+executables = "#8cff00"
+empty = "#626274"
+danger = "#ff244f"
+total_size = "#ffe600"

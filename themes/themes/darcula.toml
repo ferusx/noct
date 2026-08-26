@@ -1,0 +1,102 @@
+name = "darcula"
+
+[file_type]
+file = "#a9b7c6"
+directory = "#ffc66d"
+symlink = "#6aafc9"
+special = "#cc7832"
+
+[permissions]
+read = "#808080"
+write = "#6897bb"
+execute = "#6a8759"
+missing = "#4e5254"
+
+[columns]
+user = "#808080"
+size = "#a5c261"
+time = "#6897bb"
+age = "#9876aa"
+state_normal = "#808080"
+state_attention = "#ff6b68"
+
+[names]
+file = "#a9b7c6"
+directory = "#ffc66d"
+symlink = "#6aafc9"
+broken_symlink = "#ff6b68"
+executable = "#a5c261"
+special = "#cc7832"
+
+[tags]
+filesystem = "#cc7832"
+virtual_tag = "#6aafc9"
+memory = "#9876aa"
+note = "#ffc66d"
+
+[report]
+heading = "#ffc66d"
+label = "#6897bb"
+value = "#a9b7c6"
+name = "#a9b7c6"
+path = "#6aafc9"
+command = "#a5c261"
+package = "#9876aa"
+version = "#cc7832"
+size = "#a5c261"
+count = "#808080"
+total = "#d6d9dc"
+muted = "#606366"
+attention = "#ff6b68"
+
+[header]
+foreground = "#2b2b2b"
+background = "#ffc66d"
+bold = true
+
+[summary]
+entries = "#d6d9dc"
+entries_bold = true
+files = "#a9b7c6"
+directories = "#ffc66d"
+symlinks = "#6aafc9"
+special = "#cc7832"
+executables = "#a5c261"
+empty = "#606366"
+danger = "#ff6b68"
+total_size = "#a5c261"
+
+[classification]
+broken_symlink = "#ff6b68"
+directory = "#ffc66d"
+symlink = "#6aafc9"
+special = "#cc7832"
+executable = "#a5c261"
+
+source_code = "#bbb529"
+shell = "#a5c261"
+web = "#9876aa"
+
+build_config = "#6897bb"
+structured_data = "#6aafc9"
+log = "#808080"
+
+archive_package = "#cc7832"
+document = "#a9b7c6"
+spreadsheet = "#a5c261"
+presentation = "#d19a66"
+
+image = "#9876aa"
+audio = "#6aafc9"
+video = "#8d73a5"
+font = "#aa9bb7"
+
+database = "#6897bb"
+backup = "#808080"
+certificate = "#ffc66d"
+disk_image = "#748ba3"
+torrent = "#7ea47a"
+desktop_plugin = "#9876aa"
+
+binary = "#606366"
+file = "#a9b7c6"

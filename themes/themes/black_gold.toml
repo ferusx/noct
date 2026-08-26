@@ -1,0 +1,102 @@
+name = "black_gold"
+
+[file_type]
+file = "#f0eadb"
+directory = "#ffc857"
+symlink = "#31d6c4"
+special = "#cf86ff"
+
+[permissions]
+read = "#938a77"
+write = "#e8a93c"
+execute = "#75e89a"
+missing = "#3d3a33"
+
+[columns]
+user = "#938a77"
+size = "#75e89a"
+time = "#61aaf2"
+age = "#c9a95f"
+state_normal = "#706a5d"
+state_attention = "#ff535f"
+
+[names]
+file = "#f0eadb"
+directory = "#ffc857"
+symlink = "#31d6c4"
+broken_symlink = "#ff535f"
+executable = "#75e89a"
+special = "#cf86ff"
+
+[classification]
+broken_symlink = "#ff535f"
+directory = "#ffc857"
+symlink = "#31d6c4"
+special = "#cf86ff"
+executable = "#75e89a"
+
+source_code = "#ffe07a"
+shell = "#75e89a"
+web = "#cf86ff"
+
+build_config = "#61aaf2"
+structured_data = "#31d6c4"
+log = "#938a77"
+
+archive_package = "#ff9f43"
+document = "#f0eadb"
+spreadsheet = "#75e89a"
+presentation = "#e8a93c"
+
+image = "#cf86ff"
+audio = "#31d6c4"
+video = "#9f82e8"
+font = "#c7a6e8"
+
+database = "#61aaf2"
+backup = "#c9a95f"
+certificate = "#ffe07a"
+disk_image = "#7f9fd8"
+torrent = "#5ed2a6"
+desktop_plugin = "#b88ce0"
+
+binary = "#706a5d"
+file = "#f0eadb"
+
+[tags]
+filesystem = "#ff9f43"
+virtual_tag = "#31d6c4"
+memory = "#cf86ff"
+note = "#ffe07a"
+
+[report]
+heading = "#ffc857"
+label = "#31d6c4"
+value = "#f0eadb"
+name = "#f0eadb"
+path = "#31d6c4"
+command = "#75e89a"
+package = "#cf86ff"
+version = "#ff9f43"
+size = "#75e89a"
+count = "#c9a95f"
+total = "#fff9eb"
+muted = "#706a5d"
+attention = "#ff535f"
+
+[header]
+foreground = "#151109"
+background = "#ffc857"
+bold = true
+
+[summary]
+entries = "#fff9eb"
+entries_bold = true
+files = "#f0eadb"
+directories = "#ffc857"
+symlinks = "#31d6c4"
+special = "#cf86ff"
+executables = "#75e89a"
+empty = "#706a5d"
+danger = "#ff535f"
+total_size = "#ff9f43"

@@ -1,0 +1,102 @@
+name = "daylight_sage"
+
+[file_type]
+file = "#4f5a56"
+directory = "#2f7d63"
+symlink = "#328c87"
+special = "#816a58"
+
+[permissions]
+read = "#66736d"
+write = "#327a78"
+execute = "#4f8a4c"
+missing = "#a7aea9"
+
+[columns]
+user = "#6d746f"
+size = "#467d4b"
+time = "#3f7777"
+age = "#8b735f"
+state_normal = "#747c77"
+state_attention = "#b44f54"
+
+[names]
+file = "#4f5a56"
+directory = "#2f7d63"
+symlink = "#328c87"
+broken_symlink = "#b44f54"
+executable = "#4f8a4c"
+special = "#816a58"
+
+[tags]
+filesystem = "#966442"
+virtual_tag = "#328c87"
+memory = "#77647c"
+note = "#9b763f"
+
+[report]
+heading = "#2f7d63"
+label = "#327a78"
+value = "#4f5a56"
+name = "#4f5a56"
+path = "#328c87"
+command = "#4f8a4c"
+package = "#77647c"
+version = "#966442"
+size = "#467d4b"
+count = "#747c77"
+total = "#34413c"
+muted = "#858d88"
+attention = "#b44f54"
+
+[header]
+foreground = "#ffffff"
+background = "#2f7d63"
+bold = true
+
+[summary]
+entries = "#34413c"
+entries_bold = true
+files = "#4f5a56"
+directories = "#2f7d63"
+symlinks = "#328c87"
+special = "#816a58"
+executables = "#4f8a4c"
+empty = "#858d88"
+danger = "#b44f54"
+total_size = "#7b643f"
+
+[classification]
+broken_symlink = "#b44f54"
+directory = "#2f7d63"
+symlink = "#328c87"
+special = "#816a58"
+executable = "#4f8a4c"
+
+source_code = "#627f3f"
+shell = "#4f8a4c"
+web = "#4a7f73"
+
+build_config = "#477773"
+structured_data = "#3e8c82"
+log = "#747c77"
+
+archive_package = "#966442"
+document = "#4f5a56"
+spreadsheet = "#568753"
+presentation = "#9b754d"
+
+image = "#647d6e"
+audio = "#328c87"
+video = "#687b75"
+font = "#756e66"
+
+database = "#37756d"
+backup = "#826f61"
+certificate = "#9b763f"
+disk_image = "#62736f"
+torrent = "#4f8a68"
+desktop_plugin = "#77647c"
+
+binary = "#747c77"
+file = "#4f5a56"

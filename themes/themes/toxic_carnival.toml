@@ -1,0 +1,102 @@
+name = "toxic_carnival"
+
+[file_type]
+file = "#fff7e6"
+directory = "#a6ff00"
+symlink = "#00f5d4"
+special = "#d600ff"
+
+[permissions]
+read = "#8a8f73"
+write = "#00d9ff"
+execute = "#a6ff00"
+missing = "#35402c"
+
+[columns]
+user = "#9b9384"
+size = "#ffe600"
+time = "#00d9ff"
+age = "#ff8c1a"
+state_normal = "#68705e"
+state_attention = "#ff296d"
+
+[names]
+file = "#fff7e6"
+directory = "#a6ff00"
+symlink = "#00f5d4"
+broken_symlink = "#ff296d"
+executable = "#ffe600"
+special = "#d600ff"
+
+[classification]
+broken_symlink = "#ff296d"
+directory = "#a6ff00"
+symlink = "#00f5d4"
+special = "#d600ff"
+executable = "#ffe600"
+
+source_code = "#fff24a"
+shell = "#a6ff00"
+web = "#ff3cac"
+
+build_config = "#00d9ff"
+structured_data = "#00f5d4"
+log = "#8a8f73"
+
+archive_package = "#ff8c1a"
+document = "#fff7e6"
+spreadsheet = "#a6ff00"
+presentation = "#ff9e40"
+
+image = "#d600ff"
+audio = "#00f5d4"
+video = "#9d4dff"
+font = "#c985ff"
+
+database = "#00d9ff"
+backup = "#ff8c1a"
+certificate = "#ffe600"
+disk_image = "#648cff"
+torrent = "#79ff62"
+desktop_plugin = "#c400e8"
+
+binary = "#68705e"
+file = "#fff7e6"
+
+[tags]
+filesystem = "#ff8c1a"
+virtual_tag = "#00f5d4"
+memory = "#d600ff"
+note = "#ffe600"
+
+[report]
+heading = "#ff3cac"
+label = "#00d9ff"
+value = "#fff7e6"
+name = "#fff7e6"
+path = "#00f5d4"
+command = "#a6ff00"
+package = "#d600ff"
+version = "#ff8c1a"
+size = "#ffe600"
+count = "#ff9e40"
+total = "#ffffff"
+muted = "#68705e"
+attention = "#ff296d"
+
+[header]
+foreground = "#111700"
+background = "#a6ff00"
+bold = true
+
+[summary]
+entries = "#ffffff"
+entries_bold = true
+files = "#fff7e6"
+directories = "#a6ff00"
+symlinks = "#00f5d4"
+special = "#d600ff"
+executables = "#ffe600"
+empty = "#68705e"
+danger = "#ff296d"
+total_size = "#ff8c1a"

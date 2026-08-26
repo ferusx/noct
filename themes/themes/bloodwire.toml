@@ -1,0 +1,102 @@
+name = "bloodwire"
+
+[file_type]
+file = "#e8e4eb"
+directory = "#ff506b"
+symlink = "#42e8e0"
+special = "#bd75ff"
+
+[permissions]
+read = "#8d8492"
+write = "#ff6680"
+execute = "#82e6a0"
+missing = "#3d3742"
+
+[columns]
+user = "#918896"
+size = "#82e6a0"
+time = "#65b8ff"
+age = "#c090e8"
+state_normal = "#6d6573"
+state_attention = "#ff385c"
+
+[names]
+file = "#e8e4eb"
+directory = "#ff506b"
+symlink = "#42e8e0"
+broken_symlink = "#ff385c"
+executable = "#82e6a0"
+special = "#bd75ff"
+
+[classification]
+broken_symlink = "#ff385c"
+directory = "#ff506b"
+symlink = "#42e8e0"
+special = "#bd75ff"
+executable = "#82e6a0"
+
+source_code = "#ffd166"
+shell = "#82e6a0"
+web = "#bd75ff"
+
+build_config = "#65b8ff"
+structured_data = "#42e8e0"
+log = "#8d8492"
+
+archive_package = "#ff9f43"
+document = "#e8e4eb"
+spreadsheet = "#82e6a0"
+presentation = "#ff6680"
+
+image = "#c884ff"
+audio = "#42e8e0"
+video = "#9c78e8"
+font = "#c6a0df"
+
+database = "#65b8ff"
+backup = "#c090e8"
+certificate = "#ffd166"
+disk_image = "#829bd8"
+torrent = "#66d7b0"
+desktop_plugin = "#bd75ff"
+
+binary = "#6d6573"
+file = "#e8e4eb"
+
+[tags]
+filesystem = "#ff9f43"
+virtual_tag = "#42e8e0"
+memory = "#bd75ff"
+note = "#ffd166"
+
+[report]
+heading = "#ff668f"
+label = "#bd75ff"
+value = "#e8e4eb"
+name = "#e8e4eb"
+path = "#42e8e0"
+command = "#82e6a0"
+package = "#bd75ff"
+version = "#ffd166"
+size = "#82e6a0"
+count = "#c090e8"
+total = "#ffffff"
+muted = "#6d6573"
+attention = "#ff385c"
+
+[header]
+foreground = "#130a0e"
+background = "#ff506b"
+bold = true
+
+[summary]
+entries = "#ffffff"
+entries_bold = true
+files = "#e8e4eb"
+directories = "#ff506b"
+symlinks = "#42e8e0"
+special = "#bd75ff"
+executables = "#82e6a0"
+empty = "#6d6573"
+danger = "#ff385c"
+total_size = "#ffd166"

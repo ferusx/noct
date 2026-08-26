@@ -1,0 +1,102 @@
+name = "gruvbox"
+
+[file_type]
+file = "#ebdbb2"
+directory = "#83a598"
+symlink = "#8ec07c"
+special = "#d3869b"
+
+[permissions]
+read = "#928374"
+write = "#83a598"
+execute = "#b8bb26"
+missing = "#504945"
+
+[columns]
+user = "#928374"
+size = "#b8bb26"
+time = "#83a598"
+age = "#d3869b"
+state_normal = "#928374"
+state_attention = "#fb4934"
+
+[names]
+file = "#ebdbb2"
+directory = "#83a598"
+symlink = "#8ec07c"
+broken_symlink = "#fb4934"
+executable = "#b8bb26"
+special = "#d3869b"
+
+[tags]
+filesystem = "#fe8019"
+virtual_tag = "#8ec07c"
+memory = "#d3869b"
+note = "#fabd2f"
+
+[report]
+heading = "#fabd2f"
+label = "#83a598"
+value = "#ebdbb2"
+name = "#ebdbb2"
+path = "#8ec07c"
+command = "#b8bb26"
+package = "#d3869b"
+version = "#fe8019"
+size = "#b8bb26"
+count = "#928374"
+total = "#fbf1c7"
+muted = "#928374"
+attention = "#fb4934"
+
+[header]
+foreground = "#282828"
+background = "#fabd2f"
+bold = true
+
+[summary]
+entries = "#fbf1c7"
+entries_bold = true
+files = "#ebdbb2"
+directories = "#83a598"
+symlinks = "#8ec07c"
+special = "#d3869b"
+executables = "#b8bb26"
+empty = "#928374"
+danger = "#fb4934"
+total_size = "#fabd2f"
+
+[classification]
+broken_symlink = "#fb4934"
+directory = "#83a598"
+symlink = "#8ec07c"
+special = "#d3869b"
+executable = "#b8bb26"
+
+source_code = "#fabd2f"
+shell = "#b8bb26"
+web = "#d3869b"
+
+build_config = "#83a598"
+structured_data = "#8ec07c"
+log = "#928374"
+
+archive_package = "#fe8019"
+document = "#ebdbb2"
+spreadsheet = "#b8bb26"
+presentation = "#d79921"
+
+image = "#d3869b"
+audio = "#8ec07c"
+video = "#b16286"
+font = "#c4a7a1"
+
+database = "#458588"
+backup = "#928374"
+certificate = "#fabd2f"
+disk_image = "#7c8b85"
+torrent = "#689d6a"
+desktop_plugin = "#b16286"
+
+binary = "#665c54"
+file = "#ebdbb2"

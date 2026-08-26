@@ -1,0 +1,102 @@
+name = "daylight_hearth"
+
+[file_type]
+file = "#5c5148"
+directory = "#a3532f"
+symlink = "#5f8771"
+special = "#8a6a52"
+
+[permissions]
+read = "#7f7368"
+write = "#9b6a47"
+execute = "#6f8441"
+missing = "#b5ada5"
+
+[columns]
+user = "#7d736a"
+size = "#6f8441"
+time = "#8a6a52"
+age = "#9b7d58"
+state_normal = "#8a8178"
+state_attention = "#b54943"
+
+[names]
+file = "#5c5148"
+directory = "#a3532f"
+symlink = "#5f8771"
+broken_symlink = "#b54943"
+executable = "#6f8441"
+special = "#8a6a52"
+
+[tags]
+filesystem = "#9c5d34"
+virtual_tag = "#5f8771"
+memory = "#7b665b"
+note = "#a67a2d"
+
+[report]
+heading = "#a3532f"
+label = "#5f8771"
+value = "#5c5148"
+name = "#5c5148"
+path = "#5f8771"
+command = "#6f8441"
+package = "#7b665b"
+version = "#9c5d34"
+size = "#6f8441"
+count = "#8a8178"
+total = "#3f362f"
+muted = "#9b938b"
+attention = "#b54943"
+
+[header]
+foreground = "#ffffff"
+background = "#a3532f"
+bold = true
+
+[summary]
+entries = "#3f362f"
+entries_bold = true
+files = "#5c5148"
+directories = "#a3532f"
+symlinks = "#5f8771"
+special = "#8a6a52"
+executables = "#6f8441"
+empty = "#9b938b"
+danger = "#b54943"
+total_size = "#a67a2d"
+
+[classification]
+broken_symlink = "#b54943"
+directory = "#a3532f"
+symlink = "#5f8771"
+special = "#8a6a52"
+executable = "#6f8441"
+
+source_code = "#7e7b2f"
+shell = "#6f8441"
+web = "#7b665b"
+
+build_config = "#8a6a52"
+structured_data = "#5f8771"
+log = "#8a8178"
+
+archive_package = "#9c5d34"
+document = "#5c5148"
+spreadsheet = "#6f8441"
+presentation = "#b07b4b"
+
+image = "#8a6a52"
+audio = "#5f8771"
+video = "#7a7268"
+font = "#8c7d70"
+
+database = "#6d7d57"
+backup = "#8d6f5e"
+certificate = "#a67a2d"
+disk_image = "#7b756b"
+torrent = "#72844c"
+desktop_plugin = "#7b665b"
+
+binary = "#8a8178"
+file = "#5c5148"

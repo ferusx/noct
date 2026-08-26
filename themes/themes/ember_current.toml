@@ -1,0 +1,102 @@
+name = "ember_current"
+
+[file_type]
+file = "#f2ebe3"
+directory = "#ff8a3d"
+symlink = "#49d7d0"
+special = "#c78cff"
+
+[permissions]
+read = "#9a8575"
+write = "#49d7d0"
+execute = "#ffc04d"
+missing = "#433932"
+
+[columns]
+user = "#9b8c80"
+size = "#ffc04d"
+time = "#65a9ff"
+age = "#d9a35f"
+state_normal = "#73655b"
+state_attention = "#ff5d6c"
+
+[names]
+file = "#f2ebe3"
+directory = "#ff8a3d"
+symlink = "#49d7d0"
+broken_symlink = "#ff5d6c"
+executable = "#ffc04d"
+special = "#c78cff"
+
+[classification]
+broken_symlink = "#ff5d6c"
+directory = "#ff8a3d"
+symlink = "#49d7d0"
+special = "#c78cff"
+executable = "#ffc04d"
+
+source_code = "#ffd36b"
+shell = "#ffc04d"
+web = "#c78cff"
+
+build_config = "#65a9ff"
+structured_data = "#49d7d0"
+log = "#9a8575"
+
+archive_package = "#ff9b52"
+document = "#f2ebe3"
+spreadsheet = "#a8d886"
+presentation = "#d9a35f"
+
+image = "#c78cff"
+audio = "#49d7d0"
+video = "#9f86d8"
+font = "#c8add6"
+
+database = "#65a9ff"
+backup = "#b69a88"
+certificate = "#ffd36b"
+disk_image = "#8098c8"
+torrent = "#65cfa8"
+desktop_plugin = "#b38bdd"
+
+binary = "#73655b"
+file = "#f2ebe3"
+
+[tags]
+filesystem = "#ff8a3d"
+virtual_tag = "#49d7d0"
+memory = "#c78cff"
+note = "#ffd36b"
+
+[report]
+heading = "#ff9b52"
+label = "#49d7d0"
+value = "#f2ebe3"
+name = "#f2ebe3"
+path = "#49d7d0"
+command = "#ffc04d"
+package = "#c78cff"
+version = "#ffd36b"
+size = "#ffc04d"
+count = "#d9a35f"
+total = "#fff7f1"
+muted = "#73655b"
+attention = "#ff5d6c"
+
+[header]
+foreground = "#140d0a"
+background = "#ff8a3d"
+bold = true
+
+[summary]
+entries = "#fff7f1"
+entries_bold = true
+files = "#f2ebe3"
+directories = "#ff8a3d"
+symlinks = "#49d7d0"
+special = "#c78cff"
+executables = "#ffc04d"
+empty = "#73655b"
+danger = "#ff5d6c"
+total_size = "#ffd36b"

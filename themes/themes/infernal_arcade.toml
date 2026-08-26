@@ -1,0 +1,102 @@
+name = "infernal_arcade"
+
+[file_type]
+file = "#fff0e8"
+directory = "#ff3d2e"
+symlink = "#00f0ff"
+special = "#a855ff"
+
+[permissions]
+read = "#9f756d"
+write = "#ff6a00"
+execute = "#39ff88"
+missing = "#482d2a"
+
+[columns]
+user = "#a17d75"
+size = "#ffcc00"
+time = "#00b7ff"
+age = "#ff7a2f"
+state_normal = "#76534e"
+state_attention = "#ff174d"
+
+[names]
+file = "#fff0e8"
+directory = "#ff3d2e"
+symlink = "#00f0ff"
+broken_symlink = "#ff174d"
+executable = "#39ff88"
+special = "#a855ff"
+
+[classification]
+broken_symlink = "#ff174d"
+directory = "#ff3d2e"
+symlink = "#00f0ff"
+special = "#a855ff"
+executable = "#39ff88"
+
+source_code = "#ffcc00"
+shell = "#39ff88"
+web = "#a855ff"
+
+build_config = "#00b7ff"
+structured_data = "#00f0ff"
+log = "#9f756d"
+
+archive_package = "#ff6a00"
+document = "#fff0e8"
+spreadsheet = "#39ff88"
+presentation = "#ff7a2f"
+
+image = "#a855ff"
+audio = "#00f0ff"
+video = "#7d5cff"
+font = "#c28aff"
+
+database = "#00b7ff"
+backup = "#ff8f3d"
+certificate = "#ffcc00"
+disk_image = "#5f86ff"
+torrent = "#43e6a3"
+desktop_plugin = "#9e54e8"
+
+binary = "#76534e"
+file = "#fff0e8"
+
+[tags]
+filesystem = "#ff6a00"
+virtual_tag = "#00f0ff"
+memory = "#a855ff"
+note = "#ffcc00"
+
+[report]
+heading = "#ff6a00"
+label = "#00f0ff"
+value = "#fff0e8"
+name = "#fff0e8"
+path = "#00f0ff"
+command = "#39ff88"
+package = "#a855ff"
+version = "#ffcc00"
+size = "#39ff88"
+count = "#ff8f3d"
+total = "#ffffff"
+muted = "#76534e"
+attention = "#ff174d"
+
+[header]
+foreground = "#180300"
+background = "#ff3d2e"
+bold = true
+
+[summary]
+entries = "#ffffff"
+entries_bold = true
+files = "#fff0e8"
+directories = "#ff3d2e"
+symlinks = "#00f0ff"
+special = "#a855ff"
+executables = "#39ff88"
+empty = "#76534e"
+danger = "#ff174d"
+total_size = "#ffcc00"

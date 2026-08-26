@@ -1,0 +1,102 @@
+name = "radioactive_ocean"
+
+[file_type]
+file = "#eafffb"
+directory = "#00c2ff"
+symlink = "#00ffb7"
+special = "#ff5ea8"
+
+[permissions]
+read = "#77999a"
+write = "#00c2ff"
+execute = "#7dff36"
+missing = "#294248"
+
+[columns]
+user = "#809ca0"
+size = "#d9ff3f"
+time = "#4398ff"
+age = "#55e6c1"
+state_normal = "#587477"
+state_attention = "#ff5568"
+
+[names]
+file = "#eafffb"
+directory = "#00c2ff"
+symlink = "#00ffb7"
+broken_symlink = "#ff5568"
+executable = "#7dff36"
+special = "#ff5ea8"
+
+[classification]
+broken_symlink = "#ff5568"
+directory = "#00c2ff"
+symlink = "#00ffb7"
+special = "#ff5ea8"
+executable = "#7dff36"
+
+source_code = "#f4ff4d"
+shell = "#7dff36"
+web = "#ff5ea8"
+
+build_config = "#4398ff"
+structured_data = "#00ffb7"
+log = "#77999a"
+
+archive_package = "#ff9f43"
+document = "#eafffb"
+spreadsheet = "#d9ff3f"
+presentation = "#ff7f66"
+
+image = "#ff5ea8"
+audio = "#00ffb7"
+video = "#b86cff"
+font = "#cfa4df"
+
+database = "#00c2ff"
+backup = "#55e6c1"
+certificate = "#f4ff4d"
+disk_image = "#5f8fd8"
+torrent = "#7dff36"
+desktop_plugin = "#b86cff"
+
+binary = "#587477"
+file = "#eafffb"
+
+[tags]
+filesystem = "#ff9f43"
+virtual_tag = "#00ffb7"
+memory = "#b86cff"
+note = "#f4ff4d"
+
+[report]
+heading = "#f4ff4d"
+label = "#00c2ff"
+value = "#eafffb"
+name = "#eafffb"
+path = "#00ffb7"
+command = "#7dff36"
+package = "#ff5ea8"
+version = "#ff9f43"
+size = "#d9ff3f"
+count = "#55e6c1"
+total = "#ffffff"
+muted = "#587477"
+attention = "#ff5568"
+
+[header]
+foreground = "#001317"
+background = "#00c2ff"
+bold = true
+
+[summary]
+entries = "#ffffff"
+entries_bold = true
+files = "#eafffb"
+directories = "#00c2ff"
+symlinks = "#00ffb7"
+special = "#ff5ea8"
+executables = "#7dff36"
+empty = "#587477"
+danger = "#ff5568"
+total_size = "#f4ff4d"

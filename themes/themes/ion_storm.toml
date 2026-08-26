@@ -1,0 +1,102 @@
+name = "ion_storm"
+
+[file_type]
+file = "#f1f5ff"
+directory = "#408cff"
+symlink = "#24e6ff"
+special = "#ff62d0"
+
+[permissions]
+read = "#8491aa"
+write = "#408cff"
+execute = "#55f59a"
+missing = "#30394b"
+
+[columns]
+user = "#8491aa"
+size = "#55f59a"
+time = "#6ba7ff"
+age = "#a9b8d2"
+state_normal = "#5b667b"
+state_attention = "#ff4f74"
+
+[names]
+file = "#f1f5ff"
+directory = "#408cff"
+symlink = "#24e6ff"
+broken_symlink = "#ff4f74"
+executable = "#55f59a"
+special = "#ff62d0"
+
+[classification]
+broken_symlink = "#ff4f74"
+directory = "#408cff"
+symlink = "#24e6ff"
+special = "#ff62d0"
+executable = "#55f59a"
+
+source_code = "#ffe066"
+shell = "#55f59a"
+web = "#ff62d0"
+
+build_config = "#6ba7ff"
+structured_data = "#24e6ff"
+log = "#8491aa"
+
+archive_package = "#ffac4d"
+document = "#f1f5ff"
+spreadsheet = "#55f59a"
+presentation = "#d88bff"
+
+image = "#ff62d0"
+audio = "#24e6ff"
+video = "#9b7dff"
+font = "#c2a4ff"
+
+database = "#6ba7ff"
+backup = "#a9b8d2"
+certificate = "#ffe066"
+disk_image = "#7997d8"
+torrent = "#4edbb3"
+desktop_plugin = "#b975ff"
+
+binary = "#5b667b"
+file = "#f1f5ff"
+
+[tags]
+filesystem = "#ffac4d"
+virtual_tag = "#24e6ff"
+memory = "#b975ff"
+note = "#ffe066"
+
+[report]
+heading = "#77a7ff"
+label = "#24e6ff"
+value = "#f1f5ff"
+name = "#f1f5ff"
+path = "#24e6ff"
+command = "#55f59a"
+package = "#ff62d0"
+version = "#ffe066"
+size = "#55f59a"
+count = "#a9b8d2"
+total = "#ffffff"
+muted = "#5b667b"
+attention = "#ff4f74"
+
+[header]
+foreground = "#08101f"
+background = "#408cff"
+bold = true
+
+[summary]
+entries = "#ffffff"
+entries_bold = true
+files = "#f1f5ff"
+directories = "#408cff"
+symlinks = "#24e6ff"
+special = "#ff62d0"
+executables = "#55f59a"
+empty = "#5b667b"
+danger = "#ff4f74"
+total_size = "#ffe066"
