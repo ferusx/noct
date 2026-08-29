@@ -366,12 +366,15 @@ The weed green that colours the execution bit in the **Permissions** column brea
   <img src="screenshots/velvet_hex.png" alt="Noct long listing of a directory with Velvet Hex theme applied" width="95%">
 </p>
 
-### Verdant Mocha
-This is the very last theme to be presented in this gallery and of the `Noct Theme Collection` but it is not the least, as they say.
+### Verdant Mocha (built-in default)
+This is the very last theme to be presented in this gallery and of the `Noct Theme Collection` but it is not the least, as they say, and is also the default theme for `Noct`.
 
-`Verdant Mocha` has a beautiful and balanced set of colours. It is soothing to the eyes and has an almost meditative effect on the mind when working frequently with it.  
+`Verdant Mocha` has a beautiful and balanced set of colours. It is soothing to the eyes and has an almost meditative effect on the mind when working frequently with it.
 
 If you are looking for something you can wear a long time and never tire of it, then `Verdant Mocha` is the theme I would confidently recommend. With its earthy colours, it harmonizes its very surroundings. 
+
+**Note:** Although the theme is built-in, the theme file `verdant_mocha.toml` still exists in the `Noct Theme Collection` so that users who might like the colors in this theme can use it as a starting point when creating their own themes, just as is the intention with any of the other theme files.
+
 
 <p align="center">
   <img src="screenshots/verdant_mocha.png" alt="Noct long listing of a directory with Verdant Mocha theme applied" width="95%">

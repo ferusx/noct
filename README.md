@@ -67,7 +67,7 @@ Tree mode provides a recursive structural view while retaining `Noct's` filesyst
 
 ## Installation
 
-Noct is written in Rust and currently targets Unix-like systems, with Linux and FreeBSD as its primary development and testing platforms.
+Noct is written in Rust and currently targets Unix-like systems, with `Linux` and `FreeBSD` as its primary development and testing platforms.
 
 ### Build from source
 
@@ -399,7 +399,7 @@ Noct supports external color themes stored under:
 Select a theme in `noct.toml`:
 
 ```toml
-theme = "jungle"
+theme = "verdant_mocha"
 ```
 
 Themes can control colors throughout Noct's listings, reports, headers, summaries, permissions, filesystem classifications, and other interface elements.
@@ -409,6 +409,8 @@ For a focused explanation of the theming system, use:
 ```sh
 nt --theme-help
 ```
+
+Or see the `README.md` file in `Noct's` [themes documentation](./themes/README.md), in the themes/ directory in this repository, for a step-by-step guide on using the included themes or creating your own.
 
 ### Filesystem Colors
 
@@ -481,13 +483,13 @@ The README is intended as an introduction and overview. The built-in help, manua
 
 ## Platforms
 
-Noct is developed for Unix-like systems and is currently tested primarily on Linux and FreeBSD.
+`Noct` is developed for Unix-like systems and is currently tested primarily on `Linux` and `FreeBSD`, with ongoing testing also taking place on `NetBSD`, `OpenBSD`, and `DragonFly BSD`. Future releases for some or all of these platforms are being explored.
 
 ### Linux
 
-Noct works as a native command-line tool on Linux and integrates naturally with standard Unix filesystem conventions, permissions, ownership, symbolic links, and terminal environments.
+`Noct` works as a native command-line tool on `Linux` and integrates naturally with standard Unix filesystem conventions, permissions, ownership, symbolic links, and terminal environments.
 
-Build from source with Cargo:
+Build from source with **Cargo**:
 
 ```sh
 cargo build --release
@@ -495,11 +497,11 @@ cargo build --release
 
 ### FreeBSD
 
-FreeBSD is also a primary development and testing platform for Noct.
+`FreeBSD` is also a primary development and testing platform for `Noct`.
 
-Noct supports FreeBSD filesystem and package-management workflows, including package ownership inspection where the required system tools are available.
+`Noct` supports `FreeBSD` filesystem and package-management workflows, including package ownership inspection where the required system tools are available.
 
-A FreeBSD port is planned for installation through the Ports Collection and packages. Until that release is available, Noct can be built from source with Cargo in the same way as on Linux.
+A `FreeBSD` port is planned for installation through the Ports Collection and packages. Until that release is available, Noct can be built from source with Cargo in the same way as on `Linux`.
 
 ### Terminal Support
 

@@ -13,7 +13,7 @@ const DEFAULT_CONFIG: &str = r#"# Noct configuration
 # and adjust its colors rather than building a complete theme from scratch.
 
 # Theme loaded from ~/.config/noct/themes/.
-theme = "jungle"
+theme = "verdant_mocha"
 
 # Filesystem filename and icon colors.
 #
@@ -95,7 +95,7 @@ pub struct NoctConfig {
 impl Default for NoctConfig {
     fn default() -> Self {
         Self {
-            theme: "jungle".to_string(),
+            theme: "verdant_mocha".to_string(),
 
             filesystem_colors: FilesystemColorsMode::Theme,
 

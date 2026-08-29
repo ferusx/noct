@@ -6430,7 +6430,7 @@ pub fn print_help(palette: &AnsiPalette) {
     );
 
     print_help_line(
-        "  --permissions               Match exact permission bits, for example 755",
+        "  --permissions MODE          Match exact permission bits, for example 755",
         inner_width,
         colors.example,
         &colors,

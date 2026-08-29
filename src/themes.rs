@@ -741,10 +741,10 @@ pub struct AnsiSummaryColors {
 
 impl Theme {
     /*
-     * Noct's original built-in palette.
+     * Noct's built-in default palette.
      *
-     * This must remain visually identical to the current hard-coded ANSI
-     * constants. It becomes the fallback whenever:
+     * Verdant Mocha is always available internally and also serves as the
+     * fallback whenever:
      *
      * - no external theme is selected;
      * - a theme file is incomplete;
@@ -753,178 +753,116 @@ impl Theme {
      */
     pub fn builtin() -> Self {
         Self {
-            name: "Jungle".to_string(),
+            name: "verdant_mocha".to_string(),
 
             file_type: FileTypeColors {
-                file: RgbColor::new(28, 206, 12),
-
-                directory: RgbColor::new(236, 234, 83),
-
-                symlink: RgbColor::new(66, 199, 217),
-
-                special: RgbColor::new(209, 154, 102),
+                file: RgbColor::new(216, 210, 196),
+                directory: RgbColor::new(79, 168, 143),
+                symlink: RgbColor::new(104, 183, 174),
+                special: RgbColor::new(155, 122, 98),
             },
 
             permissions: PermissionColors {
-                read: RgbColor::new(89, 183, 255),
-
-                write: RgbColor::new(121, 255, 170),
-
-                execute: RgbColor::new(185, 115, 255),
-
-                missing: RgbColor::new(63, 70, 80),
+                read: RgbColor::new(127, 133, 125),
+                write: RgbColor::new(95, 159, 154),
+                execute: RgbColor::new(131, 182, 127),
+                missing: RgbColor::new(73, 68, 62),
             },
 
             columns: ColumnColors {
-                user: RgbColor::new(194, 255, 27),
-
-                size: RgbColor::new(147, 255, 147),
-
-                time: RgbColor::new(59, 149, 209),
-
-                age: RgbColor::new(142, 58, 184),
-
-                state_normal: RgbColor::new(95, 105, 120),
-
-                state_attention: RgbColor::new(255, 120, 135),
+                user: RgbColor::new(133, 125, 115),
+                size: RgbColor::new(143, 189, 139),
+                time: RgbColor::new(109, 159, 158),
+                age: RgbColor::new(162, 135, 111),
+                state_normal: RgbColor::new(113, 107, 99),
+                state_attention: RgbColor::new(201, 111, 98),
             },
 
             names: NameColors {
-                file: RgbColor::new(210, 215, 225),
-
-                directory: RgbColor::new(72, 150, 240),
-
-                symlink: RgbColor::new(66, 199, 217),
-
-                broken_symlink: RgbColor::new(255, 80, 100),
-
-                executable: RgbColor::new(129, 255, 145),
-
-                special: RgbColor::new(209, 154, 102),
+                file: RgbColor::new(216, 210, 196),
+                directory: RgbColor::new(79, 168, 143),
+                symlink: RgbColor::new(104, 183, 174),
+                broken_symlink: RgbColor::new(201, 111, 98),
+                executable: RgbColor::new(131, 182, 127),
+                special: RgbColor::new(155, 122, 98),
             },
 
             classification: ClassificationColors {
-                broken_symlink: RgbColor::new(255, 80, 100),
+                broken_symlink: RgbColor::new(201, 111, 98),
+                directory: RgbColor::new(79, 168, 143),
+                symlink: RgbColor::new(104, 183, 174),
+                special: RgbColor::new(155, 122, 98),
 
-                directory: RgbColor::new(80, 155, 235),
+                executable: RgbColor::new(131, 182, 127),
+                source_code: RgbColor::new(169, 201, 143),
+                shell: RgbColor::new(131, 182, 127),
+                web: RgbColor::new(111, 169, 156),
 
-                symlink: RgbColor::new(75, 195, 210),
+                build_config: RgbColor::new(109, 159, 158),
+                structured_data: RgbColor::new(114, 179, 166),
+                log: RgbColor::new(127, 133, 125),
 
-                special: RgbColor::new(210, 150, 95),
+                archive_package: RgbColor::new(164, 111, 79),
+                document: RgbColor::new(216, 210, 196),
+                spreadsheet: RgbColor::new(143, 189, 139),
+                presentation: RgbColor::new(170, 133, 98),
 
-                executable: RgbColor::new(125, 220, 150),
+                image: RgbColor::new(120, 166, 154),
+                audio: RgbColor::new(104, 183, 174),
+                video: RgbColor::new(112, 145, 139),
+                font: RgbColor::new(168, 156, 141),
 
-                source_code: RgbColor::new(235, 205, 105),
+                database: RgbColor::new(79, 144, 136),
+                backup: RgbColor::new(142, 117, 105),
+                certificate: RgbColor::new(184, 149, 102),
+                disk_image: RgbColor::new(117, 141, 137),
+                torrent: RgbColor::new(112, 170, 120),
+                desktop_plugin: RgbColor::new(146, 122, 104),
 
-                shell: RgbColor::new(125, 220, 150),
-
-                web: RgbColor::new(235, 145, 215),
-
-                build_config: RgbColor::new(195, 170, 235),
-
-                structured_data: RgbColor::new(120, 215, 220),
-
-                log: RgbColor::new(175, 190, 210),
-
-                archive_package: RgbColor::new(235, 165, 105),
-
-                document: RgbColor::new(225, 215, 180),
-
-                spreadsheet: RgbColor::new(125, 220, 165),
-
-                presentation: RgbColor::new(245, 165, 110),
-
-                image: RgbColor::new(235, 145, 215),
-
-                audio: RgbColor::new(120, 220, 185),
-
-                video: RgbColor::new(200, 150, 235),
-
-                font: RgbColor::new(215, 175, 240),
-
-                database: RgbColor::new(110, 210, 205),
-
-                backup: RgbColor::new(205, 165, 220),
-
-                certificate: RgbColor::new(245, 210, 115),
-
-                disk_image: RgbColor::new(155, 185, 235),
-
-                torrent: RgbColor::new(120, 215, 170),
-
-                desktop_plugin: RgbColor::new(185, 165, 235),
-
-                binary: RgbColor::new(225, 150, 160),
-
-                file: RgbColor::new(210, 215, 225),
+                binary: RgbColor::new(113, 107, 99),
+                file: RgbColor::new(216, 210, 196),
             },
 
             tags: TagColors {
-                filesystem: RgbColor::new(209, 154, 102),
-
-                virtual_tag: RgbColor::new(255, 170, 90),
-
-                memory: RgbColor::new(185, 115, 255),
-
-                note: RgbColor::new(255, 190, 100),
+                filesystem: RgbColor::new(164, 111, 79),
+                virtual_tag: RgbColor::new(104, 183, 174),
+                memory: RgbColor::new(142, 117, 105),
+                note: RgbColor::new(184, 149, 102),
             },
 
             report: ReportColors {
-                heading: RgbColor::new(236, 234, 83),
-
-                label: RgbColor::new(121, 255, 170),
-
-                value: RgbColor::new(210, 215, 225),
-
-                name: RgbColor::new(210, 215, 225),
-
-                path: RgbColor::new(72, 150, 240),
-
-                command: RgbColor::new(129, 255, 145),
-
-                package: RgbColor::new(66, 199, 217),
-
-                version: RgbColor::new(185, 115, 255),
-
-                size: RgbColor::new(147, 255, 147),
-
-                count: RgbColor::new(142, 58, 184),
-
-                total: RgbColor::new(95, 105, 120),
-
-                muted: RgbColor::new(95, 105, 120),
-
-                attention: RgbColor::new(255, 120, 135),
+                heading: RgbColor::new(109, 181, 157),
+                label: RgbColor::new(104, 183, 174),
+                value: RgbColor::new(216, 210, 196),
+                name: RgbColor::new(216, 210, 196),
+                path: RgbColor::new(104, 183, 174),
+                command: RgbColor::new(131, 182, 127),
+                package: RgbColor::new(155, 122, 98),
+                version: RgbColor::new(164, 111, 79),
+                size: RgbColor::new(143, 189, 139),
+                count: RgbColor::new(143, 135, 125),
+                total: RgbColor::new(238, 232, 220),
+                muted: RgbColor::new(113, 107, 99),
+                attention: RgbColor::new(201, 111, 98),
             },
 
             header: HeaderStyle {
-                foreground: RgbColor::new(25, 25, 30),
-
-                background: RgbColor::new(236, 234, 83),
-
+                foreground: RgbColor::new(23, 26, 23),
+                background: RgbColor::new(109, 181, 157),
                 bold: true,
             },
 
             summary: SummaryColors {
-                entries: RgbColor::new(210, 215, 225),
-
+                entries: RgbColor::new(238, 232, 220),
                 entries_bold: true,
-
-                total_size: RgbColor::new(95, 105, 120),
-
-                files: RgbColor::new(210, 215, 225),
-
-                directories: RgbColor::new(72, 150, 240),
-
-                symlinks: RgbColor::new(66, 199, 217),
-
-                special: RgbColor::new(209, 154, 102),
-
-                executables: RgbColor::new(129, 255, 145),
-
-                empty: RgbColor::new(95, 105, 120),
-
-                danger: RgbColor::new(255, 120, 135),
+                files: RgbColor::new(216, 210, 196),
+                directories: RgbColor::new(79, 168, 143),
+                symlinks: RgbColor::new(104, 183, 174),
+                special: RgbColor::new(155, 122, 98),
+                executables: RgbColor::new(131, 182, 127),
+                empty: RgbColor::new(113, 107, 99),
+                danger: RgbColor::new(201, 111, 98),
+                total_size: RgbColor::new(184, 149, 102),
             },
         }
     }
@@ -1378,7 +1316,7 @@ impl Theme {
             character.is_ascii_alphanumeric() || character == '-' || character == '_'
         }) {
             eprintln!(
-                "noct: invalid theme name '{}'; using Jungle",
+                "noct: invalid theme name '{}'; using built-in verdant_mocha theme\n",
                 normalized_name,
             );
 
@@ -1396,10 +1334,10 @@ impl Theme {
 
             Err(error) => {
                 /*
-                 * Jungle is already built in, so a missing jungle.toml is not
-                 * fatal during the transition to external theme files.
+                 * Verdant Mocha is built into Noct, so a missing
+                 * verdant_mocha.toml does not require an external theme file.
                  */
-                if normalized_name != "jungle" {
+                if normalized_name != "verdant_mocha" {
                     eprintln!(
                         "noct: unable to load theme '{}' from {}: {}",
                         normalized_name,
@@ -1407,7 +1345,7 @@ impl Theme {
                         error,
                     );
 
-                    eprintln!("noct: using built-in Jungle theme",);
+                    eprintln!("noct: using built-in verdant_mocha theme\n",);
                 }
 
                 return theme;
@@ -1420,7 +1358,7 @@ impl Theme {
             Err(error) => {
                 eprintln!("noct: invalid theme {}: {}", path.display(), error,);
 
-                eprintln!("noct: using built-in Jungle theme",);
+                eprintln!("noct: using built-in verdant_mocha theme\n",);
 
                 return theme;
             }
@@ -1844,13 +1782,13 @@ mod tests {
     }
 
     #[test]
-    fn builtin_header_matches_original_style() {
+    fn builtin_header_matches_verdant_mocha_style() {
         let theme = Theme::builtin();
 
         assert_eq!(
-            theme.header_ansi(),
-            "\x1b[1m\x1b[38;2;25;25;30m\x1b[48;2;236;234;83m",
-        );
+        theme.header_ansi(),
+        "\x1b[1m\x1b[38;2;23;26;23m\x1b[48;2;109;181;157m",
+    );
     }
 
     #[test]
@@ -1858,9 +1796,9 @@ mod tests {
         let theme = Theme::builtin();
 
         assert_eq!(
-            theme.summary_entries_ansi(),
-            "\x1b[1m\x1b[38;2;210;215;225m",
-        );
+        theme.summary_entries_ansi(),
+        "\x1b[1m\x1b[38;2;238;232;220m",
+    );
     }
 
     #[test]
@@ -1886,12 +1824,12 @@ mod tests {
     }
 
     #[test]
-    fn enabled_palette_matches_original_read_color() {
+    fn enabled_palette_matches_builtin_read_color() {
         let theme = Theme::builtin();
 
         let palette = AnsiPalette::from_theme(&theme, true);
 
-        assert_eq!(palette.permissions.read, "\x1b[38;2;89;183;255m",);
+        assert_eq!(palette.permissions.read, "\x1b[38;2;127;133;125m",);
 
         assert_eq!(palette.reset, "\x1b[0m",);
     }
@@ -1910,16 +1848,23 @@ mod tests {
     }
 
     #[test]
-    fn builtin_report_palette_matches_existing_jungle_colors() {
+    fn builtin_report_palette_matches_verdant_mocha_colors() {
         let theme = Theme::builtin();
 
-        assert_eq!(theme.report.heading.to_hex(), "#ecea53",);
+        assert_eq!(theme.report.heading.to_hex(), "#6db59d",);
 
-        assert_eq!(theme.report.path.to_hex(), "#4896f0",);
+        assert_eq!(theme.report.path.to_hex(), "#68b7ae",);
 
-        assert_eq!(theme.report.command.to_hex(), "#81ff91",);
+        assert_eq!(theme.report.command.to_hex(), "#83b67f",);
 
-        assert_eq!(theme.report.attention.to_hex(), "#ff7887",);
+        assert_eq!(theme.report.attention.to_hex(), "#c96f62",);
+    }
+
+    #[test]
+    fn builtin_theme_is_verdant_mocha() {
+        let theme = Theme::builtin();
+
+        assert_eq!(theme.name, "verdant_mocha");
     }
 }
 
