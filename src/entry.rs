@@ -110,11 +110,7 @@ fn time_for_sort(metadata: &fs::Metadata, time_field: TimeField) -> Option<std::
     }
 }
 
-pub fn sort_entries(
-    entries: &mut [EntryInfo],
-    sort_mode: SortMode,
-    time_field: TimeField,
-) {
+pub fn sort_entries(entries: &mut [EntryInfo], sort_mode: SortMode, time_field: TimeField) {
     match sort_mode {
         SortMode::Name => {
             entries.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
@@ -179,6 +175,42 @@ pub fn read_path_entry(
         .unwrap_or_else(|| path.display().to_string());
 
     maybe_push_entry(path, &name, filters, &mount_table, &mut entries)?;
+
+    Ok(entries)
+}
+
+pub fn read_path_entries(
+    paths: &[String],
+    filters: &[crate::args::Filter],
+    sort_mode: SortMode,
+    time_field: TimeField,
+    reverse_sort: bool,
+) -> std::io::Result<Vec<EntryInfo>> {
+    let mut entries = Vec::new();
+
+    let mount_table = MountTable::load();
+
+    for path_text in paths {
+        let path = Path::new(path_text);
+
+        let name = path
+            .file_name()
+            .map(|file_name| file_name.to_string_lossy().to_string())
+            .unwrap_or_else(|| path.display().to_string());
+
+        if let Err(error) = maybe_push_entry(path, &name, filters, &mount_table, &mut entries) {
+            return Err(std::io::Error::new(
+                error.kind(),
+                format!("unable to read {}: {}", path.display(), error),
+            ));
+        }
+    }
+
+    sort_entries(&mut entries, sort_mode, time_field);
+
+    if reverse_sort && !matches!(sort_mode, SortMode::Unsorted) {
+        entries.reverse();
+    }
 
     Ok(entries)
 }

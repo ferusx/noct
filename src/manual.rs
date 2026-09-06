@@ -18,8 +18,8 @@ const MANUAL_TEXT: &str = "\x1b[38;2;110;110;128m"; // The TEXT (dark gray) colo
 const MANUAL_EMPHASIS: &str = "\x1b[38;2;255;255;255m"; // The EMPHASIS (white)
 const MANUAL_TITLE: &str = "\x1b[1;38;2;255;255;255m"; // The EMPHASIS (bold+white)
 
-const MANUAL_EXAMPLE: &str = "\x1b[38;2;146;220;72m"; // The EXAMPLE (green) color
-const MANUAL_OPTION: &str = "\x1b[1;38;2;146;220;72m"; // The EXAMPLE (bold+green) color
+const MANUAL_EXAMPLE: &str = "\x1b[92m"; // The EXAMPLE (green) color
+const MANUAL_OPTION: &str = "\x1b[1;92m"; // The EXAMPLE (bold+green) color
 
 const MANUAL_BORDER: &str = "\x1b[38;2;78;86;98m"; // The BORDER (gray) color
 const MANUAL_RESET: &str = "\x1b[0m";
@@ -3450,12 +3450,10 @@ but Noct emits plain terminal text without ANSI color styling.",
     print_line("  file", inner_width, colors.option, &colors);
 
     print_indented_paragraph(
-        &[
-            ManualPart {
-                text: "        Match only regular file entries.",
-                color: "",
-            },
-        ],
+        &[ManualPart {
+            text: "        Match only regular file entries.",
+            color: "",
+        }],
         inner_width,
         4,
         &colors,
@@ -3466,12 +3464,10 @@ but Noct emits plain terminal text without ANSI color styling.",
     print_line("  directory (dir)", inner_width, colors.option, &colors);
 
     print_indented_paragraph(
-        &[
-            ManualPart {
-                text: "        Match only directory entries.",
-                color: "",
-            },
-        ],
+        &[ManualPart {
+            text: "        Match only directory entries.",
+            color: "",
+        }],
         inner_width,
         4,
         &colors,
@@ -3482,12 +3478,10 @@ but Noct emits plain terminal text without ANSI color styling.",
     print_line("  symlink (link)", inner_width, colors.option, &colors);
 
     print_indented_paragraph(
-        &[
-            ManualPart {
-                text: "        Match only symbolic link entries.",
-                color: "",
-            },
-        ],
+        &[ManualPart {
+            text: "        Match only symbolic link entries.",
+            color: "",
+        }],
         inner_width,
         4,
         &colors,
@@ -3498,12 +3492,10 @@ but Noct emits plain terminal text without ANSI color styling.",
     print_line("  special", inner_width, colors.option, &colors);
 
     print_indented_paragraph(
-        &[
-            ManualPart {
-                text: "        Match special entries (sockets, FIFOs, block devices, and character devices)",
-                color: "",
-            },
-        ],
+        &[ManualPart {
+            text: "        Match special entries (sockets, FIFOs, block devices, and character devices)",
+            color: "",
+        }],
         inner_width,
         4,
         &colors,
@@ -5687,7 +5679,7 @@ pub fn print_theme_help(palette: &AnsiPalette) {
     print_paragraph(
         &[
             ManualPart {
-                text: "Noct themes live in",
+                text: "Noct can use themes installed with the program as well as themes stored in your personal",
                 color: "",
             },
             ManualPart {
@@ -5695,15 +5687,20 @@ pub fn print_theme_help(palette: &AnsiPalette) {
                 color: colors.example,
             },
             ManualPart {
-                text: "and are selected in the first entry, above the",
+                text: "directory. A personal theme with the same name as an installed theme takes precedence.",
                 color: "",
             },
+        ],
+        inner_width,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_paragraph(
+        &[
             ManualPart {
-                text: "[display]",
-                color: colors.emphasis,
-            },
-            ManualPart {
-                text: "section, in",
+                text: "Select the active RGB theme in",
                 color: "",
             },
             ManualPart {
@@ -5718,6 +5715,10 @@ pub fn print_theme_help(palette: &AnsiPalette) {
                 text: "theme = \"ash_melon\".",
                 color: colors.example,
             },
+            ManualPart {
+                text: "Installed themes can be selected immediately; you only need a personal copy when you want to edit or create one.",
+                color: "",
+            },
         ],
         inner_width,
         &colors,
@@ -5728,27 +5729,23 @@ pub fn print_theme_help(palette: &AnsiPalette) {
     print_paragraph(
         &[
             ManualPart {
-                text: "The easiest way to build a custom theme is to copy an existing",
+                text: "The easiest way to build a custom RGB theme is to copy an existing Noct theme into",
                 color: "",
             },
             ManualPart {
-                text: "Noct",
-                color: colors.option,
-            },
-            ManualPart {
-                text: "theme, rename the file,",
-                color: "",
-            },
-            ManualPart {
-                text: "set theme in",
-                color: "",
-            },
-            ManualPart {
-                text: "noct.toml",
+                text: "~/.config/noct/themes/",
                 color: colors.example,
             },
             ManualPart {
-                text: "to the filename you renamed, and edit its colors. Theme colors use",
+                text: "rename the file, select that filename in",
+                color: "",
+            },
+            ManualPart {
+                text: "noct.toml,",
+                color: colors.example,
+            },
+            ManualPart {
+                text: "and edit its colors. RGB theme colors use",
                 color: "",
             },
             ManualPart {
@@ -5918,6 +5915,318 @@ always inherits the same classification color as its filename.",
 
     print_blank_line(inner_width, &colors);
 
+    print_line("ANSI16 Console Theme", inner_width, colors.title, &colors);
+
+    print_theme_field(
+        "Automatic selection",
+        "Physical system consoles use Noct's separate ANSI16 console palette automatically instead of the selected RGB theme.",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field(
+        "User override",
+        "~/.config/noct/themes/console/console_ansi16.toml",
+        inner_width,
+        &colors,
+    );
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "A personal console theme takes precedence over the system-installed console theme.",
+            color: "",
+        }],
+        inner_width,
+        8,
+        &colors,
+    );
+
+    print_theme_field(
+        "Fixed filename",
+        "The filename console_ansi16.toml is fixed. It is not selected with theme = and must retain that exact name for Noct to load it automatically.",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field(
+        "Fallback",
+        "Noct first tries the personal console theme, then the system-installed console theme, and finally its complete built-in ANSI16 palette.",
+        inner_width,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("Console Color Names", inner_width, colors.title, &colors);
+
+    print_theme_field(
+        "Available colors",
+        "black, red, green, yellow, blue, magenta, cyan, light_gray, dark_gray, bright_red, bright_green, bright_yellow, bright_blue, bright_magenta, bright_cyan, white",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field(
+        "Gray and white",
+        "light_gray and white are different colors. white uses the bright-white ANSI slot.",
+        inner_width,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("Console Theme Fields", inner_width, colors.title, &colors);
+
+    print_paragraph(
+        &[ManualPart {
+            text: "The console theme uses the same general color groups as Noct's RGB themes. Each section controls a different part of the output.",
+            color: "",
+        }],
+        inner_width,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("[file_type]", inner_width, colors.option, &colors);
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "Colors the leading file-type character shown in permission strings: ordinary files, directories, symbolic links, and special files.",
+            color: "",
+        }],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("[permissions]", inner_width, colors.option, &colors);
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "Colors permission characters in long listings and reports. The fields are read, write, execute, and missing; execute also covers special execute markers such as s, S, t, and T.",
+            color: "",
+        }],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("[columns]", inner_width, colors.option, &colors);
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "Controls metadata colors in ordinary long listings.",
+            color: "",
+        }],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_theme_field("user", "Owner names.", inner_width, &colors);
+
+    print_theme_field(
+        "size_bytes",
+        "Sizes displayed as raw byte values.",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field(
+        "size_units",
+        "Sizes displayed with K, M, G, or T units.",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field("time", "Timestamps.", inner_width, &colors);
+
+    print_theme_field("age", "Relative ages.", inner_width, &colors);
+
+    print_theme_field("state_normal", "Normal file states.", inner_width, &colors);
+
+    print_theme_field(
+        "state_attention",
+        "States that require attention.",
+        inner_width,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("[names]", inner_width, colors.option, &colors);
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "Provides basic name colors for directories, symbolic links, broken symbolic links, executables, and special files where Noct uses simple name-based coloring rather than the detailed filesystem classification palette.",
+            color: "",
+        }],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("[classification]", inner_width, colors.option, &colors);
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "Controls filesystem-aware filename colors when filesystem_colors = \"theme\". Entries cover directories and links as well as source code, shell files, web files, archives, documents, images, audio, video, databases, backups, disk images, binaries, and the other file classes listed earlier in this help.",
+            color: "",
+        }],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("[tags]", inner_width, colors.option, &colors);
+
+    print_theme_field(
+        "filesystem",
+        "Ordinary filesystem annotations.",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field(
+        "virtual_tag",
+        "Virtual-filesystem annotations.",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field(
+        "memory",
+        "Memory-backed filesystem annotations.",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field(
+        "note",
+        "Explanatory notes printed with listings.",
+        inner_width,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("[report]", inner_width, colors.option, &colors);
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "Controls Noct's specialized report-style commands such as permissions, ownership, profiling, mapping, and similar inspection modes.",
+            color: "",
+        }],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_theme_field("heading", "Report headings.", inner_width, &colors);
+
+    print_theme_field("label", "Descriptive field labels.", inner_width, &colors);
+
+    print_theme_field("value", "General reported values.", inner_width, &colors);
+
+    print_theme_field("name", "Entry or item names.", inner_width, &colors);
+
+    print_theme_field("path", "Filesystem paths.", inner_width, &colors);
+
+    print_theme_field("command", "Command names.", inner_width, &colors);
+
+    print_theme_field("package", "Package names.", inner_width, &colors);
+
+    print_theme_field("version", "Version strings.", inner_width, &colors);
+
+    print_theme_field("size", "Reported sizes.", inner_width, &colors);
+
+    print_theme_field("count", "Numeric counts.", inner_width, &colors);
+
+    print_theme_field("total", "Totals and result labels.", inner_width, &colors);
+
+    print_theme_field(
+        "muted",
+        "Secondary or subdued information.",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field(
+        "attention",
+        "Warnings and attention-worthy values.",
+        inner_width,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("[header]", inner_width, colors.option, &colors);
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "Controls the foreground and background colors of the long-view column header.",
+            color: "",
+        }],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_line("[summary]", inner_width, colors.option, &colors);
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "Controls the colors used by ordinary listing summaries rather than specialized reports.",
+            color: "",
+        }],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_theme_field("entries", "Total entry count.", inner_width, &colors);
+
+    print_theme_field(
+        "total_size",
+        "The Total listed size line.",
+        inner_width,
+        &colors,
+    );
+
+    print_theme_field("files", "File counts.", inner_width, &colors);
+
+    print_theme_field("directories", "Directory counts.", inner_width, &colors);
+
+    print_theme_field("symlinks", "Symbolic-link counts.", inner_width, &colors);
+
+    print_theme_field("special", "Special-file counts.", inner_width, &colors);
+
+    print_theme_field("executables", "Executable counts.", inner_width, &colors);
+
+    print_theme_field("empty", "Empty-file counts.", inner_width, &colors);
+
+    print_theme_field(
+        "danger",
+        "Count of attention-worthy entries.",
+        inner_width,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
     print_line("Useful Commands", inner_width, colors.title, &colors);
 
     print_paragraph(
@@ -6010,6 +6319,33 @@ pub fn print_help(palette: &AnsiPalette) {
         "  --theme-help                Show the Noct theming quick reference",
         inner_width,
         colors.example,
+        &colors,
+    );
+
+    print_help_line(
+        "                              Physical consoles use a separate ANSI16",
+        inner_width,
+        colors.example,
+        &colors,
+    );
+
+    print_indented_paragraph(
+        &[
+            ManualPart {
+                text: "theme automatically (see",
+                color: colors.example,
+            },
+            ManualPart {
+                text: "--theme-help",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: ")",
+                color: colors.example,
+            },
+        ],
+        inner_width,
+        30,
         &colors,
     );
 
@@ -6523,7 +6859,6 @@ pub fn print_help(palette: &AnsiPalette) {
 
     print_blank_line(inner_width, &colors);
 
-
     print_help_line(
         "  --greater-than SIZE         Show regular files at least SIZE (See SIZE)",
         inner_width,
@@ -6572,7 +6907,6 @@ pub fn print_help(palette: &AnsiPalette) {
     );
 
     print_blank_line(inner_width, &colors);
-
 
     print_help_line(
         "  -D, --dirs-only             Used with --tree",
@@ -6699,7 +7033,6 @@ pub fn print_help(palette: &AnsiPalette) {
         &colors,
     );
 
-
     print_blank_line(inner_width, &colors);
 
     print_help_line("  NOCT SPECIFIC SORT:", inner_width, colors.title, &colors);
@@ -6808,33 +7141,13 @@ pub fn print_help(palette: &AnsiPalette) {
         &colors,
     );
 
-    print_line(
-        "    file",
-        inner_width,
-        colors.example,
-        &colors,
-    );
+    print_line("    file", inner_width, colors.example, &colors);
 
-    print_line(
-        "    directory, dir",
-        inner_width,
-        colors.example,
-        &colors,
-    );
+    print_line("    directory, dir", inner_width, colors.example, &colors);
 
-    print_line(
-        "    symlink, link",
-        inner_width,
-        colors.example,
-        &colors,
-    );
+    print_line("    symlink, link", inner_width, colors.example, &colors);
 
-    print_line(
-        "    special",
-        inner_width,
-        colors.example,
-        &colors,
-    );
+    print_line("    special", inner_width, colors.example, &colors);
 
     print_blank_line(inner_width, &colors);
 
@@ -6875,7 +7188,6 @@ pub fn print_help(palette: &AnsiPalette) {
     print_help_line("  DEFAULT", inner_width, colors.title, &colors);
 
     print_blank_line(inner_width, &colors);
-
 
     print_help_line("    broken-link", inner_width, colors.example, &colors);
 
@@ -7220,6 +7532,28 @@ fn print_centered_resize_line(
     }
 }
 
+fn print_theme_field(name: &str, description: &str, inner_width: usize, colors: &ManualColors) {
+    print_indented_paragraph(
+        &[ManualPart {
+            text: name,
+            color: colors.example,
+        }],
+        inner_width,
+        4,
+        colors,
+    );
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: description,
+            color: "",
+        }],
+        inner_width,
+        8,
+        colors,
+    );
+}
+
 fn print_manual_dimension_line(
     label: &str,
     value_width: usize,
@@ -7308,12 +7642,7 @@ fn print_line(text: &str, width: usize, color: &str, colors: &ManualColors) {
     );
 }
 
-fn print_help_line(
-    text: &str,
-    width: usize,
-    color: &str,
-    colors: &ManualColors,
-) {
+fn print_help_line(text: &str, width: usize, color: &str, colors: &ManualColors) {
     let visible_width = text.chars().count();
 
     /*

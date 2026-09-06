@@ -33,7 +33,7 @@ impl CommandMode {
             CommandMode::PackageBins => "--package-bins",
             CommandMode::Owns => "--owns",
             CommandMode::Inspect => "--inspect",
-            CommandMode::LinksTo => "--links-to",
+            CommandMode::LinksTo => "--link-to",
             CommandMode::Duplicates => "--duplicates",
             CommandMode::Du => "--du",
             CommandMode::Map => "--map",
@@ -402,8 +402,6 @@ fn command_mode_for_argument(argument: &str) -> Option<CommandMode> {
 
         "--inspect" => Some(CommandMode::Inspect),
 
-        "--links-to" | "--link-to" => Some(CommandMode::LinksTo),
-
         "--duplicates" => Some(CommandMode::Duplicates),
 
         "--du" => Some(CommandMode::Du),
@@ -435,6 +433,8 @@ fn command_mode_for_argument(argument: &str) -> Option<CommandMode> {
         "--mounts" => Some(CommandMode::Mounts),
 
         "--empty-dirs" => Some(CommandMode::EmptyDirs),
+
+        "--link-to" => Some(CommandMode::LinksTo),
 
         "--hot" => Some(CommandMode::Hot),
 

@@ -271,12 +271,22 @@ pub fn print_entry(
     }
 
     if render_options.use_colors {
-        let size_style = if size_has_unit { "\x1b[1m" } else { "" };
+        let size_style = if size_has_unit && !palette.ansi16 {
+            "\x1b[1m"
+        } else {
+            ""
+        };
+
+        let size_color = if size_has_unit {
+            &palette.columns.size_units
+        } else {
+            &palette.columns.size_bytes
+        };
 
         columns.push(format!(
             "{}{}{:>width$}{}",
             size_style,
-            palette.columns.size,
+            size_color,
             size,
             palette.reset,
             width = widths.size,

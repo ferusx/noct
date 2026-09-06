@@ -42,7 +42,7 @@ Configuration settings provide defaults for display, listing, colors, icons, the
 
 .TP
 .BR \-\-manual
-Display \fBNoct’s\fP explanatory built-in manual. It provides a guided overview of ordinary listing options, filters, fields, and \fBNoct-specific\fP inspection operations.
+Display \fBNoct's\fP explanatory built-in manual. It provides a guided overview of ordinary listing options, filters, fields, and \fBNoct-specific\fP inspection operations.
 
 .TP
 .BR \-\-theme-help
@@ -54,7 +54,7 @@ Generate an editable configuration template without replacing the active configu
 
 .TP
 .BR \-? ", " \-\-help
-Display \fBNoct’s\fP compact command reference for quickly looking up available options, modifiers, fields, and command forms.
+Display \fBNoct's\fP compact command reference for quickly looking up available options, modifiers, fields, and command forms.
 
 .TP
 .BR \-v ", " \-\-version
@@ -154,7 +154,7 @@ Sort entries by the selected field. Available fields are described in the \fBFIE
 
 .TP
 .BR \-S
-Sort by size, largest first. 
+Sort by size, largest first.
 
 .TP
 .BR \-r ", " \-\-reverse
@@ -198,7 +198,7 @@ Directories are not included by this filter.
 .BR \-f ", " "\-\-filter KIND VALUE"
 Apply \fBNoct's\fP general filtering interface to an ordinary listing. \fBKIND\fP selects the property to match and \fBVALUE\fP supplies the requested value.
 
-Apply the general filtering interface to ordinary listings. \fBKIND\fP selects the property to match and VALUE supplies the wanted match. Supported kinds are \fBextension\fP (ext) and \fBtype\fP.
+Supported kinds are \fBextension\fP (\fBext\fP) and \fBtype\fP.
 
 The available filter kinds are described in the \fBKINDS\fP section.
 
@@ -206,8 +206,7 @@ The available filter kinds are described in the \fBKINDS\fP section.
 .BR \-\-fresh
 Show entries modified within the last 24 hours.
 
-This is the fixed-
-window convenience form for recent modification filtering. For a custom time window, use \fB--newer-than AGE\fP or \fB--since AGE\fP.
+This is the fixed-window convenience form for recent modification filtering. For a custom time window, use \fB--newer-than AGE\fP or \fB--since AGE\fP.
 
 .TP
 .BR "\-\-greater\-than SIZE"
@@ -293,7 +292,7 @@ This is narrower than \fB--writable\fP and identifies entries that may be modifi
 .TP
 These options perform dedicated filesystem inspections and analyses rather than merely shaping or filtering an ordinary listing. Each operation is designed to answer a particular filesystem question and may accept additional modifiers, fields, limits, or selection values described elsewhere in this manual.
 
-.TP 
+.TP
 .BR "\-\-audit [PATH]"
 Audit a directory for filesystem entries that deserve attention. The report provides a focused view of unusual or potentially troublesome conditions without requiring them to be discovered manually in an ordinary listing.
 
@@ -339,7 +338,7 @@ Use \fB--kind KIND\fP to concentrate on one candidate type, or refine the report
 .BR "\-\-hot [PATH]"
 Search recursively for recently modified entries below a directory. By default, \fB--hot\fP examines the previous 24 hours, places the newest findings first, and shows at most 50 results.
 
-Use \fB--since AGE\fP to change the time window and --limit N to restrict the number of findings. Results may be sorted by age or path.
+Use \fB--since AGE\fP to change the time window and \fB--limit N\fP to restrict the number of findings. Results may be sorted by age or path.
 
 .TP
 .BR "\-\-inspect PATH|COMMAND"
@@ -843,7 +842,7 @@ Weeks. For example: \fB4w\fP
 
 .RS
 Months. For example: \fB3mo\fP
-.RE 
+.RE
 
 .TP
 .BR y
@@ -898,6 +897,7 @@ Gibibytes. One unit equals \fB1024 MiB\fP.
 Tebibytes. One unit equals \fB1024 GiB\fP.
 
 Examples of valid size expressions include \fB512\fP, \fB100K\fP, \fB10MiB\fP, \fB2G\fP, and \fB1TiB\fP.
+.RE
 
 .\" === Main Section ===
 .SH CONFIGURATION
@@ -1409,7 +1409,7 @@ Show entries whose world-write permission bit is set.
 .SS "NOCT-SPECIFIC EXAMPLES"
 
 .TP
-The following examples demonstrate Noct's dedicated inspection and analysis operations. They are arranged alphabetically to match the \fBNOCT-SPECIFIC OPTIONS\fP section. 
+The following examples demonstrate Noct's dedicated inspection and analysis operations. They are arranged alphabetically to match the \fBNOCT-SPECIFIC OPTIONS\fP section.
 
 .TP
 .BR "nt --audit /usr/local/bin"

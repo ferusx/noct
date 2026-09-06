@@ -2,18 +2,18 @@
 
 **A command-line filesystem inspection and analysis toolkit for Unix-like systems.**
 
-Noct is built for looking at filesystems from more useful angles than a traditional directory listing alone can provide. It combines a fast everyday file lister with focused inspection modes for ownership, permissions, age, sizes, duplicate files, scripts, extensions, filesystem boundaries, cleanup candidates, and more.
+Noct is built for looking at filesystems from more useful angles than a traditional directory listing alone can provide. It combines a fast everyday file listing tool with focused inspection modes for ownership, permissions, age, sizes, duplicate files, scripts, extensions, filesystem boundaries, cleanup candidates, and more.
 
 The installed executable is `noct`, while `nt` is the recommended short form used throughout this documentation.
 
-Noct can be used as a familiar directory viewer when you simply want to see what is there, or as a more specialized inspection tool when you want the filesystem to answer a particular question.
+**Noct** can be used as a familiar directory viewer when you simply want to see what is there, or as a more specialized inspection tool when you want the filesystem to answer a particular question.
 
 ## Highlights
 
 - Fast grid, one-line, long, and recursive Tree views
 - Rich terminal colors with configurable themes
 - Optional Nerd Font file-type icons
-- Filesystem-aware classification for files and directories
+- Filesystem-aware classification for source code, documents, media, archives, special files, directories, and more
 - Detailed long listings with permissions, owner, size, timestamps, age, and state
 - Filtering by size, age, permissions, state, extension, executability, writability, and more
 - Specialized modes for duplicates, ownership, permissions, scripts, extensions, cleanup candidates, directory usage, filesystem mounts, and other inspections
@@ -21,7 +21,6 @@ Noct can be used as a familiar directory viewer when you simply want to see what
 - Built-in `--help`, explanatory `--manual`, theme reference with `--theme-help`, and generated configuration template support
 
 ## Screenshots
-
 
 ### Noct's \--map Option
 `--map` gives a directory a visual size profile, making the relative weight of its contents immediately obvious. The proportional bars make large directories and files stand out without requiring you to compare a column of numbers manually.
@@ -48,18 +47,18 @@ Noct can be used as a familiar directory viewer when you simply want to see what
 `--profile` gives a broader snapshot of a directory rather than concentrating on individual entries. It summarizes its contents, space usage, executable and hidden entries, age extremes, and other useful characteristics in one compact report.
 
 <p align="center">
-  <img src="screenshots/noct-profile.png" alt="Noct's --profile option  gathering info about ~/DevX" width="95%">
+  <img src="screenshots/noct-profile.png" alt="Noct's --profile option gathering info about ~/DevX" width="95%">
 </p>
 
 ### Noct's \--long --header Options
-`Noct's` long view turns ordinary directory browsing into a metadata-rich table with permissions, ownership, size, timestamps, age, state, and classified filenames. Optional **Nerd Font** icons and themed filesystem colors make different kinds of entries easy to distinguish at a glance.
+**Noct's** long view turns ordinary directory browsing into a metadata-rich table with permissions, ownership, size, timestamps, age, state, and classified filenames. Optional **Nerd Font** icons and themed filesystem colors make different kinds of entries easy to distinguish at a glance.
 
 <p align="center">
   <img src="screenshots/noct-long-header.png" alt="Noct's --lh options listing in long view format" width="95%">
 </p>
 
 ### Noct's \--tree Option
-Tree mode provides a recursive structural view while retaining `Noct's` filesystem classification, colors, and optional icons. Depth can be restricted with `--level`, making it useful both for quick project overviews and deeper directory exploration.
+Tree mode provides a recursive structural view while retaining **Noct's** filesystem classification, colors, and optional icons. Depth can be restricted with `--level`, making it useful both for quick project overviews and deeper directory exploration.
 
 <p align="center">
   <img src="screenshots/noct-tree.png" alt="Noct's --tree option in action" width="95%">
@@ -67,7 +66,7 @@ Tree mode provides a recursive structural view while retaining `Noct's` filesyst
 
 ## Installation
 
-Noct is written in Rust and currently targets Unix-like systems, with `Linux` and `FreeBSD` as its primary development and testing platforms.
+**Noct** is written in Rust and targets Unix-like systems, with `Linux` and `FreeBSD` as its primary development and testing platforms.
 
 ### Build from source
 
@@ -91,7 +90,25 @@ Install it somewhere in your `PATH`, for example:
 sudo install -m 755 target/release/noct /usr/local/bin/noct
 ```
 
-Noct's manual page is located at:
+The recommended command name throughout **Noct's** documentation is `nt`. When installing from source, create the corresponding symbolic link:
+
+```
+sudo ln -sf noct /usr/local/bin/nt
+```
+
+You can then invoke **Noct** with either command:
+
+```
+nt
+```
+
+or:
+
+```
+noct
+```
+
+**Noct's** manual page is located at:
 
 ```text
 man/man1/noct.1
@@ -103,43 +120,25 @@ It can be installed manually with:
 sudo install -m 644 man/man1/noct.1 /usr/local/share/man/man1/noct.1
 ```
 
-### The `nt` command
+After installation, open it with:
 
-The installed executable is named `noct`, but the recommendation is to use `nt` as the preferred short command.
-
-For Zsh or Bash, you can add an alias such as:
-
-```sh
-alias nt='noct'
+```
+man noct
 ```
 
-Add it to your shell configuration if you want it available in every session.
-
-For example:
-
-```sh
-echo "alias nt='noct'" >> ~/.zshrc
-```
-
-or:
-
-```sh
-echo "alias nt='noct'" >> ~/.bashrc
-```
-
-Reload the shell configuration or start a new shell afterwards.
+**Packaged installations may install the binary, the `nt` command, and the manual page automatically.**
 
 ## Quick Start
 
-Noct is designed to make useful filesystem inspection accessible without requiring you to assemble several separate commands first. Many of its inspection modes can be used directly: choose what you want to know, point Noct at a path, and let it build the report.
+**Noct** is designed to make useful filesystem inspection accessible without requiring you to assemble several separate commands first. Many of its inspection modes can be used directly: choose what you want to know, point **Noct** at a path, and let it build the report.
 
-List the current directory:
+List the current directory using **Noct's** grid format:
 
 ```
 nt
 ```
 
-List the current directory using Noct's long format, similar in spirit to **`ls -l`**:
+List the current directory using **Noct's** long format, similar in spirit to **`ls -l`**:
 
 ```
 nt -l
@@ -157,7 +156,7 @@ Get a broader profile of a directory:
 nt --profile ~/Projects
 ```
 
-Map the filesystem characteristics of a path using a graphical ASCII layout:
+Map the contents of a path by relative size using a graphical ASCII layout:
 
 ```
 nt --map ~/
@@ -178,14 +177,14 @@ nt --graveyard ~/
 Or switch back to familiar filesystem browsing with a recursive Tree:
 
 ```
-nt --tree ~/Projects
+nt --tree --level 3 ~/Projects
 ```
 
-These are only a few of Noct's many inspection modes. Most are deliberately simple to invoke, while additional modifiers and different combinations are available when you want to narrow or reshape a report.
+These are only a few of **Noct's** many inspection modes. Most are deliberately simple to invoke, while additional modifiers and different combinations are available when you want to narrow or reshape a report.
 
 ## Inspection Tools
 
-Noct's inspection modes are designed to answer useful filesystem questions directly. Instead of assembling several separate commands, you can usually point Noct at a path and ask for the kind of report you want.
+**Noct's** inspection modes are designed to answer useful filesystem questions directly. Instead of assembling several separate commands, you can usually point **Noct** at a path and ask for the kind of report you want.
 
 Some of the many useful inspection modes are:
 
@@ -248,11 +247,11 @@ nt --manual
 
 ## Listing and Tree Views
 
-Noct can also be used as a fast everyday directory viewer. Ordinary listings support familiar grid and long formats, while Tree mode gives a recursive structural view of a path.
+**Noct** can also be used as a fast everyday directory viewer. Ordinary listings support familiar grid and long formats, while Tree mode gives a recursive structural view of a path.
 
 ### Ordinary Listings
 
-Run Noct without a specialized inspection mode to list a directory:
+Run **Noct** without a specialized inspection mode to list a directory:
 
 ```sh
 nt ~/Downloads
@@ -292,7 +291,7 @@ Or show directories only:
 nt --tree ~/Projects -D
 ```
 
-Tree output shares Noct's filesystem classification, colors, icons, sorting, and hidden-entry handling, so it remains visually consistent with ordinary listings.
+Tree output shares **Noct's** filesystem classification, colors, icons, sorting, and hidden-entry handling, so it remains visually consistent with ordinary listings.
 
 For the full set of display and Tree options, see:
 
@@ -302,7 +301,7 @@ nt --help
 
 ## Filtering and Sorting
 
-Noct's ordinary listings can be narrowed and reordered without leaving the command. Filters can focus the view on things such as size, age, permissions, state, executability, or file extension, while sorting controls how the final results are presented.
+**Noct's** ordinary listings can be narrowed and reordered without leaving the command. Filters can focus the view on things such as size, age, permissions, state, executability, or file extension, while sorting controls how the final results are presented.
 
 Common filters include:
 
@@ -372,15 +371,15 @@ nt --manual
 
 ## Configuration, Themes, Colors, and Icons
 
-Noct can be customized through its configuration file, including default listing behavior, long-view columns, sorting, colors, icons, and themes.
+**Noct** can be customized through its configuration file, including default listing behavior, long-view columns, sorting, colors, icons, and themes.
 
-The configuration is stored under Noct's XDG configuration directory, normally:
+The configuration is stored under **Noct's** XDG configuration directory, normally:
 
 ```text
 ~/.config/noct/noct.toml
 ```
 
-Rather than building a configuration file by hand, Noct can generate a fully commented template:
+Rather than building a configuration file by hand, **Noct** can generate a fully commented template:
 
 ```sh
 nt --generate-config
@@ -390,19 +389,21 @@ The generated copy is written separately from the active configuration, so it ca
 
 ### Themes
 
-Noct supports external color themes stored under:
+**Noct** can use themes installed with the program as well as personal themes stored under:
 
 ```text
 ~/.config/noct/themes/
 ```
 
-Select a theme in `noct.toml`:
+A personal theme with the same name as an installed theme takes precedence.
+
+Select the active theme in `noct.toml`:
 
 ```toml
 theme = "verdant_mocha"
 ```
 
-Themes can control colors throughout Noct's listings, reports, headers, summaries, permissions, filesystem classifications, and other interface elements.
+Themes can control colors throughout **Noct's** listings, reports, headers, summaries, permissions, filesystem classifications, and other interface elements.
 
 For a focused explanation of the theming system, use:
 
@@ -410,7 +411,29 @@ For a focused explanation of the theming system, use:
 nt --theme-help
 ```
 
-Or see the `README.md` file in `Noct's` [themes documentation](./themes/README.md), in the themes/ directory in this repository, for a step-by-step guide on using the included themes or creating your own.
+Or see the `README.md` file in **Noct's** [themes documentation](./themes/README.md), in the themes/ directory in this repository, for a step-by-step guide on using the included rich themes or creating your own.
+
+### Console Theme
+
+On physical system consoles, **Noct** automatically switches from the selected RGB theme to a separate ANSI16 console theme designed for terminals with a limited color palette.
+
+A personal console theme can be stored at:
+
+```text
+~/.config/noct/themes/console/console_ansi16.toml
+```
+
+The filename is fixed and the console theme is selected automatically; it is ***not*** chosen with the `theme` setting in `noct.toml`.
+
+If no personal console theme is available, **Noct** falls back to the system-installed console theme and then to its built-in ANSI16 palette.
+
+For the complete console-theme format, supported color names, and available fields, use:
+
+```sh
+nt --theme-help
+```
+
+or see **Noct's** [console theme documentation](./themes/themes/console/README.md).
 
 ### Filesystem Colors
 
@@ -420,10 +443,10 @@ Filename and icon coloring can be controlled independently of the rest of the in
 filesystem_colors = "theme"
 ```
 
-Noct provides three filesystem color modes:
+**Noct** provides three filesystem color modes:
 
 - `theme` — use filesystem classification colors from the selected theme
-- `standard` — use Noct's built-in filesystem classification palette
+- `standard` — use **Noct's** built-in filesystem classification palette
 - `directories` — emphasize directory coloring while leaving ordinary filenames unclassified
 
 This makes it possible to use anything from rich file classification to a much quieter traditional directory-oriented appearance.
@@ -449,7 +472,7 @@ A font containing the required Nerd Font glyph must be installed for the icons t
 
 ## Documentation
 
-Noct includes several layers of built-in documentation depending on how much detail you need.
+**Noct** includes several layers of built-in documentation depending on how much detail you need.
 
 For a compact command reference:
 
@@ -483,11 +506,11 @@ The README is intended as an introduction and overview. The built-in help, manua
 
 ## Platforms
 
-`Noct` is developed for Unix-like systems and is currently tested primarily on `Linux` and `FreeBSD`, with ongoing testing also taking place on `NetBSD`, `OpenBSD`, and `DragonFly BSD`. Future releases for some or all of these platforms are being explored.
+**Noct** is developed for Unix-like systems and is currently tested primarily on `Linux` and `FreeBSD`, with ongoing testing also taking place on `NetBSD`, `OpenBSD`, and `DragonFly BSD`. Future releases for some or all of these platforms are being explored.
 
 ### Linux
 
-`Noct` works as a native command-line tool on `Linux` and integrates naturally with standard Unix filesystem conventions, permissions, ownership, symbolic links, and terminal environments.
+**Noct** works as a native command-line tool on `Linux` and integrates naturally with standard Unix filesystem conventions, permissions, ownership, symbolic links, and terminal environments.
 
 Build from source with **Cargo**:
 
@@ -497,15 +520,15 @@ cargo build --release
 
 ### FreeBSD
 
-`FreeBSD` is also a primary development and testing platform for `Noct`.
+`FreeBSD` is also a primary development and testing platform for **Noct**.
 
-`Noct` supports `FreeBSD` filesystem and package-management workflows, including package ownership inspection where the required system tools are available.
+**Noct** supports `FreeBSD` filesystem and package-management workflows, including package ownership inspection where the required system tools are available.
 
-A `FreeBSD` port is planned for installation through the Ports Collection and packages. Until that release is available, Noct can be built from source with Cargo in the same way as on `Linux`.
+A `FreeBSD` port is planned for installation through the Ports Collection and packages. Until that release is available, **Noct** can be built from source with Cargo in the same way as on `Linux`.
 
 ### Terminal Support
 
-Noct is designed for terminal use and works with plain text output as well as rich ANSI colors.
+**Noct** is designed for terminal use and works with plain text output as well as rich ANSI colors.
 
 Optional file-type icons require a Nerd Font-compatible terminal font.
 
@@ -517,7 +540,7 @@ nt --no-colors
 
 ## Scry
 
-Noct is developed alongside [Scry](https://github.com/ferusx/scry-tui-file-browser), an interactive terminal file search and navigation tool.
+**Noct** is developed alongside [Scry](https://github.com/ferusx/scry-tui-file-browser), an interactive terminal file search and navigation tool.
 
 The two projects share some visual ideas and filesystem-oriented design, but they serve different purposes:
 
@@ -528,6 +551,6 @@ They can be used independently, but together they cover two different sides of f
 
 ## License
 
-Noct is released under the BSD 3-Clause License.
+**Noct** is released under the BSD 3-Clause License.
 
 See [LICENSE](LICENSE) for the full license text.

@@ -56,7 +56,7 @@ fn entry_matches_filter(
                 }
             }
         }
-        
+
         Filter::State(wanted_state) => state == wanted_state,
 
         Filter::Danger => state != "normal",

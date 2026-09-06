@@ -238,10 +238,12 @@ fn print_column_header(palette: &AnsiPalette) {
 fn print_map_entry(entry: &MapEntry, largest: u64, palette: &AnsiPalette) {
     let bar_width = bar_width_for_size(entry.size, largest);
 
+    let bar_character = if palette.ansi16 { "#" } else { "▨" };
+
     let bar = if bar_width == 0 {
         "!".to_string()
     } else {
-        "▨".repeat(bar_width)
+        bar_character.repeat(bar_width)
     };
 
     let padded_bar = format!("{:<width$}", bar, width = MAX_BAR_WIDTH,);

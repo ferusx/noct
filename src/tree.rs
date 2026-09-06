@@ -544,20 +544,13 @@ fn render_tree_name(
 
     let class = classify_entry(&entry.path, &entry.name, &entry.metadata);
 
-    let icon = if show_icons {
+    let icon = if show_icons && !palette.ansi16 {
         format!("{} ", icon_for_class(class))
     } else {
         String::new()
     };
 
-    format!(
-        "{}{}{}{}{}",
-        color,
-        icon,
-        entry.name,
-        suffix,
-        palette.reset,
-    )
+    format!("{}{}{}{}{}", color, icon, entry.name, suffix, palette.reset,)
 }
 
 fn count_tree_entry(entry: &TreeEntry, counts: &mut TreeCounts) {

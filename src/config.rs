@@ -182,10 +182,25 @@ pub fn config_directory() -> Option<PathBuf> {
     Some(PathBuf::from(home).join(".config").join("noct"))
 }
 
-pub fn themes_directory() -> Option<PathBuf> {
+pub fn user_themes_directory() -> Option<PathBuf> {
     config_directory().map(|directory| directory.join("themes"))
 }
 
+pub fn system_themes_directories() -> Vec<PathBuf> {
+    let data_directories = env::var_os("XDG_DATA_DIRS")
+        .map(|value| env::split_paths(&value).collect::<Vec<_>>())
+        .unwrap_or_else(|| {
+            vec![
+                PathBuf::from("/usr/local/share"),
+                PathBuf::from("/usr/share"),
+            ]
+        });
+
+    data_directories
+        .into_iter()
+        .map(|directory| directory.join("noct").join("themes"))
+        .collect()
+}
 pub fn config_path() -> Option<PathBuf> {
     config_directory().map(|directory| directory.join("noct.toml"))
 }
@@ -238,7 +253,7 @@ pub fn load_or_create_config() -> NoctConfig {
         return NoctConfig::default();
     };
 
-    if let Some(themes_directory) = themes_directory() {
+    if let Some(themes_directory) = user_themes_directory() {
         if let Err(error) = fs::create_dir_all(&themes_directory) {
             eprintln!(
                 "noct: unable to create themes directory {}: {}",

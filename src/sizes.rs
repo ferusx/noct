@@ -3,7 +3,7 @@ use std::fs;
 use std::os::unix::fs::MetadataExt;
 use std::path::{Component, Path, PathBuf};
 
-#[cfg(target_os = "freebsd")]
+#[cfg(any(target_os = "freebsd", target_os = "netbsd"))]
 use std::process::Command;
 
 use crate::entry::EntryInfo;
@@ -149,8 +149,8 @@ fn normalize_lexical_path(path: &Path) -> PathBuf {
 
 fn classify_filesystem(filesystem_type: &str) -> FilesystemClass {
     match filesystem_type {
-        "proc" | "procfs" | "sysfs" | "cgroup" | "cgroup2" | "debugfs" | "tracefs"
-        | "securityfs" | "configfs" | "pstore" | "fusectl" | "mqueue" | "devpts"
+        "proc" | "procfs" | "kernfs" | "ptyfs" | "sysfs" | "cgroup" | "cgroup2" | "debugfs"
+        | "tracefs" | "securityfs" | "configfs" | "pstore" | "fusectl" | "mqueue" | "devpts"
         | "binfmt_misc" => FilesystemClass::VirtualMetadata,
 
         "tmpfs" | "devtmpfs" | "ramfs" => FilesystemClass::MemoryBacked,
@@ -221,11 +221,43 @@ fn parse_freebsd_mount_line(line: &str) -> Option<MountRecord> {
     })
 }
 
-#[cfg(not(any(target_os = "linux", target_os = "freebsd",)))]
+#[cfg(target_os = "netbsd")]
+fn platform_mount_records() -> Vec<MountRecord> {
+    let Ok(output) = Command::new("mount").output() else {
+        return Vec::new();
+    };
+
+    if !output.status.success() {
+        return Vec::new();
+    }
+
+    String::from_utf8_lossy(&output.stdout)
+        .lines()
+        .filter_map(parse_netbsd_mount_line)
+        .collect()
+}
+
+#[cfg(target_os = "netbsd")]
+fn parse_netbsd_mount_line(line: &str) -> Option<MountRecord> {
+    let (_, mount_and_type) = line.split_once(" on ")?;
+
+    let (mount_point, type_and_options) = mount_and_type.split_once(" type ")?;
+
+    let filesystem_type = type_and_options.split_whitespace().next()?;
+
+    Some(MountRecord {
+        mount_point: PathBuf::from(decode_mount_field(mount_point)),
+
+        filesystem_type: filesystem_type.to_string(),
+    })
+}
+
+#[cfg(not(any(target_os = "linux", target_os = "freebsd", target_os = "netbsd",)))]
 fn platform_mount_records() -> Vec<MountRecord> {
     Vec::new()
 }
 
+#[cfg(any(target_os = "linux", target_os = "freebsd", target_os = "netbsd",))]
 fn decode_mount_field(value: &str) -> String {
     let bytes = value.as_bytes();
 

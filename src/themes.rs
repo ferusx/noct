@@ -1,9 +1,11 @@
 use std::env;
+use std::ffi::CStr;
 use std::fs;
 use std::io::{self, IsTerminal};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use crate::classify::FilesystemColorClass;
+use crate::config::{system_themes_directories, user_themes_directory};
 use serde::Deserialize;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -64,6 +66,81 @@ impl RgbColor {
             .map_err(|_| format!("invalid blue component in '{}'", value,))?;
 
         Ok(Self::new(red, green, blue))
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ColorCapability {
+    TrueColor,
+    Ansi16,
+}
+
+impl ColorCapability {
+    pub fn detect() -> Self {
+        let Some(tty_path) = stdout_tty_path() else {
+            return Self::TrueColor;
+        };
+
+        if is_physical_console_tty(&tty_path) {
+            Self::Ansi16
+        } else {
+            Self::TrueColor
+        }
+    }
+}
+
+fn stdout_tty_path() -> Option<String> {
+    if !io::stdout().is_terminal() {
+        return None;
+    }
+
+    let tty_name = unsafe { libc::ttyname(libc::STDOUT_FILENO) };
+
+    if tty_name.is_null() {
+        return None;
+    }
+
+    Some(
+        unsafe { CStr::from_ptr(tty_name) }
+            .to_string_lossy()
+            .into_owned(),
+    )
+}
+
+fn is_physical_console_tty(path: &str) -> bool {
+    match env::consts::OS {
+        /*
+         * FreeBSD and DragonFly BSD virtual consoles use /dev/ttyv*.
+         */
+        "freebsd" | "dragonfly" => path.starts_with("/dev/ttyv") || path == "/dev/console",
+
+        /*
+         * NetBSD wscons virtual terminals normally use /dev/ttyE*.
+         */
+        "netbsd" => path.starts_with("/dev/ttyE") || path == "/dev/console",
+
+        /*
+         * OpenBSD wscons virtual terminals use /dev/ttyC*.
+         */
+        "openbsd" => path.starts_with("/dev/ttyC") || path == "/dev/console",
+
+        /*
+         * Linux virtual consoles use /dev/tty followed by a number.
+         * Do not mistake serial terminals such as /dev/ttyS0 for consoles.
+         */
+        "linux" => {
+            if path == "/dev/console" {
+                return true;
+            }
+
+            path.strip_prefix("/dev/tty")
+                .map(|suffix| {
+                    !suffix.is_empty() && suffix.chars().all(|character| character.is_ascii_digit())
+                })
+                .unwrap_or(false)
+        }
+
+        _ => false,
     }
 }
 
@@ -334,6 +411,244 @@ pub struct SummaryColors {
 
 #[derive(Debug, Default, Deserialize)]
 #[serde(default)]
+struct Ansi16ThemeFile {
+    file_type: Ansi16FileTypeThemeFile,
+    permissions: Ansi16PermissionThemeFile,
+    columns: Ansi16ColumnThemeFile,
+    names: Ansi16NameThemeFile,
+    classification: Ansi16ClassificationThemeFile,
+    tags: Ansi16TagThemeFile,
+    report: Ansi16ReportThemeFile,
+    header: Ansi16HeaderThemeFile,
+    summary: Ansi16SummaryThemeFile,
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+struct Ansi16NameThemeFile {
+    directory: Option<String>,
+    symlink: Option<String>,
+    broken_symlink: Option<String>,
+    executable: Option<String>,
+    special: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+struct Ansi16FileTypeThemeFile {
+    file: Option<String>,
+    directory: Option<String>,
+    symlink: Option<String>,
+    special: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+struct Ansi16PermissionThemeFile {
+    read: Option<String>,
+    write: Option<String>,
+    execute: Option<String>,
+    missing: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+struct Ansi16ColumnThemeFile {
+    user: Option<String>,
+    size_bytes: Option<String>,
+    size_units: Option<String>,
+    time: Option<String>,
+    age: Option<String>,
+    state_normal: Option<String>,
+    state_attention: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+struct Ansi16ClassificationThemeFile {
+    broken_symlink: Option<String>,
+    directory: Option<String>,
+    symlink: Option<String>,
+    special: Option<String>,
+    executable: Option<String>,
+    source_code: Option<String>,
+    shell: Option<String>,
+    web: Option<String>,
+    build_config: Option<String>,
+    structured_data: Option<String>,
+    log: Option<String>,
+    archive_package: Option<String>,
+    document: Option<String>,
+    spreadsheet: Option<String>,
+    presentation: Option<String>,
+    image: Option<String>,
+    audio: Option<String>,
+    video: Option<String>,
+    font: Option<String>,
+    database: Option<String>,
+    backup: Option<String>,
+    certificate: Option<String>,
+    disk_image: Option<String>,
+    torrent: Option<String>,
+    desktop_plugin: Option<String>,
+    binary: Option<String>,
+    file: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+struct Ansi16TagThemeFile {
+    filesystem: Option<String>,
+    virtual_tag: Option<String>,
+    memory: Option<String>,
+    note: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+struct Ansi16ReportThemeFile {
+    heading: Option<String>,
+    label: Option<String>,
+    value: Option<String>,
+    name: Option<String>,
+    path: Option<String>,
+    command: Option<String>,
+    package: Option<String>,
+    version: Option<String>,
+    size: Option<String>,
+    count: Option<String>,
+    total: Option<String>,
+    muted: Option<String>,
+    attention: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+struct Ansi16HeaderThemeFile {
+    foreground: Option<String>,
+    background: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+struct Ansi16SummaryThemeFile {
+    entries: Option<String>,
+    total_size: Option<String>,
+    files: Option<String>,
+    directories: Option<String>,
+    symlinks: Option<String>,
+    special: Option<String>,
+    executables: Option<String>,
+    empty: Option<String>,
+    danger: Option<String>,
+}
+
+fn ansi16_foreground(name: &str) -> Option<&'static str> {
+    match name.trim().to_lowercase().as_str() {
+        "black" => Some("\x1b[30m"),
+        "red" => Some("\x1b[31m"),
+        "green" => Some("\x1b[32m"),
+        "yellow" => Some("\x1b[33m"),
+        "blue" => Some("\x1b[34m"),
+        "magenta" => Some("\x1b[35m"),
+        "cyan" => Some("\x1b[36m"),
+
+        /*
+         * ANSI 37 is traditionally named "white", but on the BSD consoles
+         * we target here it behaves as the useful light-gray slot.
+         */
+        "light_gray" | "light-grey" | "lightgray" | "lightgrey" => Some("\x1b[37m"),
+
+        /*
+         * ANSI 90 is traditionally "bright black"; visually it is the
+         * dark-gray slot we want exposed to console-theme authors.
+         */
+        "dark_gray" | "dark-grey" | "darkgray" | "darkgrey" => Some("\x1b[90m"),
+
+        "bright_red" => Some("\x1b[91m"),
+        "bright_green" => Some("\x1b[92m"),
+        "bright_yellow" => Some("\x1b[93m"),
+        "bright_blue" => Some("\x1b[94m"),
+        "bright_magenta" => Some("\x1b[95m"),
+        "bright_cyan" => Some("\x1b[96m"),
+
+        /*
+         * ANSI 97 is the true bright-white slot.
+         */
+        "white" | "bright_white" => Some("\x1b[97m"),
+
+        _ => None,
+    }
+}
+
+fn ansi16_background(name: &str) -> Option<&'static str> {
+    match name.trim().to_lowercase().as_str() {
+        "black" => Some("\x1b[40m"),
+        "red" => Some("\x1b[41m"),
+        "green" => Some("\x1b[42m"),
+        "yellow" => Some("\x1b[43m"),
+        "blue" => Some("\x1b[44m"),
+        "magenta" => Some("\x1b[45m"),
+        "cyan" => Some("\x1b[46m"),
+        "light_gray" | "light-grey" | "lightgray" | "lightgrey" => Some("\x1b[47m"),
+
+        "dark_gray" | "dark-grey" | "darkgray" | "darkgrey" => Some("\x1b[100m"),
+        "bright_red" => Some("\x1b[101m"),
+        "bright_green" => Some("\x1b[102m"),
+        "bright_yellow" => Some("\x1b[103m"),
+        "bright_blue" => Some("\x1b[104m"),
+        "bright_magenta" => Some("\x1b[105m"),
+        "bright_cyan" => Some("\x1b[106m"),
+        "white" | "bright_white" => Some("\x1b[107m"),
+
+        _ => None,
+    }
+}
+
+fn apply_ansi16_foreground(target: &mut String, value: Option<String>, field: &str) {
+    let Some(value) = value else {
+        return;
+    };
+
+    match ansi16_foreground(&value) {
+        Some(color) => {
+            *target = color.to_string();
+        }
+
+        None => {
+            eprintln!(
+                "noct: invalid ANSI16 color '{}' for {}; keeping fallback color",
+                value, field,
+            );
+        }
+    }
+}
+
+fn resolved_ansi16_background(
+    value: Option<String>,
+    fallback: &'static str,
+    field: &str,
+) -> String {
+    let Some(value) = value else {
+        return fallback.to_string();
+    };
+
+    match ansi16_background(&value) {
+        Some(color) => color.to_string(),
+
+        None => {
+            eprintln!(
+                "noct: invalid ANSI16 color '{}' for {}; keeping fallback color",
+                value, field,
+            );
+
+            fallback.to_string()
+        }
+    }
+}
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
 struct ThemeFile {
     name: Option<String>,
 
@@ -550,6 +865,8 @@ struct SummaryThemeFile {
 pub struct AnsiPalette {
     pub enabled: bool,
 
+    pub ansi16: bool,
+
     pub reset: &'static str,
 
     pub file_type: AnsiFileTypeColors,
@@ -597,7 +914,9 @@ pub struct AnsiPermissionColors {
 pub struct AnsiColumnColors {
     pub user: String,
 
-    pub size: String,
+    pub size_bytes: String,
+
+    pub size_units: String,
 
     pub time: String,
 
@@ -1303,7 +1622,11 @@ impl Theme {
         );
     }
 
-    pub fn load_named(theme_name: &str, themes_directory: Option<&Path>) -> Self {
+    pub fn load_named(
+        theme_name: &str,
+        user_themes_directory: Option<&Path>,
+        system_themes_directories: &[PathBuf],
+    ) -> Self {
         let mut theme = Self::builtin();
 
         let normalized_name = theme_name.trim();
@@ -1323,30 +1646,47 @@ impl Theme {
             return theme;
         }
 
-        let Some(themes_directory) = themes_directory else {
+        let filename = format!("{}.toml", normalized_name);
+
+        let mut candidate_paths = Vec::new();
+
+        if let Some(user_themes_directory) = user_themes_directory {
+            candidate_paths.push(user_themes_directory.join(&filename));
+        }
+
+        for system_themes_directory in system_themes_directories {
+            candidate_paths.push(system_themes_directory.join(&filename));
+        }
+
+        let path = candidate_paths.into_iter().find(|path| path.is_file());
+
+        let Some(path) = path else {
+            /*
+             * Verdant Mocha is built into Noct, so a missing
+             * verdant_mocha.toml does not require an external theme file.
+             */
+            if normalized_name != "verdant_mocha" {
+                eprintln!(
+                    "noct: unable to find theme '{}'; using built-in verdant_mocha theme\n",
+                    normalized_name,
+                );
+            }
+
             return theme;
         };
-
-        let path = themes_directory.join(format!("{}.toml", normalized_name,));
 
         let contents = match fs::read_to_string(&path) {
             Ok(contents) => contents,
 
             Err(error) => {
-                /*
-                 * Verdant Mocha is built into Noct, so a missing
-                 * verdant_mocha.toml does not require an external theme file.
-                 */
-                if normalized_name != "verdant_mocha" {
-                    eprintln!(
-                        "noct: unable to load theme '{}' from {}: {}",
-                        normalized_name,
-                        path.display(),
-                        error,
-                    );
+                eprintln!(
+                    "noct: unable to load theme '{}' from {}: {}",
+                    normalized_name,
+                    path.display(),
+                    error,
+                );
 
-                    eprintln!("noct: using built-in verdant_mocha theme\n",);
-                }
+                eprintln!("noct: using built-in verdant_mocha theme\n");
 
                 return theme;
             }
@@ -1356,9 +1696,9 @@ impl Theme {
             Ok(theme_file) => theme_file,
 
             Err(error) => {
-                eprintln!("noct: invalid theme {}: {}", path.display(), error,);
+                eprintln!("noct: invalid theme {}: {}", path.display(), error);
 
-                eprintln!("noct: using built-in verdant_mocha theme\n",);
+                eprintln!("noct: using built-in verdant_mocha theme\n");
 
                 return theme;
             }
@@ -1403,8 +1743,13 @@ impl Theme {
 }
 
 impl AnsiPalette {
-    pub fn new(theme: &Theme, color_mode: ColorMode) -> Self {
-        Self::from_theme(theme, color_mode.colors_enabled())
+    pub fn new(theme: &Theme, color_mode: ColorMode, capability: ColorCapability) -> Self {
+        let enabled = color_mode.colors_enabled();
+
+        match capability {
+            ColorCapability::TrueColor => Self::from_theme(theme, enabled),
+            ColorCapability::Ansi16 => Self::console_ansi16(enabled),
+        }
     }
 
     pub fn from_theme(theme: &Theme, enabled: bool) -> Self {
@@ -1414,6 +1759,8 @@ impl AnsiPalette {
 
         Self {
             enabled: true,
+
+            ansi16: false,
 
             reset: "\x1b[0m",
 
@@ -1440,7 +1787,9 @@ impl AnsiPalette {
             columns: AnsiColumnColors {
                 user: theme.columns.user.foreground_ansi(),
 
-                size: theme.columns.size.foreground_ansi(),
+                size_bytes: theme.columns.size.foreground_ansi(),
+
+                size_units: theme.columns.size.foreground_ansi(),
 
                 time: theme.columns.time.foreground_ansi(),
 
@@ -1581,6 +1930,406 @@ impl AnsiPalette {
         }
     }
 
+    fn console_ansi16(enabled: bool) -> Self {
+        if !enabled {
+            return Self::disabled();
+        }
+
+        const BLACK: &str = "\x1b[30m";
+        const WHITE: &str = "\x1b[97m";
+        const RED: &str = "\x1b[31m";
+        const GREEN: &str = "\x1b[32m";
+        const YELLOW: &str = "\x1b[33m";
+        const BLUE: &str = "\x1b[34m";
+        const MAGENTA: &str = "\x1b[35m";
+        const CYAN: &str = "\x1b[36m";
+        const LIGHT_GRAY: &str = "\x1b[37m";
+
+        const DARK_GRAY: &str = "\x1b[90m";
+        const BRIGHT_RED: &str = "\x1b[91m";
+        const BRIGHT_GREEN: &str = "\x1b[92m";
+        const BRIGHT_YELLOW: &str = "\x1b[93m";
+        const BRIGHT_BLUE: &str = "\x1b[94m";
+        const BRIGHT_MAGENTA: &str = "\x1b[95m";
+        const BRIGHT_CYAN: &str = "\x1b[96m";
+
+        let mut palette = Self {
+            enabled: true,
+
+            ansi16: true,
+
+            reset: "\x1b[0m",
+
+            file_type: AnsiFileTypeColors {
+                file: LIGHT_GRAY.to_string(),
+                directory: BRIGHT_BLUE.to_string(),
+                symlink: BRIGHT_CYAN.to_string(),
+                special: YELLOW.to_string(),
+            },
+
+            permissions: AnsiPermissionColors {
+                read: BLUE.to_string(),
+                write: CYAN.to_string(),
+                execute: LIGHT_GRAY.to_string(),
+                missing: DARK_GRAY.to_string(),
+            },
+
+            columns: AnsiColumnColors {
+                user: BLUE.to_string(),
+                size_bytes: CYAN.to_string(),
+                size_units: BRIGHT_CYAN.to_string(),
+                time: BRIGHT_BLUE.to_string(),
+                age: MAGENTA.to_string(),
+                state_normal: DARK_GRAY.to_string(),
+                state_attention: BRIGHT_RED.to_string(),
+            },
+
+            names: AnsiNameColors {
+                directory: BRIGHT_BLUE.to_string(),
+                symlink: BRIGHT_CYAN.to_string(),
+                broken_symlink: BRIGHT_RED.to_string(),
+                executable: BRIGHT_GREEN.to_string(),
+                special: YELLOW.to_string(),
+            },
+
+            classification: AnsiClassificationColors {
+                broken_symlink: BRIGHT_RED.to_string(),
+                directory: BRIGHT_BLUE.to_string(),
+                symlink: BRIGHT_CYAN.to_string(),
+                special: YELLOW.to_string(),
+
+                executable: BRIGHT_GREEN.to_string(),
+                source_code: BRIGHT_YELLOW.to_string(),
+                shell: GREEN.to_string(),
+                web: BRIGHT_MAGENTA.to_string(),
+
+                build_config: MAGENTA.to_string(),
+                structured_data: CYAN.to_string(),
+                log: LIGHT_GRAY.to_string(),
+
+                archive_package: YELLOW.to_string(),
+
+                document: LIGHT_GRAY.to_string(),
+                spreadsheet: BRIGHT_GREEN.to_string(),
+                presentation: BRIGHT_MAGENTA.to_string(),
+
+                image: MAGENTA.to_string(),
+                audio: CYAN.to_string(),
+                video: BRIGHT_MAGENTA.to_string(),
+                font: LIGHT_GRAY.to_string(),
+
+                database: CYAN.to_string(),
+                backup: MAGENTA.to_string(),
+                certificate: BRIGHT_YELLOW.to_string(),
+                disk_image: BLUE.to_string(),
+                torrent: GREEN.to_string(),
+                desktop_plugin: MAGENTA.to_string(),
+
+                binary: RED.to_string(),
+                file: LIGHT_GRAY.to_string(),
+            },
+
+            tags: AnsiTagColors {
+                filesystem: YELLOW.to_string(),
+                virtual_tag: BRIGHT_YELLOW.to_string(),
+                memory: BRIGHT_MAGENTA.to_string(),
+                note: BRIGHT_YELLOW.to_string(),
+            },
+
+            report: AnsiReportColors {
+                heading: WHITE.to_string(),
+                label: BRIGHT_CYAN.to_string(),
+                value: WHITE.to_string(),
+                name: LIGHT_GRAY.to_string(),
+                path: BRIGHT_BLUE.to_string(),
+                command: BRIGHT_GREEN.to_string(),
+                package: BRIGHT_CYAN.to_string(),
+                version: BRIGHT_MAGENTA.to_string(),
+                size: BRIGHT_YELLOW.to_string(),
+                count: WHITE.to_string(),
+                total: WHITE.to_string(),
+                muted: DARK_GRAY.to_string(),
+                attention: BRIGHT_RED.to_string(),
+            },
+
+            header: format!("{}{}", BLACK, "\x1b[44m"),
+
+            summary: AnsiSummaryColors {
+                entries: LIGHT_GRAY.to_string(),
+                total_size: LIGHT_GRAY.to_string(),
+                files: LIGHT_GRAY.to_string(),
+                directories: BRIGHT_BLUE.to_string(),
+                symlinks: BRIGHT_CYAN.to_string(),
+                special: YELLOW.to_string(),
+                executables: BRIGHT_GREEN.to_string(),
+                empty: DARK_GRAY.to_string(),
+                danger: BRIGHT_RED.to_string(),
+            },
+        };
+
+        let path = ansi16_theme_paths().into_iter().find(|path| path.is_file());
+
+        let Some(path) = path else {
+            return palette;
+        };
+
+        let contents = match fs::read_to_string(&path) {
+            Ok(contents) => contents,
+
+            Err(error) => {
+                eprintln!(
+                    "noct: unable to read ANSI16 console theme {}: {}",
+                    path.display(),
+                    error,
+                );
+
+                return palette;
+            }
+        };
+
+        let theme_file = match toml::from_str::<Ansi16ThemeFile>(&contents) {
+            Ok(theme_file) => theme_file,
+
+            Err(error) => {
+                eprintln!(
+                    "noct: invalid ANSI16 console theme {}: {}",
+                    path.display(),
+                    error,
+                );
+
+                return palette;
+            }
+        };
+
+        apply_ansi16_foreground(
+            &mut palette.file_type.file,
+            theme_file.file_type.file,
+            "file_type.file",
+        );
+        apply_ansi16_foreground(
+            &mut palette.file_type.directory,
+            theme_file.file_type.directory,
+            "file_type.directory",
+        );
+        apply_ansi16_foreground(
+            &mut palette.file_type.symlink,
+            theme_file.file_type.symlink,
+            "file_type.symlink",
+        );
+        apply_ansi16_foreground(
+            &mut palette.file_type.special,
+            theme_file.file_type.special,
+            "file_type.special",
+        );
+
+        apply_ansi16_foreground(
+            &mut palette.permissions.read,
+            theme_file.permissions.read,
+            "permissions.read",
+        );
+        apply_ansi16_foreground(
+            &mut palette.permissions.write,
+            theme_file.permissions.write,
+            "permissions.write",
+        );
+        apply_ansi16_foreground(
+            &mut palette.permissions.execute,
+            theme_file.permissions.execute,
+            "permissions.execute",
+        );
+        apply_ansi16_foreground(
+            &mut palette.permissions.missing,
+            theme_file.permissions.missing,
+            "permissions.missing",
+        );
+
+        apply_ansi16_foreground(
+            &mut palette.columns.user,
+            theme_file.columns.user,
+            "columns.user",
+        );
+        apply_ansi16_foreground(
+            &mut palette.columns.size_bytes,
+            theme_file.columns.size_bytes,
+            "columns.size_bytes",
+        );
+        apply_ansi16_foreground(
+            &mut palette.columns.size_units,
+            theme_file.columns.size_units,
+            "columns.size_units",
+        );
+        apply_ansi16_foreground(
+            &mut palette.columns.time,
+            theme_file.columns.time,
+            "columns.time",
+        );
+        apply_ansi16_foreground(
+            &mut palette.columns.age,
+            theme_file.columns.age,
+            "columns.age",
+        );
+        apply_ansi16_foreground(
+            &mut palette.columns.state_normal,
+            theme_file.columns.state_normal,
+            "columns.state_normal",
+        );
+        apply_ansi16_foreground(
+            &mut palette.columns.state_attention,
+            theme_file.columns.state_attention,
+            "columns.state_attention",
+        );
+
+        apply_ansi16_foreground(
+            &mut palette.names.directory,
+            theme_file.names.directory,
+            "names.directory",
+        );
+        apply_ansi16_foreground(
+            &mut palette.names.symlink,
+            theme_file.names.symlink,
+            "names.symlink",
+        );
+        apply_ansi16_foreground(
+            &mut palette.names.broken_symlink,
+            theme_file.names.broken_symlink,
+            "names.broken_symlink",
+        );
+        apply_ansi16_foreground(
+            &mut palette.names.executable,
+            theme_file.names.executable,
+            "names.executable",
+        );
+        apply_ansi16_foreground(
+            &mut palette.names.special,
+            theme_file.names.special,
+            "names.special",
+        );
+
+        macro_rules! ansi16_classification {
+            ($field:ident) => {
+                apply_ansi16_foreground(
+                    &mut palette.classification.$field,
+                    theme_file.classification.$field,
+                    concat!("classification.", stringify!($field)),
+                );
+            };
+        }
+
+        ansi16_classification!(broken_symlink);
+        ansi16_classification!(directory);
+        ansi16_classification!(symlink);
+        ansi16_classification!(special);
+        ansi16_classification!(executable);
+        ansi16_classification!(source_code);
+        ansi16_classification!(shell);
+        ansi16_classification!(web);
+        ansi16_classification!(build_config);
+        ansi16_classification!(structured_data);
+        ansi16_classification!(log);
+        ansi16_classification!(archive_package);
+        ansi16_classification!(document);
+        ansi16_classification!(spreadsheet);
+        ansi16_classification!(presentation);
+        ansi16_classification!(image);
+        ansi16_classification!(audio);
+        ansi16_classification!(video);
+        ansi16_classification!(font);
+        ansi16_classification!(database);
+        ansi16_classification!(backup);
+        ansi16_classification!(certificate);
+        ansi16_classification!(disk_image);
+        ansi16_classification!(torrent);
+        ansi16_classification!(desktop_plugin);
+        ansi16_classification!(binary);
+        ansi16_classification!(file);
+
+        macro_rules! ansi16_tag {
+            ($field:ident) => {
+                apply_ansi16_foreground(
+                    &mut palette.tags.$field,
+                    theme_file.tags.$field,
+                    concat!("tags.", stringify!($field)),
+                );
+            };
+        }
+
+        ansi16_tag!(filesystem);
+        ansi16_tag!(virtual_tag);
+        ansi16_tag!(memory);
+        ansi16_tag!(note);
+
+        macro_rules! ansi16_report {
+            ($field:ident) => {
+                apply_ansi16_foreground(
+                    &mut palette.report.$field,
+                    theme_file.report.$field,
+                    concat!("report.", stringify!($field)),
+                );
+            };
+        }
+
+        ansi16_report!(heading);
+        ansi16_report!(label);
+        ansi16_report!(value);
+        ansi16_report!(name);
+        ansi16_report!(path);
+        ansi16_report!(command);
+        ansi16_report!(package);
+        ansi16_report!(version);
+        ansi16_report!(size);
+        ansi16_report!(count);
+        ansi16_report!(total);
+        ansi16_report!(muted);
+        ansi16_report!(attention);
+
+        macro_rules! ansi16_summary {
+            ($field:ident) => {
+                apply_ansi16_foreground(
+                    &mut palette.summary.$field,
+                    theme_file.summary.$field,
+                    concat!("summary.", stringify!($field)),
+                );
+            };
+        }
+
+        ansi16_summary!(entries);
+        ansi16_summary!(total_size);
+        ansi16_summary!(files);
+        ansi16_summary!(directories);
+        ansi16_summary!(symlinks);
+        ansi16_summary!(special);
+        ansi16_summary!(executables);
+        ansi16_summary!(empty);
+        ansi16_summary!(danger);
+
+        let header_foreground = match theme_file.header.foreground {
+            Some(value) => match ansi16_foreground(&value) {
+                Some(color) => color.to_string(),
+
+                None => {
+                    eprintln!(
+                        "noct: invalid ANSI16 color '{}' for header.foreground; using black",
+                        value,
+                    );
+
+                    "\x1b[30m".to_string()
+                }
+            },
+
+            None => "\x1b[30m".to_string(),
+        };
+
+        let header_background = resolved_ansi16_background(
+            theme_file.header.background,
+            "\x1b[43m",
+            "header.background",
+        );
+
+        palette.header = format!("{}{}", header_foreground, header_background);
+
+        palette
+    }
+
     pub fn classification_color(&self, class: FilesystemColorClass) -> &str {
         match class {
             FilesystemColorClass::BrokenSymlink => &self.classification.broken_symlink,
@@ -1643,8 +2392,10 @@ impl AnsiPalette {
         Self {
             enabled: false,
 
+            ansi16: true,
+
             /*
-             * Reset must also be empty. Otherwise plain piped output would
+             * Reset must also be empty. Otherwise, plain piped output would
              * still contain stray escape sequences.
              */
             reset: "",
@@ -1665,7 +2416,8 @@ impl AnsiPalette {
 
             columns: AnsiColumnColors {
                 user: String::new(),
-                size: String::new(),
+                size_bytes: String::new(),
+                size_units: String::new(),
                 time: String::new(),
                 age: String::new(),
                 state_normal: String::new(),
@@ -1756,6 +2508,28 @@ impl Default for Theme {
     }
 }
 
+fn ansi16_theme_paths() -> Vec<PathBuf> {
+    let mut paths = Vec::new();
+
+    if let Some(user_themes_directory) = user_themes_directory() {
+        paths.push(
+            user_themes_directory
+                .join("console")
+                .join("console_ansi16.toml"),
+        );
+    }
+
+    for system_themes_directory in system_themes_directories() {
+        paths.push(
+            system_themes_directory
+                .join("console")
+                .join("console_ansi16.toml"),
+        );
+    }
+
+    paths
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1786,9 +2560,9 @@ mod tests {
         let theme = Theme::builtin();
 
         assert_eq!(
-        theme.header_ansi(),
-        "\x1b[1m\x1b[38;2;23;26;23m\x1b[48;2;109;181;157m",
-    );
+            theme.header_ansi(),
+            "\x1b[1m\x1b[38;2;23;26;23m\x1b[48;2;109;181;157m",
+        );
     }
 
     #[test]
@@ -1796,9 +2570,9 @@ mod tests {
         let theme = Theme::builtin();
 
         assert_eq!(
-        theme.summary_entries_ansi(),
-        "\x1b[1m\x1b[38;2;238;232;220m",
-    );
+            theme.summary_entries_ansi(),
+            "\x1b[1m\x1b[38;2;238;232;220m",
+        );
     }
 
     #[test]

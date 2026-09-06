@@ -69,7 +69,7 @@ pub enum HiddenMode {
 
 #[derive(Debug)]
 pub struct CliOptions {
-    pub path: String,
+    pub paths: Vec<String>,
     pub filters: Vec<Filter>,
     pub sort_mode: SortMode,
     pub show_header: bool,
@@ -247,7 +247,8 @@ pub fn expand_short_flags(arguments: &[String]) -> Vec<String> {
 
         for short_flag in argument[1..].chars() {
             match short_flag {
-                'h' | 'l' | '1' | 'v' | '?' | 'a' | 'A' | 'U' | 'S' | 'w' | 'T' | 'd' | 'D' | 'r' => {}
+                'h' | 'l' | '1' | 'v' | '?' | 'a' | 'A' | 'U' | 'S' | 'w' | 'T' | 'd' | 'D'
+                | 'r' => {}
 
                 _ => {
                     can_expand = false;
@@ -269,7 +270,7 @@ pub fn expand_short_flags(arguments: &[String]) -> Vec<String> {
 }
 
 pub fn parse_arguments(arguments: &[String], config: &NoctConfig) -> CliOptions {
-    let mut path = ".".to_string();
+    let mut paths = Vec::new();
 
     let mut filters: Vec<Filter> = Vec::new();
 
@@ -787,9 +788,7 @@ pub fn parse_arguments(arguments: &[String], config: &NoctConfig) -> CliOptions 
                 let filter_value = arguments[index + 2].clone();
 
                 let filter = match filter_kind {
-                    "extension" | "ext" => {
-                        Filter::Extension(normalize_extension(&filter_value))
-                    }
+                    "extension" | "ext" => Filter::Extension(normalize_extension(&filter_value)),
 
                     "type" => {
                         let filter_type = match filter_value.to_lowercase().as_str() {
@@ -951,15 +950,19 @@ pub fn parse_arguments(arguments: &[String], config: &NoctConfig) -> CliOptions 
             }
 
             argument => {
-                path = argument.to_string();
+                paths.push(argument.to_string());
 
                 index += 1;
             }
         }
     }
 
+    if paths.is_empty() {
+        paths.push(".".to_string());
+    }
+
     CliOptions {
-        path,
+        paths,
         filters,
         sort_mode,
         show_header,

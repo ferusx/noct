@@ -16,8 +16,11 @@ use std::env;
 use std::path::Path;
 
 use args::{DisplayMode, expand_short_flags, parse_arguments};
-use config::{config_path, generate_config_copy, load_or_create_config, themes_directory};
-use entry::{read_entries, read_path_entry};
+use config::{
+    config_path, generate_config_copy, load_or_create_config, system_themes_directories,
+    user_themes_directory,
+};
+use entry::{read_entries, read_path_entries, read_path_entry};
 use options::{
     handle_audit_request, handle_cold_request, handle_du_request, handle_duplicates_request,
     handle_empty_dirs_request, handle_exts_request, handle_graveyard_request, handle_hot_request,
@@ -34,12 +37,16 @@ use render::{
 };
 
 use manual::{print_help, print_manual, print_theme_help};
-use themes::{AnsiPalette, ColorMode, Theme};
+use themes::{AnsiPalette, ColorCapability, ColorMode, Theme};
 
 // Constants
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 fn main() {
+    unsafe {
+        libc::signal(libc::SIGPIPE, libc::SIG_DFL);
+    }
+
     let raw_arguments: Vec<String> = env::args().skip(1).collect();
 
     /*
@@ -107,11 +114,19 @@ fn main() {
         ColorMode::Never
     };
 
-    let themes_directory = themes_directory();
+    let user_themes_directory = user_themes_directory();
 
-    let theme = Theme::load_named(&config.theme, themes_directory.as_deref());
+    let system_themes_directories = system_themes_directories();
 
-    let palette = AnsiPalette::new(&theme, color_mode);
+    let theme = Theme::load_named(
+        &config.theme,
+        user_themes_directory.as_deref(),
+        &system_themes_directories,
+    );
+
+    let color_capability = ColorCapability::detect();
+
+    let palette = AnsiPalette::new(&theme, color_mode, color_capability);
 
     if arguments.iter().any(|argument| argument == "--manual") {
         print_manual(&palette);
@@ -225,12 +240,12 @@ fn main() {
 
     let options = parse_arguments(&arguments, &config);
 
-    let path = Path::new(&options.path);
+    let path = Path::new(&options.paths[0]);
 
     let render_options = RenderOptions {
         use_colors: palette.enabled,
         filesystem_colors: config.filesystem_colors,
-        show_icons: options.show_icons,
+        show_icons: options.show_icons && !palette.ansi16,
         show_permissions: options.show_permissions,
         show_state: options.show_state,
         show_state_labels: options.show_state_labels,
@@ -242,7 +257,15 @@ fn main() {
         output_width: options.output_width,
     };
 
-    let entries = if options.list_directory_itself {
+    let entries = if options.paths.len() > 1 {
+        read_path_entries(
+            &options.paths,
+            &options.filters,
+            options.sort_mode,
+            options.time_field,
+            options.reverse_sort,
+        )
+    } else if options.list_directory_itself || !path.is_dir() {
         read_path_entry(path, &options.filters)
     } else {
         read_entries(
@@ -259,7 +282,7 @@ fn main() {
         Ok(entries) => entries,
 
         Err(error) => {
-            eprintln!("noct: unable to read {}: {}", path.display(), error);
+            eprintln!("noct: {}", error);
 
             std::process::exit(1);
         }
