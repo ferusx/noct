@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 use std::env;
 use std::ffi::CStr;
 use std::fs;
@@ -117,7 +119,11 @@ fn is_physical_console_tty(path: &str) -> bool {
         /*
          * NetBSD wscons virtual terminals normally use /dev/ttyE*.
          */
-        "netbsd" => path.starts_with("/dev/ttyE") || path == "/dev/console",
+        "netbsd" => {
+            path.starts_with("/dev/ttyE")
+                || path == "/dev/console"
+                || path == "/dev/constty"
+        },
 
         /*
          * OpenBSD wscons virtual terminals use /dev/ttyC*.
@@ -2511,20 +2517,20 @@ impl Default for Theme {
 fn ansi16_theme_paths() -> Vec<PathBuf> {
     let mut paths = Vec::new();
 
+    let platform_filename = format!("console_ansi16_{}.toml", env::consts::OS);
+
     if let Some(user_themes_directory) = user_themes_directory() {
-        paths.push(
-            user_themes_directory
-                .join("console")
-                .join("console_ansi16.toml"),
-        );
+        let console_directory = user_themes_directory.join("console");
+
+        paths.push(console_directory.join(&platform_filename));
+        paths.push(console_directory.join("console_ansi16.toml"));
     }
 
     for system_themes_directory in system_themes_directories() {
-        paths.push(
-            system_themes_directory
-                .join("console")
-                .join("console_ansi16.toml"),
-        );
+        let console_directory = system_themes_directory.join("console");
+
+        paths.push(console_directory.join(&platform_filename));
+        paths.push(console_directory.join("console_ansi16.toml"));
     }
 
     paths

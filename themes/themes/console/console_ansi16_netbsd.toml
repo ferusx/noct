@@ -1,0 +1,99 @@
+[file_type]
+file = "light_gray"
+directory = "bright_cyan"
+symlink = "bright_cyan"
+special = "yellow"
+
+[permissions]
+read = "green"
+write = "cyan"
+execute = "light_gray"
+missing = "dark_gray"
+
+[columns]
+user = "bright_yellow"
+size_bytes = "cyan"
+size_units = "bright_cyan"
+time = "cyan"
+age = "magenta"
+state_normal = "dark_gray"
+state_attention = "bright_red"
+
+[names]
+directory = "bright_cyan"
+symlink = "bright_cyan"
+broken_symlink = "bright_red"
+executable = "bright_green"
+special = "yellow"
+
+[classification]
+broken_symlink = "bright_red"
+directory = "bright_cyan"
+symlink = "bright_cyan"
+special = "yellow"
+
+executable = "bright_green"
+source_code = "bright_yellow"
+shell = "green"
+web = "bright_magenta"
+
+build_config = "magenta"
+structured_data = "cyan"
+log = "light_gray"
+
+archive_package = "yellow"
+
+document = "light_gray"
+spreadsheet = "bright_green"
+presentation = "bright_magenta"
+
+image = "magenta"
+audio = "cyan"
+video = "bright_magenta"
+font = "light_gray"
+
+database = "cyan"
+backup = "magenta"
+certificate = "bright_yellow"
+disk_image = "blue"
+torrent = "green"
+desktop_plugin = "magenta"
+
+binary = "red"
+file = "light_gray"
+
+[tags]
+filesystem = "yellow"
+virtual_tag = "bright_yellow"
+memory = "bright_magenta"
+note = "bright_yellow"
+
+[report]
+heading = "white"
+label = "bright_cyan"
+value = "white"
+name = "light_gray"
+path = "bright_cyan"
+command = "bright_green"
+package = "bright_cyan"
+version = "bright_magenta"
+size = "bright_yellow"
+count = "white"
+total = "white"
+muted = "dark_gray"
+attention = "bright_red"
+
+[header]
+foreground = "black"
+background = "bright_cyan"
+
+[summary]
+entries = "light_gray"
+total_size = "light_gray"
+files = "light_gray"
+directories = "bright_blue"
+symlinks = "bright_cyan"
+special = "yellow"
+executables = "bright_green"
+empty = "dark_gray"
+danger = "bright_red"

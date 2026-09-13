@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 use crate::args::parse_size_argument;
 use crate::format::human_size;
 use crate::themes::AnsiPalette;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 mod args;
 mod classify;
 mod config;
@@ -13,6 +15,7 @@ pub mod tree;
 mod validate;
 
 use std::env;
+use std::io::IsTerminal;
 use std::path::Path;
 
 use args::{DisplayMode, expand_short_flags, parse_arguments};
@@ -99,14 +102,9 @@ fn main() {
 
     validate_arguments(&arguments);
 
-    let cli_disables_colors = arguments.iter().any(|argument| {
-        matches!(
-            argument.as_str(),
-            "--no-color" | "--no-colour" | "--no-colors" | "--no-colours"
-        )
-    });
-
-    let use_colors = config.display.colors && !cli_disables_colors;
+    let use_colors =
+        std::io::stdout().is_terminal()
+            && std::env::var_os("NO_COLOR").is_none();
 
     let color_mode = if use_colors {
         ColorMode::Auto
@@ -129,19 +127,19 @@ fn main() {
     let palette = AnsiPalette::new(&theme, color_mode, color_capability);
 
     if arguments.iter().any(|argument| argument == "--manual") {
-        print_manual(&palette);
+        print_manual(use_colors);
 
         return;
     }
 
     if arguments.iter().any(|argument| argument == "--theme-help") {
-        print_theme_help(&palette);
+        print_theme_help(use_colors);
 
         return;
     }
 
     if arguments.iter().any(|argument| argument == "--help") {
-        print_help(&palette);
+        print_help(use_colors);
 
         return;
     }

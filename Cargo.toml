@@ -1,7 +1,10 @@
 [package]
 name = "noct"
-version = "1.0.2"
+version = "1.0.3"
 edition = "2024"
+license = "BSD-3-Clause"
+description = "Command-line filesystem inspection and analysis toolkit for Unix-like systems"
+repository = "https://github.com/ferusx/noct"
 
 [dependencies]
 chrono = "0.4.45"

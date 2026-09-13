@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 use std::env;
 use std::fs;
 use std::time::{Duration, SystemTime};
@@ -134,30 +136,6 @@ pub fn terminal_width() -> usize {
     terminal_width_from_ioctl()
         .or_else(terminal_width_from_environment)
         .unwrap_or(80)
-}
-
-pub fn terminal_size() -> Option<(usize, usize)> {
-    let mut window_size = libc::winsize {
-        ws_row: 0,
-        ws_col: 0,
-        ws_xpixel: 0,
-        ws_ypixel: 0,
-    };
-
-    let result = unsafe { libc::ioctl(libc::STDOUT_FILENO, libc::TIOCGWINSZ, &mut window_size) };
-
-    if result != 0 {
-        return None;
-    }
-
-    let width = window_size.ws_col as usize;
-    let height = window_size.ws_row as usize;
-
-    if width == 0 || height == 0 {
-        None
-    } else {
-        Some((width, height))
-    }
 }
 
 fn terminal_width_from_environment() -> Option<usize> {

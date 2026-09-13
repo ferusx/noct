@@ -1,10 +1,6 @@
-use crate::format::{terminal_size, terminal_width};
-use crate::themes::AnsiPalette;
-use std::sync::atomic::{AtomicBool, Ordering};
+// SPDX-License-Identifier: BSD-3-Clause
 
-use std::io::{self, IsTerminal, Write};
-use std::thread;
-use std::time::Duration;
+use std::env;
 
 const MIN_INNER_WIDTH: usize = 40;
 const MAX_INNER_WIDTH: usize = 96;
@@ -13,45 +9,16 @@ const MAX_INNER_WIDTH: usize = 96;
  * The manual deliberately uses its own fixed palette rather than the
  * currently selected Noct theme.
  */
-const MANUAL_ACCENT: &str = "\x1b[38;2;185;190;210m"; // The ACCENT (light gray) color
-const MANUAL_TEXT: &str = "\x1b[38;2;110;110;128m"; // The TEXT (dark gray) color
-const MANUAL_EMPHASIS: &str = "\x1b[38;2;255;255;255m"; // The EMPHASIS (white)
-const MANUAL_TITLE: &str = "\x1b[1;38;2;255;255;255m"; // The EMPHASIS (bold+white)
-
-const MANUAL_EXAMPLE: &str = "\x1b[92m"; // The EXAMPLE (green) color
+const MANUAL_ACCENT: &str = "\x1b[36m"; // The ACCENT (bold cyan) color
+const MANUAL_TEXT: &str = "\x1b[37m"; // The TEXT (Dark Gray) color
+const MANUAL_EMPHASIS: &str = "\x1b[1;97m"; // The EMPHASIS (white)
+const MANUAL_TITLE: &str = "\x1b[1;96m"; // The TITLE (Gray)
+const MANUAL_EXAMPLE: &str = "\x1b[32m"; // The EXAMPLE (green) color
 const MANUAL_OPTION: &str = "\x1b[1;92m"; // The EXAMPLE (bold+green) color
 
-const MANUAL_BORDER: &str = "\x1b[38;2;78;86;98m"; // The BORDER (gray) color
+const MANUAL_BORDER: &str = "\x1b[1;30m"; // The BORDER (gray) color
 const MANUAL_RESET: &str = "\x1b[0m";
-const MANUAL_MIN_WIDTH: usize = 100;
-const MANUAL_MIN_HEIGHT: usize = 16;
 
-const MANUAL_RESIZE_GREEN: &str = "\x1b[38;2;90;220;120m";
-const MANUAL_RESIZE_WHITE: &str = "\x1b[38;2;235;235;240m";
-const MANUAL_RESIZE_RED: &str = "\x1b[38;2;255;85;100m";
-const MANUAL_RESIZE_MUTED: &str = "\x1b[38;2;120;128;142m";
-static MANUAL_RESIZE_INTERRUPTED: AtomicBool = AtomicBool::new(false);
-const MANUAL_LOGO_COLORS: [&str; 6] = [
-    "\x1b[38;2;245;245;245m",
-    "\x1b[38;2;205;205;205m",
-    "\x1b[38;2;165;165;165m",
-    "\x1b[38;2;125;125;125m",
-    "\x1b[38;2;85;85;85m",
-    "\x1b[38;2;50;50;50m",
-];
-
-const MANUAL_LOGO: [&str; 6] = [
-    "███╗   ██╗ ██████╗  ██████╗████████╗",
-    "████╗  ██║██╔═══██╗██╔════╝╚══██╔══╝",
-    "██╔██╗ ██║██║   ██║██║        ██║",
-    "██║╚██╗██║██║   ██║██║        ██║",
-    "██║ ╚████║╚██████╔╝╚██████╗   ██║",
-    "╚═╝  ╚═══╝ ╚═════╝  ╚═════╝   ╚═╝",
-];
-
-extern "C" fn manual_resize_sigint_handler(_: libc::c_int) {
-    MANUAL_RESIZE_INTERRUPTED.store(true, Ordering::SeqCst);
-}
 
 struct ManualColors {
     accent: &'static str,
@@ -96,12 +63,12 @@ struct ManualPart<'a> {
     color: &'a str,
 }
 
-pub fn print_manual(palette: &AnsiPalette) {
-    wait_for_manual_terminal_size(palette.enabled);
+
+pub fn print_manual(colors_enabled: bool) {
 
     let inner_width = manual_inner_width();
 
-    let colors = ManualColors::new(palette.enabled);
+    let colors = ManualColors::new(colors_enabled);
 
     print_top_border(inner_width, &colors);
 
@@ -5652,12 +5619,10 @@ a selected path and makes parent-child relationships visible in a way that a fla
 /* =======================================================================
                          --theme-help option
 ======================================================================= */
-pub fn print_theme_help(palette: &AnsiPalette) {
-    wait_for_manual_terminal_size(palette.enabled);
-
+pub fn print_theme_help(colors_enabled: bool) {
     let inner_width = manual_inner_width();
 
-    let colors = ManualColors::new(palette.enabled);
+    let colors = ManualColors::new(colors_enabled);
 
     print_top_border(inner_width, &colors);
 
@@ -6260,12 +6225,10 @@ always inherits the same classification color as its filename.",
 /* =======================================================================
                               --help option
 ======================================================================= */
-pub fn print_help(palette: &AnsiPalette) {
-    wait_for_manual_terminal_size(palette.enabled);
-
+pub fn print_help(colors_enabled: bool) {
     let inner_width = manual_inner_width();
 
-    let colors = ManualColors::new(palette.enabled);
+    let colors = ManualColors::new(colors_enabled);
 
     print_top_border(inner_width, &colors);
 
@@ -7327,211 +7290,6 @@ pub fn print_help(palette: &AnsiPalette) {
     print_bottom_border(inner_width, &colors);
 }
 
-fn wait_for_manual_terminal_size(colors_enabled: bool) {
-    if !io::stdout().is_terminal() {
-        return;
-    }
-
-    let Some((mut width, mut height)) = terminal_size() else {
-        return;
-    };
-
-    if width >= MANUAL_MIN_WIDTH && height >= MANUAL_MIN_HEIGHT {
-        return;
-    }
-
-    MANUAL_RESIZE_INTERRUPTED.store(false, Ordering::SeqCst);
-
-    let previous_sigint_handler = install_manual_resize_sigint_handler();
-
-    enter_alternate_screen();
-
-    loop {
-        if MANUAL_RESIZE_INTERRUPTED.load(Ordering::SeqCst) {
-            leave_alternate_screen();
-
-            restore_manual_resize_sigint_handler(previous_sigint_handler);
-
-            println!();
-
-            std::process::exit(130);
-        }
-
-        draw_manual_resize_screen(width, height, colors_enabled);
-
-        thread::sleep(Duration::from_millis(75));
-
-        if MANUAL_RESIZE_INTERRUPTED.load(Ordering::SeqCst) {
-            leave_alternate_screen();
-
-            restore_manual_resize_sigint_handler(previous_sigint_handler);
-
-            println!();
-
-            std::process::exit(130);
-        }
-
-        let Some((new_width, new_height)) = terminal_size() else {
-            leave_alternate_screen();
-
-            restore_manual_resize_sigint_handler(previous_sigint_handler);
-
-            return;
-        };
-
-        width = new_width;
-        height = new_height;
-
-        if width >= MANUAL_MIN_WIDTH && height >= MANUAL_MIN_HEIGHT {
-            leave_alternate_screen();
-
-            restore_manual_resize_sigint_handler(previous_sigint_handler);
-
-            break;
-        }
-    }
-}
-
-fn draw_manual_resize_screen(width: usize, height: usize, colors_enabled: bool) {
-    clear_terminal_screen();
-
-    let logo_width = MANUAL_LOGO
-        .iter()
-        .map(|line| line.chars().count())
-        .max()
-        .unwrap_or(0);
-
-    let content_height = 13usize;
-
-    let top_padding = height.saturating_sub(content_height) / 2;
-
-    for _ in 0..top_padding {
-        println!();
-    }
-
-    if width >= logo_width {
-        let left_padding = width.saturating_sub(logo_width) / 2;
-
-        for (index, line) in MANUAL_LOGO.iter().enumerate() {
-            print!("{}", " ".repeat(left_padding));
-
-            if colors_enabled {
-                println!("{}{}{}", MANUAL_LOGO_COLORS[index], line, "\x1b[0m",);
-            } else {
-                println!("{}", line);
-            }
-        }
-    } else {
-        print_centered_resize_line("NOCT", width, MANUAL_RESIZE_WHITE, colors_enabled);
-    }
-
-    println!();
-
-    print_centered_resize_line(
-        "Noct Manual requires a larger terminal.",
-        width,
-        MANUAL_RESIZE_GREEN,
-        colors_enabled,
-    );
-
-    println!();
-
-    print_manual_dimension_line(
-        "Minimum size:",
-        MANUAL_MIN_WIDTH,
-        MANUAL_MIN_HEIGHT,
-        width,
-        MANUAL_RESIZE_WHITE,
-        colors_enabled,
-    );
-
-    let current_color = if width < MANUAL_MIN_WIDTH || height < MANUAL_MIN_HEIGHT {
-        MANUAL_RESIZE_RED
-    } else {
-        MANUAL_RESIZE_WHITE
-    };
-
-    print_manual_dimension_line(
-        "Current size:",
-        width,
-        height,
-        width,
-        current_color,
-        colors_enabled,
-    );
-
-    println!();
-
-    print_centered_resize_line(
-        "Please enlarge the terminal window.",
-        width,
-        MANUAL_RESIZE_MUTED,
-        colors_enabled,
-    );
-
-    let _ = io::stdout().flush();
-}
-
-fn clear_terminal_screen() {
-    print!("\x1b[2J\x1b[H");
-
-    let _ = io::stdout().flush();
-}
-
-fn enter_alternate_screen() {
-    print!("\x1b[?1049h\x1b[2J\x1b[H");
-
-    let _ = io::stdout().flush();
-}
-
-fn leave_alternate_screen() {
-    print!("\x1b[?1049l");
-
-    let _ = io::stdout().flush();
-}
-
-fn install_manual_resize_sigint_handler() -> libc::sigaction {
-    unsafe {
-        let mut new_action: libc::sigaction = std::mem::zeroed();
-        let mut old_action: libc::sigaction = std::mem::zeroed();
-
-        let handler: extern "C" fn(libc::c_int) = manual_resize_sigint_handler;
-
-        new_action.sa_sigaction = handler as usize;
-
-        libc::sigemptyset(&mut new_action.sa_mask);
-
-        new_action.sa_flags = 0;
-
-        libc::sigaction(libc::SIGINT, &new_action, &mut old_action);
-
-        old_action
-    }
-}
-
-fn restore_manual_resize_sigint_handler(previous: libc::sigaction) {
-    unsafe {
-        libc::sigaction(libc::SIGINT, &previous, std::ptr::null_mut());
-    }
-}
-
-fn print_centered_resize_line(
-    text: &str,
-    terminal_width: usize,
-    color: &str,
-    colors_enabled: bool,
-) {
-    let left_padding = terminal_width.saturating_sub(text.chars().count()) / 2;
-
-    print!("{}", " ".repeat(left_padding));
-
-    if colors_enabled {
-        println!("{}{}{}", color, text, "\x1b[0m",);
-    } else {
-        println!("{}", text);
-    }
-}
-
 fn print_theme_field(name: &str, description: &str, inner_width: usize, colors: &ManualColors) {
     print_indented_paragraph(
         &[ManualPart {
@@ -7554,37 +7312,6 @@ fn print_theme_field(name: &str, description: &str, inner_width: usize, colors: 
     );
 }
 
-fn print_manual_dimension_line(
-    label: &str,
-    value_width: usize,
-    value_height: usize,
-    terminal_width: usize,
-    value_color: &str,
-    colors_enabled: bool,
-) {
-    let value = format!("{} × {}", value_width, value_height,);
-
-    let plain_line = format!("{} {}", label, value,);
-
-    let left_padding = terminal_width.saturating_sub(plain_line.chars().count()) / 2;
-
-    print!("{}", " ".repeat(left_padding));
-
-    if colors_enabled {
-        println!(
-            "{}{}{} {}{}{}",
-            MANUAL_RESIZE_MUTED, label, "\x1b[0m", value_color, value, "\x1b[0m",
-        );
-    } else {
-        println!("{} {}", label, value);
-    }
-}
-
-fn manual_inner_width() -> usize {
-    let available = terminal_width().saturating_sub(8);
-
-    available.clamp(MIN_INNER_WIDTH, MAX_INNER_WIDTH)
-}
 
 fn print_top_border(width: usize, colors: &ManualColors) {
     println!(
@@ -7863,4 +7590,57 @@ fn print_right_padding(width: usize, current_width: usize, colors: &ManualColors
         colors.border,
         colors.reset,
     );
+}
+
+
+pub fn terminal_width() -> usize {
+    terminal_width_from_ioctl()
+        .or_else(terminal_width_from_environment)
+        .unwrap_or(80)
+}
+
+fn manual_inner_width() -> usize {
+    let available = terminal_width().saturating_sub(8);
+
+    available.clamp(MIN_INNER_WIDTH, MAX_INNER_WIDTH)
+}
+
+fn terminal_width_from_environment() -> Option<usize> {
+    env::var("COLUMNS")
+        .ok()
+        .and_then(|value| value.parse::<usize>().ok())
+        .filter(|width| *width > 0)
+}
+
+fn terminal_width_from_ioctl() -> Option<usize> {
+    for file_descriptor in [
+        libc::STDOUT_FILENO,
+        libc::STDERR_FILENO,
+        libc::STDIN_FILENO,
+    ] {
+        let mut window_size = libc::winsize {
+            ws_row: 0,
+            ws_col: 0,
+            ws_xpixel: 0,
+            ws_ypixel: 0,
+        };
+
+        let result = unsafe {
+            libc::ioctl(
+                file_descriptor,
+                libc::TIOCGWINSZ,
+                &mut window_size,
+            )
+        };
+
+        if result == 0 {
+            let width = window_size.ws_col as usize;
+
+            if width > 0 {
+                return Some(width);
+            }
+        }
+    }
+
+    None
 }

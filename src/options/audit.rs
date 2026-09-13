@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 use std::fs;
 use std::io::{BufRead, BufReader};
 use std::os::unix::fs::{MetadataExt, PermissionsExt};
