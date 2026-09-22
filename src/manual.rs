@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 use std::env;
+use std::ffi::CStr;
+use std::io::IsTerminal;
 
 const MIN_INNER_WIDTH: usize = 40;
 const MAX_INNER_WIDTH: usize = 96;
@@ -7312,43 +7314,99 @@ fn print_theme_field(name: &str, description: &str, inner_width: usize, colors: 
     );
 }
 
+fn use_ascii_frame() -> bool {
+    if env::consts::OS != "netbsd" || !std::io::stdout().is_terminal() {
+        return false;
+    }
+
+    let tty_name = unsafe { libc::ttyname(libc::STDOUT_FILENO) };
+
+    if tty_name.is_null() {
+        return false;
+    }
+
+    let tty_path = unsafe { CStr::from_ptr(tty_name) }
+        .to_string_lossy();
+
+    tty_path.starts_with("/dev/ttyE")
+        || tty_path == "/dev/console"
+        || tty_path == "/dev/constty"
+}
 
 fn print_top_border(width: usize, colors: &ManualColors) {
-    println!(
-        "{}┌{}┐{}",
-        colors.border,
-        "─".repeat(width + 4),
-        colors.reset,
-    );
+    if use_ascii_frame() {
+        println!(
+            "{}+{}+{}",
+            colors.border,
+            "-".repeat(width + 4),
+            colors.reset,
+        );
+    } else {
+        println!(
+            "{}┌{}┐{}",
+            colors.border,
+            "─".repeat(width + 4),
+            colors.reset,
+        );
+    }
 }
 
 fn print_separator(width: usize, colors: &ManualColors) {
-    println!(
-        "{}├{}┤{}",
-        colors.border,
-        "─".repeat(width + 4),
-        colors.reset,
-    );
+    if use_ascii_frame() {
+        println!(
+            "{}+{}+{}",
+            colors.border,
+            "-".repeat(width + 4),
+            colors.reset,
+        );
+    } else {
+        println!(
+            "{}├{}┤{}",
+            colors.border,
+            "─".repeat(width + 4),
+            colors.reset,
+        );
+    }
 }
 
 fn print_bottom_border(width: usize, colors: &ManualColors) {
-    println!(
-        "{}└{}┘{}",
-        colors.border,
-        "─".repeat(width + 4),
-        colors.reset,
-    );
+    if use_ascii_frame() {
+        println!(
+            "{}+{}+{}",
+            colors.border,
+            "-".repeat(width + 4),
+            colors.reset,
+        );
+    } else {
+        println!(
+            "{}└{}┘{}",
+            colors.border,
+            "─".repeat(width + 4),
+            colors.reset,
+        );
+    }
 }
 
 fn print_blank_line(width: usize, colors: &ManualColors) {
-    println!(
-        "{}│{}  {}  {}│{}",
-        colors.border,
-        colors.reset,
-        " ".repeat(width),
-        colors.border,
-        colors.reset,
-    );
+    if use_ascii_frame() {
+        println!(
+            "{}|{}  {}  {}|{}",
+            colors.border,
+            colors.reset,
+            " ".repeat(width),
+            colors.border,
+            colors.reset,
+        );
+    } else {
+        println!(
+            "{}│{}  {}  {}│{}",
+            colors.border,
+            colors.reset,
+            " ".repeat(width),
+            colors.border,
+            colors.reset,
+        );
+    }
 }
 
 fn print_line(text: &str, width: usize, color: &str, colors: &ManualColors) {
@@ -7356,8 +7414,10 @@ fn print_line(text: &str, width: usize, color: &str, colors: &ManualColors) {
 
     let padding = width.saturating_sub(visible_width);
 
+    let border = if use_ascii_frame() { '|' } else { '│' };
+
     println!(
-        "{}│{}  {}{}{}{}  {}│{}",
+        "{}{border}{}  {}{}{}{}  {}{border}{}",
         colors.border,
         colors.reset,
         color,
@@ -7574,18 +7634,29 @@ fn print_indented_paragraph(
 }
 
 fn print_left_border_with_indent(indent: usize, colors: &ManualColors) {
-    print!("{}│{}  {}", colors.border, colors.reset, " ".repeat(indent),);
+    let border = if use_ascii_frame() { '|' } else { '│' };
+
+    print!(
+        "{}{border}{}  {}",
+        colors.border,
+        colors.reset,
+        " ".repeat(indent),
+    );
 }
 
 fn print_left_border(colors: &ManualColors) {
-    print!("{}│{}  ", colors.border, colors.reset,);
+    let border = if use_ascii_frame() { '|' } else { '│' };
+
+    print!("{}{border}{}  ", colors.border, colors.reset,);
 }
 
 fn print_right_padding(width: usize, current_width: usize, colors: &ManualColors) {
     let padding = width.saturating_sub(current_width);
 
+    let border = if use_ascii_frame() { '|' } else { '│' };
+
     println!(
-        "{}{}│{}",
+        "{}{}{border}{}",
         " ".repeat(padding + 2),
         colors.border,
         colors.reset,
