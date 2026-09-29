@@ -550,6 +550,23 @@ struct Ansi16SummaryThemeFile {
 }
 
 fn ansi16_foreground(name: &str) -> Option<&'static str> {
+    #[cfg(target_os = "dragonfly")]
+    {
+        match name.trim().to_lowercase().as_str() {
+            "dark_gray" | "dark-grey" | "darkgray" | "darkgrey" => {
+                return Some("\x1b[1;30m");
+            }
+            "bright_red" => return Some("\x1b[1;31m"),
+            "bright_green" => return Some("\x1b[1;32m"),
+            "bright_yellow" => return Some("\x1b[1;33m"),
+            "bright_blue" => return Some("\x1b[1;34m"),
+            "bright_magenta" => return Some("\x1b[1;35m"),
+            "bright_cyan" => return Some("\x1b[1;36m"),
+            "white" | "bright_white" => return Some("\x1b[1;37m"),
+            _ => {}
+        }
+    }
+
     match name.trim().to_lowercase().as_str() {
         "black" => Some("\x1b[30m"),
         "red" => Some("\x1b[31m"),
@@ -1951,12 +1968,39 @@ impl AnsiPalette {
         const CYAN: &str = "\x1b[36m";
         const LIGHT_GRAY: &str = "\x1b[37m";
 
+        #[cfg(target_os = "dragonfly")]
+        const DARK_GRAY: &str = "\x1b[1;30m";
+        #[cfg(not(target_os = "dragonfly"))]
         const DARK_GRAY: &str = "\x1b[90m";
+
+        #[cfg(target_os = "dragonfly")]
+        const BRIGHT_RED: &str = "\x1b[1;31m";
+        #[cfg(not(target_os = "dragonfly"))]
         const BRIGHT_RED: &str = "\x1b[91m";
+
+        #[cfg(target_os = "dragonfly")]
+        const BRIGHT_GREEN: &str = "\x1b[1;32m";
+        #[cfg(not(target_os = "dragonfly"))]
         const BRIGHT_GREEN: &str = "\x1b[92m";
+
+        #[cfg(target_os = "dragonfly")]
+        const BRIGHT_YELLOW: &str = "\x1b[1;33m";
+        #[cfg(not(target_os = "dragonfly"))]
         const BRIGHT_YELLOW: &str = "\x1b[93m";
+
+        #[cfg(target_os = "dragonfly")]
+        const BRIGHT_BLUE: &str = "\x1b[1;34m";
+        #[cfg(not(target_os = "dragonfly"))]
         const BRIGHT_BLUE: &str = "\x1b[94m";
+
+        #[cfg(target_os = "dragonfly")]
+        const BRIGHT_MAGENTA: &str = "\x1b[1;35m";
+        #[cfg(not(target_os = "dragonfly"))]
         const BRIGHT_MAGENTA: &str = "\x1b[95m";
+
+        #[cfg(target_os = "dragonfly")]
+        const BRIGHT_CYAN: &str = "\x1b[1;36m";
+        #[cfg(not(target_os = "dragonfly"))]
         const BRIGHT_CYAN: &str = "\x1b[96m";
 
         let mut palette = Self {

@@ -4,21 +4,21 @@
 
 Noct is built for looking at filesystems from more useful angles than a traditional directory listing alone can provide. It combines a fast everyday file listing tool with focused inspection modes for ownership, permissions, age, sizes, duplicate files, scripts, extensions, filesystem boundaries, cleanup candidates, and more.
 
-The installed executable is `noct`, while `nt` is the recommended short form used throughout this documentation.
+The installed executable is `noct`. A symbolic link named `nt` is provided as the recommended short form and is used throughout this documentation.
 
-**Noct** can be used as a familiar directory viewer when you simply want to see what is there, or as a more specialized inspection tool when you want the filesystem to answer a particular question.
+**Noct** can be used as a familiar directory viewer when you simply want to see what is there, much like `ls(1)`, or as a more specialized inspection tool when you want the filesystem to answer a particular question.
 
 ## Highlights
 
 - Fast grid, one-line, long, and recursive Tree views
 - Rich terminal colors with configurable themes
 - Optional Nerd Font file-type icons
-- Filesystem-aware classification for source code, documents, media, archives, special files, directories, and more
+- Filesystem-aware classification coloring for source code, documents, media, archives, special files, directories, and more
 - Detailed long listings with permissions, owner, size, timestamps, age, and state
 - Filtering by size, age, permissions, state, extension, executability, writability, and more
 - Specialized modes for duplicates, ownership, permissions, scripts, extensions, cleanup candidates, directory usage, filesystem mounts, and other inspections
-- Configurable sorting, limits, output width, and display behavior
-- Built-in `--help`, explanatory `--manual`, theme reference with `--theme-help`, and generated configuration template support
+- Configurable sorting, limits, output width, and display behavior for the standard listing modes
+- Built-in `--help`, explanatory `--manual`, theme reference with `--theme-help`, and generated configuration template support. Noct also includes an exhaustive man page.
 
 ## Screenshots
 
@@ -66,7 +66,97 @@ Tree mode provides a recursive structural view while retaining **Noct's** filesy
 
 ## Installation
 
-**Noct** is written in Rust and targets Unix-like systems, with `Linux` and `FreeBSD` as its primary development and testing platforms.
+### Prebuilt packages
+
+Prebuilt **Noct** packages are available for:
+
+- Alpine Linux (x86_64)
+- Arch Linux (x86_64)
+- Debian (amd64)
+- DragonFly BSD
+- FreeBSD
+- NetBSD
+- OpenBSD
+- openSUSE (x86_64)
+- Void Linux (x86_64)
+
+Packages are available from the [GitHub Releases page](https://github.com/ferusx/noct/releases).
+
+**Some installation commands require root privileges. Run those commands as root or using the privilege-elevation method appropriate for your system.**
+
+Installation instructions for each supported package format are provided below. All Linux packages are signed, and the corresponding public signing keys and verification instructions are also provided below.
+
+#### Alpine Linux
+Noct's Alpine packages are signed with the FerusX Alpine package-signing key. Download and install the public key, then install the package:
+
+```sh
+wget -O ferusx-6aaf881d.rsa.pub https://raw.githubusercontent.com/ferusx/package-signing-keys/master/alpine/ferusx-6aaf881d.rsa.pub
+cp ferusx-6aaf881d.rsa.pub /etc/apk/keys/
+apk add ./noct-*.apk
+```
+
+#### Arch Linux
+
+```sh
+pacman -U ./noct-*.pkg.tar.zst
+```
+
+#### Debian-based systems
+
+```sh
+apt install ./noct_*_amd64.deb
+```
+
+#### DragonFly BSD
+
+```sh
+pkg add ./noct-dragonflybsd-*.pkg
+```
+
+#### FreeBSD
+
+```sh
+pkg install ./noct-freebsd-*.pkg
+```
+
+#### NetBSD
+
+```sh
+pkg_add ./noct-netbsd-*.tgz
+```
+
+#### OpenBSD
+Fetch and install the Noct package signing key before installing the package:
+
+```sh
+ftp -o noct-openbsd-pkg.pub https://raw.githubusercontent.com/ferusx/package-signing-keys/master/openbsd/noct-openbsd-pkg.pub
+cp noct-openbsd-pkg.pub /etc/signify/noct-openbsd-pkg.pub
+pkg_add ./noct-openbsd-*.tgz
+```
+
+#### openSUSE
+On openSUSE, import the FerusX RPM signing key, then install the package:
+
+
+```sh
+rpm --import https://raw.githubusercontent.com/ferusx/package-signing-keys/master/rpm/ferusx-rpm-signing-public.asc
+zypper install ./noct-*.x86_64.rpm
+```
+
+`Note:` The RPM package may also work on other RPM-based Linux distributions, but these have not yet been tested.
+
+#### Void Linux
+XBPS installs packages from repositories rather than directly from standalone package files. After downloading the Noct package, create a local repository index in the directory containing the package:
+
+```sh
+xbps-rindex -a "$PWD"/noct-*.x86_64.xbps
+```
+
+Install Noct from the local repository:
+
+```sh
+xbps-install --repository="$PWD" noct
+```
 
 ### Build from source
 
@@ -87,16 +177,17 @@ target/release/noct
 Install it somewhere in your `PATH`, for example:
 
 ```sh
-sudo install -m 755 target/release/noct /usr/local/bin/noct
+install -m 755 target/release/noct /usr/local/bin/noct
 ```
 
 The recommended command name throughout **Noct's** documentation is `nt`. When installing from source, create the corresponding symbolic link:
 
 ```
-sudo ln -sf noct /usr/local/bin/nt
+ln -sf noct /usr/local/bin/nt
 ```
 
-You can then invoke **Noct** with either command:
+You can thenopenSUSE
+On openSUSE, import the FerusX RPM signing key, then install the package: invoke **Noct** with either command:
 
 ```
 nt
@@ -117,7 +208,7 @@ man/man1/noct.1
 It can be installed manually with:
 
 ```sh
-sudo install -m 644 man/man1/noct.1 /usr/local/share/man/man1/noct.1
+install -m 644 man/man1/noct.1 /usr/local/share/man/man1/noct.1
 ```
 
 After installation, open it with:
@@ -126,7 +217,7 @@ After installation, open it with:
 man noct
 ```
 
-**Packaged installations may install the binary, the `nt` command, and the manual page automatically.**
+**Prebuilt packages install the `noct` executable, the `nt` symbolic link, and the manual page automatically.**
 
 ## Quick Start
 
@@ -411,7 +502,7 @@ For a focused explanation of the theming system, use:
 nt --theme-help
 ```
 
-Or see the `README.md` file in **Noct's** [themes documentation](./themes/README.md), in the themes/ directory in this repository, for a step-by-step guide on using the included rich themes or creating your own.
+Or see the `README.md` file in **Noct's** [themes documentation](./themes/themes/README.md), in the themes/ directory in this repository, for a step-by-step guide on using the included rich themes or creating your own.
 
 ### Console Theme
 
@@ -504,40 +595,6 @@ nt --theme-help
 
 The README is intended as an introduction and overview. The built-in help, manual, generated configuration, and man page contain the complete option reference and mode-specific details.
 
-## Platforms
-
-**Noct** is developed for Unix-like systems and is currently tested primarily on `Linux` and `FreeBSD`, with ongoing testing also taking place on `NetBSD`, `OpenBSD`, and `DragonFly BSD`. Future releases for some or all of these platforms are being explored.
-
-### Linux
-
-**Noct** works as a native command-line tool on `Linux` and integrates naturally with standard Unix filesystem conventions, permissions, ownership, symbolic links, and terminal environments.
-
-Build from source with **Cargo**:
-
-```sh
-cargo build --release
-```
-
-### FreeBSD
-
-`FreeBSD` is also a primary development and testing platform for **Noct**.
-
-**Noct** supports `FreeBSD` filesystem and package-management workflows, including package ownership inspection where the required system tools are available.
-
-A `FreeBSD` port is planned for installation through the Ports Collection and packages. Until that release is available, **Noct** can be built from source with Cargo in the same way as on `Linux`.
-
-### Terminal Support
-
-**Noct** is designed for terminal use and works with plain text output as well as rich ANSI colors.
-
-Optional file-type icons require a Nerd Font-compatible terminal font.
-
-Color output is automatically suppressed for non-interactive output when appropriate, and can also be disabled explicitly with:
-
-```sh
-nt --no-colors
-```
-
 ## Scry
 
 **Noct** is developed alongside [Scry](https://github.com/ferusx/scry-tui-file-browser), an interactive terminal file search and navigation tool.
@@ -551,6 +608,6 @@ They can be used independently, but together they cover two different sides of f
 
 ## License
 
-**Noct** is released under the BSD 3-Clause License.
+**Noct** is released under the BSD-3-Clause License.
 
 See [LICENSE](LICENSE) for the full license text.
