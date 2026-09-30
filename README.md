@@ -86,7 +86,7 @@ Packages are available from the [GitHub Releases page](https://github.com/ferusx
 
 Installation instructions for each supported package format are provided below. Replace `<version>` in the commands with the version of Noct you want to install.
 
-All Linux packages are signed, and the corresponding public signing keys and verification instructions are also provided below.
+Signing-key instructions are included where required.
 
 #### Alpine Linux
 Noct's Alpine packages are signed with the FerusX Alpine package-signing key. Download the package and public key, install the key, then install the package.
