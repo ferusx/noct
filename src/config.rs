@@ -195,6 +195,8 @@ pub fn system_themes_directories() -> Vec<PathBuf> {
             vec![
                 PathBuf::from("/usr/local/share"),
                 PathBuf::from("/usr/share"),
+                #[cfg(target_os = "netbsd")]
+                PathBuf::from("/usr/pkg/share"),
             ]
         });
 
@@ -203,6 +205,7 @@ pub fn system_themes_directories() -> Vec<PathBuf> {
         .map(|directory| directory.join("noct").join("themes"))
         .collect()
 }
+
 pub fn config_path() -> Option<PathBuf> {
     config_directory().map(|directory| directory.join("noct.toml"))
 }
