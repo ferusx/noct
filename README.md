@@ -84,12 +84,12 @@ Packages are available from the [GitHub Releases page](https://github.com/ferusx
 
 **Note:** ***Some installation commands require root privileges. Run those commands as root or using the privilege-elevation method appropriate for your system.***
 
-Installation instructions for each supported package format are provided below. All Linux packages are signed, and the corresponding public signing keys and verification instructions are also provided below.
+Installation instructions for each supported package format are provided below. Replace `<version>` in the commands with the version of Noct you want to install.
+
+All Linux packages are signed, and the corresponding public signing keys and verification instructions are also provided below.
 
 #### Alpine Linux
 Noct's Alpine packages are signed with the FerusX Alpine package-signing key. Download the package and public key, install the key, then install the package.
-
-Replace `<version>` with the version of Noct you want to install.
 
 ```sh
 wget https://github.com/ferusx/noct/releases/download/v<version>/noct-<version>-r0.apk
@@ -100,16 +100,12 @@ apk add ./noct-<version>-r0.apk
 
 #### Arch Linux
 
-Replace `<version>` with the version of Noct you want to install.
-
 ```sh
 curl -LO https://github.com/ferusx/noct/releases/download/v<version>/noct-<version>-1-x86_64.pkg.tar.zst
 pacman -U ./noct-<version>-1-x86_64.pkg.tar.zst
 ```
 
 #### Debian-based systems
-
-Replace `<version>` with the version of Noct you want to install.
 
 ```sh
 wget https://github.com/ferusx/noct/releases/download/v<version>/noct_<version>-1_amd64.deb
@@ -118,16 +114,12 @@ apt install ./noct_<version>-1_amd64.deb
 
 #### DragonFly BSD
 
-Replace `<version>` with the version of Noct you want to install.
-
 ```sh
 fetch https://github.com/ferusx/noct/releases/download/v<version>/noct-dragonflybsd-<version>.pkg
 pkg add ./noct-dragonflybsd-<version>.pkg
 ```
 
 #### FreeBSD
-
-Replace `<version>` with the version of Noct you want to install.
 
 ```sh
 fetch https://github.com/ferusx/noct/releases/download/v<version>/noct-freebsd-<version>.pkg
@@ -136,8 +128,6 @@ pkg install ./noct-freebsd-<version>.pkg
 
 #### NetBSD
 
-Replace `<version>` with the version of Noct you want to install.
-
 ```sh
 ftp https://github.com/ferusx/noct/releases/download/v<version>/noct-netbsd-<version>.tgz
 pkg_add ./noct-netbsd-<version>.tgz
@@ -145,8 +135,6 @@ pkg_add ./noct-netbsd-<version>.tgz
 
 #### OpenBSD
 Fetch the Noct package and its signing key, install the key, then install the package.
-
-Replace `<version>` with the version of Noct you want to install.
 
 ```sh
 ftp https://github.com/ferusx/noct/releases/download/v<version>/noct-openbsd-<version>.tgz
@@ -158,8 +146,6 @@ pkg_add ./noct-openbsd-<version>.tgz
 #### openSUSE
 On openSUSE, download the package, import the FerusX RPM signing key, then install the package.
 
-Replace `<version>` with the version of Noct you want to install.
-
 ```sh
 wget https://github.com/ferusx/noct/releases/download/v<version>/noct-<version>-1.x86_64.rpm
 rpm --import https://raw.githubusercontent.com/ferusx/package-signing-keys/master/rpm/ferusx-rpm-signing-public.asc
@@ -170,8 +156,6 @@ zypper install ./noct-<version>-1.x86_64.rpm
 
 #### Void Linux
 XBPS installs packages from repositories rather than directly from standalone package files. Download the Noct package, then create a local repository index in the directory containing the package.
-
-Replace `<version>` with the version of Noct you want to install.
 
 ```sh
 curl -fLO https://github.com/ferusx/noct/releases/download/v<version>/noct-<version>_1.x86_64.xbps
