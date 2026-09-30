@@ -174,7 +174,7 @@ XBPS installs packages from repositories rather than directly from standalone pa
 Replace `<version>` with the version of Noct you want to install.
 
 ```sh
-wget https://github.com/ferusx/noct/releases/download/v<version>/noct-<version>_1.x86_64.xbps
+curl -fLO https://github.com/ferusx/noct/releases/download/v<version>/noct-<version>_1.x86_64.xbps
 xbps-rindex -a "$PWD"/noct-<version>_1.x86_64.xbps
 ```
 
