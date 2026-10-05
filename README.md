@@ -26,35 +26,35 @@ The installed executable is `noct`. A symbolic link named `nt` is provided as th
 `--map` gives a directory a visual size profile, making the relative weight of its contents immediately obvious. The proportional bars make large directories and files stand out without requiring you to compare a column of numbers manually.
 
 <p align="center">
-  <img src="screenshots/noct-map.png" alt="Noct's --map option checking a local directory" width="70%">
+  <img src="screenshots/noct-map.png" alt="Noct's --map option checking a local directory" width="90%">
 </p>
 
 ### Noct's \--inspect Option
 `--inspect` gives one filesystem entry the full interrogation treatment. Paths, type, state, ownership, permissions, timestamps, age, extension, and other useful properties are gathered into a compact single-entry report.
 
 <p align="center">
-  <img src="screenshots/noct-inspect.png" alt="Noct's --inspect option inspecting Cargo.toml" width="70%">
+  <img src="screenshots/noct-inspect.png" alt="Noct's --inspect option inspecting Cargo.toml" width="90%">
 </p>
 
 ### Noct's \--graveyard Option
 `--graveyard` searches for files that look like likely cleanup candidates and explains why each one was selected. Here it is narrowed to backup-related files, combining age, size, kind, and filename clues into one focused report.
 
 <p align="center">
-  <img src="screenshots/noct-graveyard.png" alt="Noct's --graveyard option searching for obsolete files" width="70%">
+  <img src="screenshots/noct-graveyard.png" alt="Noct's --graveyard option searching for obsolete files" width="90%">
 </p>
 
 ### Noct's \--profile Option
 `--profile` gives a broader snapshot of a directory rather than concentrating on individual entries. It summarizes its contents, space usage, executable and hidden entries, age extremes, and other useful characteristics in one compact report.
 
 <p align="center">
-  <img src="screenshots/noct-profile.png" alt="Noct's --profile option gathering info about ~/DevX" width="70%">
+  <img src="screenshots/noct-profile.png" alt="Noct's --profile option gathering info about ~/DevX" width="90%">
 </p>
 
 ### Noct's \--long --header Options
 **Noct's** long view turns ordinary directory browsing into a metadata-rich table with permissions, ownership, size, timestamps, age, state, and classified filenames. Optional **Nerd Font** icons and themed filesystem colors make different kinds of entries easy to distinguish at a glance.
 
 <p align="center">
-  <img src="screenshots/noct-long-header.png" alt="Noct's --lh options listing in long view format" width="70%">
+  <img src="screenshots/noct-long-header.png" alt="Noct's --lh options listing in long view format" width="90%">
 </p>
 
 ### Noct's \--show-names-tree Option
@@ -62,14 +62,14 @@ The installed executable is `noct`. A symbolic link named `nt` is provided as th
 `-F, --show-names-tree` adds a compact directory-tree preview to the **NAME** column of Noct's ordinary long listing. The listing keeps its permissions, ownership, size, time, age, and state columns while previewing a limited number of entries beneath each directory. Preview depth and per-directory limits are configurable, and the optional peek counter can show how many entries were omitted from a shortened preview.
 
 <p align="center">
-  <img src="screenshots/noct-names-tree-peek-counter.png" alt="Noct's --show-names-tree preview in long view" width="70%">
+  <img src="screenshots/noct-names-tree-peek-counter.png" alt="Noct's --show-names-tree preview in long view" width="90%">
 </p>
 
 ### Noct's \--tree Option
 Tree mode provides a recursive structural view while retaining **Noct's** filesystem classification, colors, and optional icons. Depth can be restricted with `--level`, making it useful both for quick project overviews and deeper directory exploration.
 
 <p align="center">
-  <img src="screenshots/noct-tree.png" alt="Noct's --tree option in action" width="70%">
+  <img src="screenshots/noct-tree.png" alt="Noct's --tree option in action" width="90%">
 </p>
 
 ## Installation
