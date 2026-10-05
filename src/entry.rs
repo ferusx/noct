@@ -14,6 +14,9 @@ use crate::sizes::{FilesystemInfo, MountTable};
 pub struct EntryInfo {
     pub name: String,
     pub path: PathBuf,
+    pub tree_prefix: Option<String>,
+    pub tree_omitted_prefix: Option<String>,
+    pub tree_omitted_count: usize,
     pub metadata: fs::Metadata,
     pub class: EntryClass,
     pub file_type_char: char,
@@ -257,6 +260,195 @@ pub fn read_entries(
     Ok(entries)
 }
 
+pub fn read_entries_with_names_tree(
+    path: &Path,
+    filters: &[crate::args::Filter],
+    sort_mode: SortMode,
+    time_field: TimeField,
+    reverse_sort: bool,
+    hidden_mode: HiddenMode,
+    max_depth: usize,
+    per_directory_limit: usize,
+) -> std::io::Result<Vec<EntryInfo>> {
+    let mount_table = MountTable::load();
+
+    let mut entries = Vec::new();
+
+    read_names_tree_directory(
+        path,
+        filters,
+        sort_mode,
+        time_field,
+        reverse_sort,
+        hidden_mode,
+        &mount_table,
+        &[],
+        true,
+        0,
+        max_depth,
+        per_directory_limit,
+        &mut entries,
+    )?;
+
+    Ok(entries)
+}
+
+fn read_names_tree_directory(
+    directory: &Path,
+    filters: &[crate::args::Filter],
+    sort_mode: SortMode,
+    time_field: TimeField,
+    reverse_sort: bool,
+    hidden_mode: HiddenMode,
+    mount_table: &MountTable,
+    ancestor_has_more: &[bool],
+    top_level: bool,
+    depth: usize,
+    max_depth: usize,
+    per_directory_limit: usize,
+    entries: &mut Vec<EntryInfo>,
+) -> std::io::Result<()> {
+    let mut children = Vec::new();
+
+    for result in fs::read_dir(directory)? {
+        let dir_entry = result?;
+
+        let path = dir_entry.path();
+
+        let name = dir_entry.file_name().to_string_lossy().to_string();
+
+        if matches!(hidden_mode, HiddenMode::VisibleOnly) && name.starts_with('.') {
+            continue;
+        }
+
+        let metadata = fs::symlink_metadata(&path)?;
+
+        let state = detect_state(&path, &metadata);
+
+        let class = classify_entry(&path, &name, &metadata);
+
+        let file_type_char = file_type_char(&metadata);
+
+        let filesystem = mount_table.filesystem_for_path(&path);
+
+        children.push(EntryInfo {
+            name,
+            path,
+            tree_prefix: None,
+            tree_omitted_prefix: None,
+            tree_omitted_count: 0,
+            metadata,
+            class,
+            file_type_char,
+            state,
+            filesystem,
+        });
+    }
+
+    sort_entries(&mut children, sort_mode, time_field);
+
+    if reverse_sort && !matches!(sort_mode, SortMode::Unsorted) {
+        children.reverse();
+    }
+
+    let omitted_count =
+        if !top_level && per_directory_limit > 0 && children.len() > per_directory_limit {
+            children.len() - per_directory_limit
+        } else {
+            0
+        };
+
+    if omitted_count > 0 {
+        children.truncate(per_directory_limit);
+    }
+
+    let child_count = children.len();
+
+    for (index, mut entry) in children.into_iter().enumerate() {
+        let is_last_visible = index + 1 == child_count;
+
+        let is_last = is_last_visible && omitted_count == 0;
+
+        if top_level {
+            entry.tree_prefix = Some(String::new());
+        } else {
+            entry.tree_prefix = Some(names_tree_prefix(ancestor_has_more, is_last));
+        }
+
+        if is_last_visible && omitted_count > 0 {
+            entry.tree_omitted_prefix =
+                Some(names_tree_prefix(ancestor_has_more, true));
+
+            entry.tree_omitted_count = omitted_count;
+        }
+        
+        let descend = entry.metadata.is_dir();
+
+        let child_path = entry.path.clone();
+
+        /*
+         * Apply the ordinary listing filters to displayed entries.
+         *
+         * Directories are still traversed even when they do not themselves
+         * satisfy a filter, so matching descendants remain discoverable.
+         */
+        if entry_matches_filters(
+            &entry.path,
+            &entry.metadata,
+            &entry.state,
+            filters,
+        ) {
+            entries.push(entry);
+        }
+
+        if descend && depth < max_depth {
+            let mut child_ancestor_state = ancestor_has_more.to_vec();
+
+            if !top_level {
+                child_ancestor_state.push(!is_last);
+            }
+
+            read_names_tree_directory(
+                &child_path,
+                filters,
+                sort_mode,
+                time_field,
+                reverse_sort,
+                hidden_mode,
+                mount_table,
+                &child_ancestor_state,
+                false,
+                depth + 1,
+                max_depth,
+                per_directory_limit,
+                entries,
+            )?;
+        }
+    }
+
+    Ok(())
+}
+
+fn names_tree_prefix(ancestor_has_more: &[bool], is_last: bool) -> String {
+    let mut prefix = String::new();
+
+    for has_more in ancestor_has_more {
+        if *has_more {
+            prefix.push_str("│   ");
+        } else {
+            prefix.push_str("    ");
+        }
+    }
+
+    if is_last {
+        prefix.push_str("└── ");
+    } else {
+        prefix.push_str("├── ");
+    }
+
+    prefix
+}
+
 fn maybe_push_entry(
     path: &Path,
     name: &str,
@@ -282,6 +474,10 @@ fn maybe_push_entry(
         name: name.to_string(),
 
         path: path.to_path_buf(),
+
+        tree_prefix: None,
+        tree_omitted_prefix: None,
+        tree_omitted_count: 0,
 
         metadata,
         class,

@@ -48,6 +48,18 @@ show_header = false
 # Print a summary after ordinary listings.
 show_summary = false
 
+# Show tree branches in the NAME column of ordinary listings.
+show_names_tree = false
+
+# Number of directory levels expanded by the names-tree preview.
+show_names_tree_depth = 1
+
+# Maximum children shown for each expanded directory. 0 means unlimited.
+show_names_tree_limit = 3
+
+# Show how many additional entries were omitted from each names-tree preview.
+show_peek_counter = false
+
 # Use Tree output by default.
 show_tree = false
 
@@ -118,6 +130,10 @@ pub struct DisplayConfig {
     pub show_header: bool,
     pub show_summary: bool,
     pub show_tree: bool,
+    pub show_names_tree: bool,
+    pub show_names_tree_depth: usize,
+    pub show_names_tree_limit: usize,
+    pub show_peek_counter: bool,
 }
 
 impl Default for DisplayConfig {
@@ -128,6 +144,10 @@ impl Default for DisplayConfig {
             show_header: false,
             show_summary: false,
             show_tree: false,
+            show_names_tree: false,
+            show_names_tree_depth: 1,
+            show_names_tree_limit: 8,
+            show_peek_counter: false,
         }
     }
 }

@@ -68,12 +68,13 @@ struct SelectedMode {
 pub fn validate_arguments(arguments: &[String]) {
     validate_repeated_regular_options(arguments);
 
+    validate_names_tree_options(arguments);
+
     let Some(selected_mode) = detect_selected_mode(arguments) else {
         return;
     };
 
     validate_regular_listing_only_options(arguments, selected_mode.mode);
-
     match selected_mode.mode {
         CommandMode::PackageBins | CommandMode::Owns | CommandMode::Inspect => {
             validate_solo_target_mode(arguments, selected_mode);
@@ -172,6 +173,30 @@ fn validate_repeated_regular_options(arguments: &[String]) {
     }
 }
 
+fn validate_names_tree_options(arguments: &[String]) {
+    let has_names_tree = arguments
+        .iter()
+        .any(|argument| argument == "-F" || argument == "--show-names-tree");
+
+    let has_depth = arguments.iter().any(|argument| {
+        argument == "--names-tree-depth"
+            || argument.starts_with("--names-tree-depth=")
+    });
+
+    let has_limit = arguments.iter().any(|argument| {
+        argument == "--names-tree-limit"
+            || argument.starts_with("--names-tree-limit=")
+    });
+
+    if has_depth && !has_names_tree {
+        fail("--names-tree-depth requires -F, --show-names-tree");
+    }
+
+    if has_limit && !has_names_tree {
+        fail("--names-tree-limit requires -F, --show-names-tree");
+    }
+}
+
 fn validate_scripts(arguments: &[String], selected: SelectedMode) {
     let mut index = 0;
 
@@ -263,6 +288,20 @@ fn canonical_regular_option(argument: &str) -> Option<&'static str> {
         "-A" | "--almost-all" => Some("--almost-all"),
 
         "--summary" => Some("--summary"),
+
+        "-F" | "--show-names-tree" => Some("--show-names-tree"),
+
+        "--names-tree-depth" => Some("--names-tree-depth"),
+
+        argument if argument.starts_with("--names-tree-depth=") => {
+            Some("--names-tree-depth")
+        }
+
+        "--names-tree-limit" => Some("--names-tree-limit"),
+
+        argument if argument.starts_with("--names-tree-limit=") => {
+            Some("--names-tree-limit")
+        }
 
         "--no-color" | "--no-colour" | "--no-colors" | "--no-colours" => Some("--no-color"),
 
@@ -390,6 +429,33 @@ fn validate_regular_listing_only_options(arguments: &[String], mode: CommandMode
                     mode.label(),
                 ));
             }
+
+            "-F" | "--show-names-tree" => {
+                fail(format!(
+                    "{} is not supported with {}",
+                    argument,
+                    mode.label(),
+                ));
+            }
+
+            "--names-tree-depth" | "--names-tree-limit" => {
+                fail(format!(
+                    "{} is not supported with {}",
+                    argument,
+                    mode.label(),
+                ));
+            }
+
+            argument
+            if argument.starts_with("--names-tree-depth=")
+                || argument.starts_with("--names-tree-limit=") =>
+                {
+                    fail(format!(
+                        "{} is not supported with {}",
+                        argument,
+                        mode.label(),
+                    ));
+                }
 
             _ => {}
         }

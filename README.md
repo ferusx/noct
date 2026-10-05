@@ -10,7 +10,7 @@ The installed executable is `noct`. A symbolic link named `nt` is provided as th
 
 ## Highlights
 
-- Fast grid, one-line, long, and recursive Tree views
+- Fast grid, one-line, long, names-tree preview, and recursive Tree views
 - Rich terminal colors with configurable themes
 - Optional Nerd Font file-type icons
 - Filesystem-aware classification coloring for source code, documents, media, archives, special files, directories, and more
@@ -26,42 +26,50 @@ The installed executable is `noct`. A symbolic link named `nt` is provided as th
 `--map` gives a directory a visual size profile, making the relative weight of its contents immediately obvious. The proportional bars make large directories and files stand out without requiring you to compare a column of numbers manually.
 
 <p align="center">
-  <img src="screenshots/noct-map.png" alt="Noct's --map option checking a local directory" width="95%">
+  <img src="screenshots/noct-map.png" alt="Noct's --map option checking a local directory" width="70%">
 </p>
 
 ### Noct's \--inspect Option
 `--inspect` gives one filesystem entry the full interrogation treatment. Paths, type, state, ownership, permissions, timestamps, age, extension, and other useful properties are gathered into a compact single-entry report.
 
 <p align="center">
-  <img src="screenshots/noct-inspect.png" alt="Noct's --inspect option inspecting Cargo.toml" width="95%">
+  <img src="screenshots/noct-inspect.png" alt="Noct's --inspect option inspecting Cargo.toml" width="70%">
 </p>
 
 ### Noct's \--graveyard Option
 `--graveyard` searches for files that look like likely cleanup candidates and explains why each one was selected. Here it is narrowed to backup-related files, combining age, size, kind, and filename clues into one focused report.
 
 <p align="center">
-  <img src="screenshots/noct-graveyard.png" alt="Noct's --graveyard option searching for obsolete files" width="95%">
+  <img src="screenshots/noct-graveyard.png" alt="Noct's --graveyard option searching for obsolete files" width="70%">
 </p>
 
 ### Noct's \--profile Option
 `--profile` gives a broader snapshot of a directory rather than concentrating on individual entries. It summarizes its contents, space usage, executable and hidden entries, age extremes, and other useful characteristics in one compact report.
 
 <p align="center">
-  <img src="screenshots/noct-profile.png" alt="Noct's --profile option gathering info about ~/DevX" width="95%">
+  <img src="screenshots/noct-profile.png" alt="Noct's --profile option gathering info about ~/DevX" width="70%">
 </p>
 
 ### Noct's \--long --header Options
 **Noct's** long view turns ordinary directory browsing into a metadata-rich table with permissions, ownership, size, timestamps, age, state, and classified filenames. Optional **Nerd Font** icons and themed filesystem colors make different kinds of entries easy to distinguish at a glance.
 
 <p align="center">
-  <img src="screenshots/noct-long-header.png" alt="Noct's --lh options listing in long view format" width="95%">
+  <img src="screenshots/noct-long-header.png" alt="Noct's --lh options listing in long view format" width="70%">
+</p>
+
+### Noct's \--show-names-tree Option
+
+`-F, --show-names-tree` adds a compact directory-tree preview to the **NAME** column of Noct's ordinary long listing. The listing keeps its permissions, ownership, size, time, age, and state columns while previewing a limited number of entries beneath each directory. Preview depth and per-directory limits are configurable, and the optional peek counter can show how many entries were omitted from a shortened preview.
+
+<p align="center">
+  <img src="screenshots/noct-names-tree-peek-counter.png" alt="Noct's --show-names-tree preview in long view" width="70%">
 </p>
 
 ### Noct's \--tree Option
 Tree mode provides a recursive structural view while retaining **Noct's** filesystem classification, colors, and optional icons. Depth can be restricted with `--level`, making it useful both for quick project overviews and deeper directory exploration.
 
 <p align="center">
-  <img src="screenshots/noct-tree.png" alt="Noct's --tree option in action" width="95%">
+  <img src="screenshots/noct-tree.png" alt="Noct's --tree option in action" width="70%">
 </p>
 
 ## Installation
@@ -370,6 +378,24 @@ Add headings when you want the columns labeled:
 nt -lh ~/Projects
 ```
 
+### Names-Tree Preview
+
+Long listings can also add a compact tree preview to the **NAME** column:
+
+```sh
+nt -lF ~/Projects
+```
+
+Unlike the dedicated --tree mode, the names-tree preview keeps **Noct's** ordinary metadata columns and only expands a limited view beneath directories.
+
+By default, **Noct** previews one level and shows up to three entries from each expanded directory. These limits can be changed for an individual command:
+
+```sh
+nt -lF ~/Projects --names-tree-depth 2 --names-tree-limit 5
+```
+
+`--names-tree-depth` and `--names-tree-limit` require `-F`, `--show-names-tree`. A names-tree limit of `0` means unlimited entries per previewed directory.
+
 Hidden entries, sorting, filtering, output width, icons, and individual long-view columns can all be controlled when needed.
 
 ### Tree View
@@ -488,7 +514,52 @@ nt --generate-config
 
 The generated copy is written separately from the active configuration, so it can be reviewed and edited before replacing the current settings.
 
+### Names-Tree Preview
+
+The names-tree preview can be configured persistently under `[display]`:
+
+```toml
+[display]
+show_names_tree = false
+show_names_tree_depth = 1
+show_names_tree_limit = 3
+show_peek_counter = false
+```
+
+`show_names_tree` enables the preview by default.
+
+`show_names_tree_depth` controls how many directory levels are expanded, while
+
+`show_names_tree_limit` controls how many entries are shown from each previewed directory. A limit of `0` means unlimited.
+
+When show_peek_counter is enabled, shortened previews include an omitted-entry marker such as:
+
+└── + 12 more...
+
+The counter is disabled by default to keep names-tree listings compact.
+
 ### Themes
+
+#### Where to find the installed themes
+
+**Noct** comes packed for many platforms. Here is a list of paths where you can find the themes after having installed the package:
+
+On Linux:
+```
+/usr/share/noct/themes/
+```
+
+On OpenBSD/FreeBSD/DragonFly BSD:
+```
+/usr/Local/share/noct/themes/
+```
+
+On NetBSD:
+```
+/usr/pkg/share/noct/themes/
+```
+
+#### Usage - quick start
 
 **Noct** can use themes installed with the program as well as personal themes stored under:
 

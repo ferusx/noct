@@ -1,6 +1,6 @@
 [package]
 name = "noct"
-version = "1.0.5"
+version = "1.1.0"
 edition = "2024"
 license = "BSD-3-Clause"
 description = "Command-line filesystem inspection and analysis toolkit for Unix-like systems"

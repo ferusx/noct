@@ -28,6 +28,8 @@ pub struct RenderOptions {
     pub use_colors: bool,
     pub filesystem_colors: FilesystemColorsMode,
     pub show_icons: bool,
+    pub show_names_tree: bool,
+    pub show_peek_counter: bool,
     pub show_permissions: bool,
     pub show_age: bool,
     pub show_user: bool,
@@ -342,6 +344,73 @@ pub fn print_entry(
     columns.push(name);
 
     println!("{}", columns.join(render_options.long_gap,),);
+
+    if render_options.show_names_tree
+        && render_options.show_peek_counter
+        && entry.tree_omitted_count > 0
+    {
+        print_names_tree_omission(
+            entry,
+            widths,
+            render_options,
+            palette,
+        );
+    }
+}
+
+fn print_names_tree_omission(
+    entry: &EntryInfo,
+    widths: &ColumnWidths,
+    render_options: &RenderOptions,
+    palette: &AnsiPalette,
+) {
+    let mut columns = Vec::new();
+
+    if render_options.show_permissions {
+        columns.push(" ".repeat(10));
+    }
+
+    if render_options.show_user {
+        columns.push(" ".repeat(widths.user));
+    }
+
+    columns.push(" ".repeat(widths.size));
+
+    if render_options.show_date {
+        columns.push(" ".repeat(widths.time));
+    }
+
+    if render_options.show_age {
+        columns.push(" ".repeat(widths.age));
+    }
+
+    if render_options.show_state {
+        columns.push(" ".repeat(widths.state));
+    }
+
+    let prefix = entry
+        .tree_omitted_prefix
+        .as_deref()
+        .unwrap_or("");
+
+    let marker = format!(
+        "{}+ {} more...",
+        prefix,
+        entry.tree_omitted_count,
+    );
+
+    if render_options.use_colors {
+        columns.push(format!(
+            "{}{}{}",
+            palette.report.muted,
+            marker,
+            palette.reset,
+        ));
+    } else {
+        columns.push(marker);
+    }
+
+    println!("{}", columns.join(render_options.long_gap));
 }
 
 pub fn print_total_listed_size(
@@ -706,6 +775,25 @@ pub fn render_name(
 
     let color = entry_color(entry, render_options, palette);
 
+    let tree_prefix = if render_options.show_names_tree {
+        entry.tree_prefix.as_deref().unwrap_or("")
+    } else {
+        ""
+    };
+
+    let rendered_tree_prefix = if tree_prefix.is_empty() {
+        String::new()
+    } else if render_options.use_colors {
+        format!(
+            "{}{}{}",
+            palette.permissions.missing,
+            tree_prefix,
+            palette.reset,
+        )
+    } else {
+        tree_prefix.to_string()
+    };
+
     let suffix = if entry.metadata.is_dir() {
         if entry.name == "/" { "" } else { "/" }
     } else if file_type.is_symlink() {
@@ -725,21 +813,44 @@ pub fn render_name(
     let rendered_name = match (render_options.use_colors, icon) {
         (true, Some(icon)) => {
             format!(
-                "{}{} {}{}{}",
-                color, icon, entry.name, suffix, palette.reset,
+                "{}{}{} {}{}{}",
+                rendered_tree_prefix,
+                color,
+                icon,
+                entry.name,
+                suffix,
+                palette.reset,
             )
         }
 
         (true, None) => {
-            format!("{}{}{}{}", color, entry.name, suffix, palette.reset,)
+            format!(
+                "{}{}{}{}{}",
+                rendered_tree_prefix,
+                color,
+                entry.name,
+                suffix,
+                palette.reset,
+            )
         }
 
         (false, Some(icon)) => {
-            format!("{} {}{}", icon, entry.name, suffix,)
+            format!(
+                "{}{} {}{}",
+                rendered_tree_prefix,
+                icon,
+                entry.name,
+                suffix,
+            )
         }
 
         (false, None) => {
-            format!("{}{}", entry.name, suffix,)
+            format!(
+                "{}{}{}",
+                rendered_tree_prefix,
+                entry.name,
+                suffix,
+            )
         }
     };
 
@@ -927,6 +1038,12 @@ fn plain_rendered_name(entry: &EntryInfo, render_options: &RenderOptions) -> Str
         ""
     };
 
+    let tree_prefix = if render_options.show_names_tree {
+        entry.tree_prefix.as_deref().unwrap_or("")
+    } else {
+        ""
+    };
+
     /*
      * Grid measurement must reserve the same two terminal cells used by the
      * rendered icon and its following space.
@@ -936,7 +1053,13 @@ fn plain_rendered_name(entry: &EntryInfo, render_options: &RenderOptions) -> Str
      */
     let icon_space = if render_options.show_icons { "  " } else { "" };
 
-    let name = format!("{}{}{}", icon_space, entry.name, suffix);
+    let name = format!(
+        "{}{}{}{}",
+        tree_prefix,
+        icon_space,
+        entry.name,
+        suffix,
+    );
 
     match plain_entry_annotation(entry) {
         Some(annotation) => {

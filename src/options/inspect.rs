@@ -147,6 +147,8 @@ fn print_inspection(target: &str, palette: &AnsiPalette) {
             use_colors: palette.enabled,
             filesystem_colors: FilesystemColorsMode::Theme,
             show_icons: false,
+            show_names_tree: false,
+            show_peek_counter: false,
             show_permissions: false,
             show_age: false,
             show_user: false,

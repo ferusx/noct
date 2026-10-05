@@ -542,6 +542,197 @@ filters, fields, and Noct's specialized inspection modes.",
 
     print_blank_line(inner_width, &colors);
 
+    print_line(
+        "-F, --show-names-tree",
+        inner_width,
+        colors.option,
+        &colors,
+    );
+
+    print_indented_paragraph(
+        &[
+            ManualPart {
+                text: "Add a compact directory-tree preview to the",
+                color: "",
+            },
+            ManualPart {
+                text: "NAME",
+                color: colors.accent,
+            },
+            ManualPart {
+                text: "column of the ordinary long listing. Top-level entries remain part of the normal listing, while directories can show a limited preview of their contents underneath them.",
+                color: "",
+            },
+        ],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_indented_paragraph(
+        &[
+            ManualPart {
+                text: "This is intentionally different from",
+                color: "",
+            },
+            ManualPart {
+                text: "-T, --tree.",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "The Tree mode produces a dedicated recursive hierarchy, while",
+                color: "",
+            },
+            ManualPart {
+                text: "--show-names-tree",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "keeps Noct's ordinary metadata columns and only adds tree structure to the filename side of the listing.",
+                color: "",
+            },
+        ],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_indented_paragraph(
+        &[
+            ManualPart {
+                text: "Use",
+                color: "",
+            },
+            ManualPart {
+                text: "--names-tree-depth N",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "to control how many directory levels are previewed, and",
+                color: "",
+            },
+            ManualPart {
+                text: "--names-tree-limit N",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "to control how many entries are shown from each previewed directory. The default preview depth is 1 and the default per-directory limit is 3. A names-tree limit of 0 means unlimited.",
+                color: "",
+            },
+        ],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_indented_paragraph(
+        &[ManualPart {
+            text: "The configuration file can enable this view by default and also controls whether omitted-entry counts such as '+ 12 more...' are displayed after shortened previews.",
+            color: "",
+        }],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_indented_paragraph(
+        &[
+            ManualPart {
+                text: "Example:",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "nt -lF ~/Projects",
+                color: colors.example,
+            },
+        ],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_indented_paragraph(
+        &[
+            ManualPart {
+                text: "Example:",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "nt -lF ~/Projects --names-tree-depth 2 --names-tree-limit 5",
+                color: colors.example,
+            },
+        ],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_indented_paragraph(
+        &[
+            ManualPart {
+                text: "The names-tree preview can also be configured persistently in",
+                color: "",
+            },
+            ManualPart {
+                text: "noct.toml",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "through",
+                color: "",
+            },
+            ManualPart {
+                text: "show_names_tree, show_names_tree_depth, show_names_tree_limit,",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "and",
+                color: "",
+            },
+            ManualPart {
+                text: "show_peek_counter.",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "The peek counter controls whether omitted-entry summaries such as '+ 12 more...' are shown after shortened directory previews.",
+                color: "",
+            },
+        ],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
+    print_indented_paragraph(
+        &[
+            ManualPart {
+                text: "Configuration:",
+                color: colors.emphasis,
+            },
+            ManualPart {
+                text: "show_names_tree=true, show_names_tree_depth=1, show_names_tree_limit=3, show_peek_counter=false",
+                color: colors.example,
+            },
+        ],
+        inner_width,
+        4,
+        &colors,
+    );
+
+    print_blank_line(inner_width, &colors);
+
     print_line("-1, --oneline", inner_width, colors.option, &colors);
 
     print_indented_paragraph(
@@ -6382,6 +6573,34 @@ pub fn print_help(colors_enabled: bool) {
 
     print_help_line(
         "  -d, --directory             List directories themselves, not their contents",
+        inner_width,
+        colors.example,
+        &colors,
+    );
+
+    print_help_line(
+        "  -F, --show-names-tree       Show a tree preview in the NAME column",
+        inner_width,
+        colors.example,
+        &colors,
+    );
+
+    print_help_line(
+        "  --names-tree-depth N        Set names-tree preview depth",
+        inner_width,
+        colors.example,
+        &colors,
+    );
+
+    print_help_line(
+        "  --names-tree-limit N        Limit entries shown per previewed directory",
+        inner_width,
+        colors.example,
+        &colors,
+    );
+
+    print_help_line(
+        "  -T, --tree                  Show directory contents as a recursive Tree",
         inner_width,
         colors.example,
         &colors,

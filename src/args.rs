@@ -78,6 +78,9 @@ pub struct CliOptions {
     pub time_field: TimeField,
     pub display_mode: DisplayMode,
     pub show_icons: bool,
+    pub show_names_tree: bool,
+    pub show_names_tree_depth: usize,
+    pub show_names_tree_limit: usize,
     pub show_age: bool,
     pub show_date: bool,
     pub show_user: bool,
@@ -161,6 +164,10 @@ fn parse_limit_argument(value: &str) -> Option<usize> {
     }
 
     Some(limit)
+}
+
+fn parse_nonnegative_usize(value: &str) -> Option<usize> {
+    value.trim().parse::<usize>().ok()
 }
 
 fn parse_duration_argument(value: &str) -> Option<Duration> {
@@ -250,7 +257,7 @@ pub fn expand_short_flags(arguments: &[String]) -> Vec<String> {
         for short_flag in argument[1..].chars() {
             match short_flag {
                 'h' | 'l' | '1' | 'v' | '?' | 'a' | 'A' | 'U' | 'S' | 'w' | 'T' | 'd' | 'D'
-                | 'r' => {}
+                | 'r' | 'F' => {}
 
                 _ => {
                     can_expand = false;
@@ -306,6 +313,12 @@ pub fn parse_arguments(arguments: &[String], config: &NoctConfig) -> CliOptions 
     let mut display_mode = DisplayMode::Grid;
 
     let mut show_icons = config.display.icons;
+
+    let mut show_names_tree = config.display.show_names_tree;
+
+    let mut show_names_tree_depth = config.display.show_names_tree_depth;
+
+    let mut show_names_tree_limit = config.display.show_names_tree_limit;
 
     let mut show_user = config.long.show_user;
 
@@ -457,6 +470,71 @@ pub fn parse_arguments(arguments: &[String], config: &NoctConfig) -> CliOptions 
             // Show file-type icons
             "--icons" => {
                 show_icons = true;
+
+                index += 1;
+            }
+
+            // Show tree structure in the name column
+            "-F" | "--show-names-tree" => {
+                show_names_tree = true;
+
+                display_mode = DisplayMode::Long;
+
+                index += 1;
+            }
+
+            "--names-tree-depth" => {
+                if index + 1 >= arguments.len() {
+                    eprintln!("noct: --names-tree-depth requires a positive number");
+
+                    std::process::exit(2);
+                }
+
+                let Some(depth) = parse_limit_argument(&arguments[index + 1]) else {
+                    eprintln!(
+                        "noct: invalid names-tree depth '{}'",
+                        arguments[index + 1],
+                    );
+
+                    std::process::exit(2);
+                };
+
+                show_names_tree_depth = depth;
+
+                index += 2;
+            }
+
+            "--names-tree-limit" => {
+                if index + 1 >= arguments.len() {
+                    eprintln!("noct: --names-tree-limit requires a number");
+
+                    std::process::exit(2);
+                }
+
+                let Some(limit) = parse_nonnegative_usize(&arguments[index + 1]) else {
+                    eprintln!(
+                        "noct: invalid names-tree limit '{}'",
+                        arguments[index + 1],
+                    );
+
+                    std::process::exit(2);
+                };
+
+                show_names_tree_limit = limit;
+
+                index += 2;
+            }
+
+            argument if argument.starts_with("--names-tree-limit=") => {
+                let value = argument.trim_start_matches("--names-tree-limit=");
+
+                let Some(limit) = parse_nonnegative_usize(value) else {
+                    eprintln!("noct: invalid names-tree limit '{}'", value);
+
+                    std::process::exit(2);
+                };
+
+                show_names_tree_limit = limit;
 
                 index += 1;
             }
@@ -971,6 +1049,9 @@ pub fn parse_arguments(arguments: &[String], config: &NoctConfig) -> CliOptions 
         time_field,
         display_mode,
         show_icons,
+        show_names_tree,
+        show_names_tree_depth,
+        show_names_tree_limit,
         show_permissions,
         show_user,
         show_age,

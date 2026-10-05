@@ -81,6 +81,18 @@ Show column headings above the long table view.
 Display entries in the metadata-rich long table view instead of the compact grid.
 
 .TP
+.BR \-F ", " \-\-show\-names\-tree
+Add a compact directory-tree preview to the \fBNAME\fP column of the ordinary long listing. Top-level entries remain part of the normal listing, while directories may show a limited preview of their contents beneath them. This differs from \fB\-T, --tree\fP, which produces a dedicated recursive Tree view.
+
+.TP
+.BR "\-\-names\-tree\-depth N"
+Set how many directory levels are expanded by the names-tree preview. This option requires \fB\-F, --show-names-tree\fP.
+
+.TP
+.BR "\-\-names\-tree\-limit N"
+Limit how many entries are shown from each previewed directory. A value of \fB0\fP means unlimited. This option requires \fB\-F, --show-names-tree\fP.
+
+.TP
 .BR \-1 ", " \-\-oneline
 Display one entry per line.
 
@@ -903,7 +915,8 @@ Examples of valid size expressions include \fB512\fP, \fB100K\fP, \fB10MiB\fP, \
 .SH CONFIGURATION
 
 .TP
-\fBNoct\fP reads its configuration from \fBnoct.toml\fP in the \fBNoct configuration directory\fP (see below). Command-line options override applicable configuration settings for the current invocation.
+\fBNoct\fP reads its configuration from \fBnoct.toml\fP in the \fBNoct configuration directory\fP (see below). Command-line options override applicable 
+configuration settings for the current invocation.
 
 .TP
 The configuration directory is determined as follows:
@@ -982,7 +995,10 @@ Select how filename and icon colors are resolved. Accepted values are \fBtheme\f
 .RE
 
 .TP
-Controls display-related defaults such as colors, icons, headers, summaries, and Tree output.
+Controls display-related defaults such as colors, icons, headers, summaries, Tree output, and the names-tree preview.
+
+.TP
+Names-tree settings in \fB[display]\fP include \fBshow_names_tree\fP, \fBshow_names_tree_depth\fP, \fBshow_names_tree_limit\fP, and \fBshow_peek_counter\fP. The default preview depth is \fB1\fP and the default per-directory limit is \fB3\fP. A limit of \fB0\fP means unlimited. When \fBshow_peek_counter\fP is enabled, shortened previews may end with an omitted-entry summary such as \fB+ 12 more...\fP.
 
 .RS
 \fB[long]\fP
@@ -1246,6 +1262,20 @@ List the current directory using the default view.
 
 .RS
 Show a long listing of \fB~/Downloads\fP with column headings.
+.RE
+
+.TP
+.BR "nt -lF ~/Projects"
+
+.RS
+Show the ordinary long listing with a compact tree preview in the \fBNAME\fP column.
+.RE
+
+.TP
+.BR "nt -lF ~/Projects --names-tree-depth 2 --names-tree-limit 5"
+
+.RS
+Preview two directory levels and show at most five entries from each expanded directory.
 .RE
 
 .TP

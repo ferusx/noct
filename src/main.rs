@@ -23,7 +23,12 @@ use config::{
     config_path, generate_config_copy, load_or_create_config, system_themes_directories,
     user_themes_directory,
 };
-use entry::{read_entries, read_path_entries, read_path_entry};
+use entry::{
+    read_entries,
+    read_entries_with_names_tree,
+    read_path_entries,
+    read_path_entry,
+};
 use options::{
     handle_audit_request, handle_cold_request, handle_du_request, handle_duplicates_request,
     handle_empty_dirs_request, handle_exts_request, handle_graveyard_request, handle_hot_request,
@@ -244,6 +249,8 @@ fn main() {
         use_colors: palette.enabled,
         filesystem_colors: config.filesystem_colors,
         show_icons: options.show_icons && !palette.ansi16,
+        show_names_tree: options.show_names_tree,
+        show_peek_counter: config.display.show_peek_counter,
         show_permissions: options.show_permissions,
         show_state: options.show_state,
         show_state_labels: options.show_state_labels,
@@ -265,6 +272,17 @@ fn main() {
         )
     } else if options.list_directory_itself || !path.is_dir() {
         read_path_entry(path, &options.filters)
+    } else if options.show_names_tree {
+        read_entries_with_names_tree(
+            path,
+            &options.filters,
+            options.sort_mode,
+            options.time_field,
+            options.reverse_sort,
+            options.hidden_mode,
+            options.show_names_tree_depth,
+            options.show_names_tree_limit,
+        )
     } else {
         read_entries(
             path,

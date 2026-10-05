@@ -383,12 +383,38 @@ If you are looking for something you can wear a long time and never tire of it, 
 ---
 # How To Work With Themes
 
+## Where To Find the Installed Themes
+
+When Noct is installed from a package, the bundled theme files are installed in a shared system directory. The usual locations are:
+
+Linux:
+```
+/usr/share/noct/themes/
+```
+
+OpenBSD / FreeBSD / DragonFly BSD:
+```
+/usr/local/share/noct/themes/
+```
+
+NetBSD:
+```
+/usr/pkg/share/noct/themes/
+```
+
+
+These installed themes can be used directly by **Noct**, by supplying the full path to the theme you want to use. They can also be copied into your personal theme directory if you want to modify them or use one as the starting point for a custom theme:
+
+`~/.config/noct/themes/`
+
+A personal theme with the same name as an installed theme takes precedence over the installed copy.
+
 ## Using a Theme With Noct (And Generating noct.toml)
 To make a theme work with `Noct` you must first place the themes files in the correct directory, and then add a string to your **config** file, `noct.toml`, specifying the theme you wish to apply. 
 
 This is how you do it:
 
-1. Place the downloaded theme files in `~/.config/noct/themes/`, so that the files are sitting directly inside that directory. 
+1. If you are using a personal or modified theme, place the theme file in `~/.config/noct/themes/`, so that the file sits directly inside that directory. Packaged themes do not need to be copied there unless you want to modify them. 
 
 2. Add to the very top of your `noct.toml`, the line `theme = "theme_name"`, where *theme_name* is the name of the theme file itself, excluding the file extension. So, for example, if you want to apply `Ash Violet`, first make sure that the file is in the `themes/` directory, and then add the line `theme = "ash_violet"` at the top of `noct.toml`. If you do NOT have the `noct.toml` file, see next step.
 
